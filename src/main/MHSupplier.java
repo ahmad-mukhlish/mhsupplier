@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mhsupplier;
+package main;
 
 /**
  *
  * @author GOODWARE1
  */
-public class Main {
+public class MHSupplier {
 
     /**
      * @param args the command line arguments
