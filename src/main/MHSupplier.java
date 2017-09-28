@@ -5,6 +5,8 @@
  */
 package main;
 
+import frames.MainFrame ;
+
 /**
  *
  * @author GOODWARE1
@@ -15,7 +17,8 @@ public class MHSupplier {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+           MainFrame app = new MainFrame() ;
+           app.setVisible(true);
     }
     
 }
