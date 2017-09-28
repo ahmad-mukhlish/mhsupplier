@@ -17,15 +17,98 @@ import java.util.Locale;
  *
  * @author GOODWARE1
  */
+import miscellaneous.*;
+import java.sql.*;
+import javax.swing.JOptionPane;
+
 public class MainFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainFrame
-     */
+    Koneksi dbSetting;
+    String driver, database, user, pass;
+    String[] incomeData = new String[3];
+    String[] outcomeData = new String[3];
+
     public MainFrame() {
         initComponents();
         dateAndTime();
 
+        dbSetting = new Koneksi();
+        driver = dbSetting.SettingPanel("DBDriver");
+        database = dbSetting.SettingPanel("DBDatabase");
+        user = dbSetting.SettingPanel("DBUsername");
+        pass = dbSetting.SettingPanel("DBPassword");
+
+        TIncome.setModel(incomeTableModel);
+        TOutcome.setModel(outcomeTableModel);
+        setTableLoad();
+
+    }
+
+    private javax.swing.table.DefaultTableModel incomeTableModel = mhSupplierTableModel();
+    private javax.swing.table.DefaultTableModel outcomeTableModel = mhSupplierTableModel();
+
+    private javax.swing.table.DefaultTableModel mhSupplierTableModel() {
+
+        //membuat judul header
+        return new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{"Nomor", "Nama", "Nominal"}
+        ) //disable perubahan pada grid
+        {
+            boolean[] canEdit = new boolean[]{
+                false, false, false
+
+            };
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
+    }
+
+    private void setTableLoad() {
+        try {
+
+            Class.forName(driver);
+            Connection kon = DriverManager.getConnection(database, user, pass);
+
+            Statement stt1 = kon.createStatement();
+            String SQL1 = "select * from pemasukan";
+            ResultSet res1 = stt1.executeQuery(SQL1);
+            while (res1.next()) {
+                incomeData[0] = res1.getString(1);
+                incomeData[1] = res1.getString(2);
+                incomeData[2] = res1.getString(3);
+                incomeTableModel.addRow(incomeData);
+
+            }
+            
+            res1.close();
+            stt1.close();
+            
+            Statement stt = kon.createStatement();
+            String SQL = "select * from pengeluaran";
+            ResultSet res = stt.executeQuery(SQL);
+
+            
+            while (res.next()) {
+                outcomeData[0] = res.getString(1);
+                outcomeData[1] = res.getString(2);
+                outcomeData[2] = res.getString(3);
+                outcomeTableModel.addRow(outcomeData);
+
+            }
+            res.close();
+            stt.close();
+            
+            kon.close();
+
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "error", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
+        }
     }
 
     /**
@@ -51,9 +134,9 @@ public class MainFrame extends javax.swing.JFrame {
         AddOutcome = new javax.swing.JButton();
         EditOutcome = new javax.swing.JButton();
         DeleteOutcome = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        outcome = new javax.swing.JTextField();
+        income = new javax.swing.JTextField();
+        total = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         Date = new javax.swing.JLabel();
         Clock = new javax.swing.JLabel();
@@ -68,22 +151,12 @@ public class MainFrame extends javax.swing.JFrame {
         jTextField1.setForeground(new java.awt.Color(187, 187, 188));
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText("Pemasukan");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
 
         jTextField2.setEditable(false);
         jTextField2.setBackground(new java.awt.Color(60, 63, 66));
         jTextField2.setForeground(new java.awt.Color(187, 187, 188));
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField2.setText("Pengeluaran");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
 
         TOutcome.setBackground(new java.awt.Color(60, 63, 66));
         TOutcome.setForeground(new java.awt.Color(187, 187, 188));
@@ -119,11 +192,6 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane3.setViewportView(TIncome);
 
         AddIncome.setText("Tambah");
-        AddIncome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddIncomeActionPerformed(evt);
-            }
-        });
 
         EditIncome.setText("Edit");
 
@@ -135,39 +203,24 @@ public class MainFrame extends javax.swing.JFrame {
 
         DeleteOutcome.setText("Hapus");
 
-        jTextField3.setEditable(false);
-        jTextField3.setBackground(new java.awt.Color(69, 73, 75));
-        jTextField3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(187, 187, 188));
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        jTextField3.setText("  TOTAL PENGELUARAN :");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
+        outcome.setEditable(false);
+        outcome.setBackground(new java.awt.Color(69, 73, 75));
+        outcome.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        outcome.setForeground(new java.awt.Color(187, 187, 188));
+        outcome.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        outcome.setText("  TOTAL PENGELUARAN :");
 
-        jTextField4.setEditable(false);
-        jTextField4.setBackground(new java.awt.Color(69, 73, 75));
-        jTextField4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(187, 187, 188));
-        jTextField4.setText("   TOTAL PEMASUKAN :");
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
+        income.setEditable(false);
+        income.setBackground(new java.awt.Color(69, 73, 75));
+        income.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        income.setForeground(new java.awt.Color(187, 187, 188));
+        income.setText("   TOTAL PEMASUKAN :");
 
-        jTextField5.setEditable(false);
-        jTextField5.setBackground(new java.awt.Color(69, 73, 75));
-        jTextField5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(187, 187, 188));
-        jTextField5.setText("  GRAND TOTAL :");
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
+        total.setEditable(false);
+        total.setBackground(new java.awt.Color(69, 73, 75));
+        total.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        total.setForeground(new java.awt.Color(187, 187, 188));
+        total.setText("  GRAND TOTAL :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -201,13 +254,13 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(income, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(outcome, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField5)
+                .addComponent(total)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -231,10 +284,10 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(DeleteOutcome))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(outcome, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(income, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -300,28 +353,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void AddIncomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddIncomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AddIncomeActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -409,6 +440,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton EditOutcome;
     private javax.swing.JTable TIncome;
     private javax.swing.JTable TOutcome;
+    private javax.swing.JTextField income;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -417,8 +449,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField outcome;
+    private javax.swing.JTextField total;
     // End of variables declaration//GEN-END:variables
 }
