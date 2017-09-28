@@ -6,6 +6,7 @@
 package main;
 
 import frames.MainFrame ;
+import javax.swing.JFrame;
 
 /**
  *
@@ -19,6 +20,8 @@ public class MHSupplier {
     public static void main(String[] args) {
            MainFrame app = new MainFrame() ;
            app.setVisible(true);
+           app.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
     }
     
 }
