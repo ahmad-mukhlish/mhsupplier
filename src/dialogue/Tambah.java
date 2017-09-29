@@ -6,10 +6,8 @@
 package dialogue;
 
 import frame.MainFrame;
+import static frame.MainFrame.formatter;
 import java.sql.*;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import javax.swing.JOptionPane;
 
 /**
@@ -56,6 +54,11 @@ public class Tambah extends java.awt.Dialog {
         jLabel1.setText("Nama");
 
         fName.setToolTipText("");
+        fName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fNameActionPerformed(evt);
+            }
+        });
 
         jLabel2.setForeground(new java.awt.Color(187, 187, 188));
         jLabel2.setText("Nominal");
@@ -155,19 +158,31 @@ public class Tambah extends java.awt.Dialog {
                     data[0] = res.getString(1);
                 }
 
-             
-                data[2] = MainFrame.formatter(data[2]) ;
-                
+                if (table.equals("pemasukan")) {
+                    MainFrame.mTotalIncome += Long.parseLong(data[2]);
+                    MainFrame.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + MainFrame.mTotalIncome));
+                } else {
+                    MainFrame.mTotalOutcome += Long.parseLong(data[2]);
+                    MainFrame.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + MainFrame.mTotalOutcome));
+
+                }
+
+                data[2] = MainFrame.formatter(data[2]);
+
                 if (table.equals("pemasukan")) {
                     MainFrame.incomeTableModel.addRow(data);
                 } else {
                     MainFrame.outcomeTableModel.addRow(data);
                 }
+
+                MainFrame.mGrandTotal = MainFrame.mTotalIncome - MainFrame.mTotalOutcome;
+                MainFrame.total.setText("  GRAND TOTAL : " + formatter("" + MainFrame.mGrandTotal));
+
                 this.dispose();
 
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex.getStackTrace(), "Peringatan", JOptionPane.WARNING_MESSAGE);
-
+            } catch (ClassNotFoundException | NumberFormatException | SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Terjadi kesalahan", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                System.out.println(ex.getMessage());
             }
         }
     }//GEN-LAST:event_tambahActionPerformed
@@ -175,6 +190,10 @@ public class Tambah extends java.awt.Dialog {
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         this.dispose();
     }//GEN-LAST:event_batalActionPerformed
+
+    private void fNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNameActionPerformed
+         fNominal.requestFocus();
+    }//GEN-LAST:event_fNameActionPerformed
 
     /**
      * @param args the command line arguments

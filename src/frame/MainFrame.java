@@ -30,6 +30,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private String[] mIncomeData = new String[3];
     private String[] mOutcomeData = new String[3];
+    public static long mTotalIncome, mTotalOutcome, mGrandTotal;
 
     public MainFrame() {
         initComponents();
@@ -87,8 +88,11 @@ public class MainFrame extends javax.swing.JFrame {
                 mIncomeData[0] = res1.getString(1);
                 mIncomeData[1] = res1.getString(2);
                 mIncomeData[2] = res1.getString(3);
-                
-                mIncomeData[2] = formatter(mIncomeData[2]) ;
+
+                mTotalIncome += Long.parseLong(mIncomeData[2]);
+                income.setText("  Total Pemasukan : " + formatter("" + mTotalIncome));
+
+                mIncomeData[2] = formatter(mIncomeData[2]);
                 incomeTableModel.addRow(mIncomeData);
 
             }
@@ -104,8 +108,11 @@ public class MainFrame extends javax.swing.JFrame {
                 mOutcomeData[0] = res.getString(1);
                 mOutcomeData[1] = res.getString(2);
                 mOutcomeData[2] = res.getString(3);
-                
-                mOutcomeData[2] = formatter(mOutcomeData[2]) ;
+
+                mTotalOutcome += Long.parseLong(mOutcomeData[2]);
+                outcome.setText("  Total Pengeluaran : " + formatter("" + mTotalOutcome));
+
+                mOutcomeData[2] = formatter(mOutcomeData[2]);
                 outcomeTableModel.addRow(mOutcomeData);
 
             }
@@ -113,6 +120,9 @@ public class MainFrame extends javax.swing.JFrame {
             stt.close();
 
             kon.close();
+
+            mGrandTotal = mTotalIncome - mTotalOutcome;
+            total.setText("  GRAND TOTAL : " + formatter("" + mGrandTotal));
 
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
@@ -466,13 +476,13 @@ public class MainFrame extends javax.swing.JFrame {
         DecimalFormatSymbols symbol = new DecimalFormatSymbols();
         symbol.setGroupingSeparator('.');
 
-        DecimalFormat format = new DecimalFormat("Rp ###,###");
+        DecimalFormat format = new DecimalFormat(" Rp ###,###");
         format.setDecimalFormatSymbols(symbol);
 
-        return format.format(Double.parseDouble(input)) ;
+        return format.format(Double.parseDouble(input));
     }
 
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddIncome;
     private javax.swing.JButton AddOutcome;
@@ -484,7 +494,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton EditOutcome;
     private javax.swing.JTable TIncome;
     private javax.swing.JTable TOutcome;
-    private javax.swing.JTextField income;
+    public static javax.swing.JTextField income;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -493,7 +503,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField outcome;
-    private javax.swing.JTextField total;
+    public static javax.swing.JTextField outcome;
+    public static javax.swing.JTextField total;
     // End of variables declaration//GEN-END:variables
 }
