@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -20,6 +19,8 @@ import java.util.Locale;
  */
 import miscellaneous.*;
 import java.sql.*;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import javax.swing.JOptionPane;
 
 public class MainFrame extends javax.swing.JFrame {
@@ -78,7 +79,7 @@ public class MainFrame extends javax.swing.JFrame {
 
             Class.forName(driver);
             Connection kon = DriverManager.getConnection(database, user, pass);
-        
+
             Statement stt1 = kon.createStatement();
             String SQL1 = "select * from pemasukan";
             ResultSet res1 = stt1.executeQuery(SQL1);
@@ -86,6 +87,8 @@ public class MainFrame extends javax.swing.JFrame {
                 mIncomeData[0] = res1.getString(1);
                 mIncomeData[1] = res1.getString(2);
                 mIncomeData[2] = res1.getString(3);
+                
+                mIncomeData[2] = formatter(mIncomeData[2]) ;
                 incomeTableModel.addRow(mIncomeData);
 
             }
@@ -101,6 +104,8 @@ public class MainFrame extends javax.swing.JFrame {
                 mOutcomeData[0] = res.getString(1);
                 mOutcomeData[1] = res.getString(2);
                 mOutcomeData[2] = res.getString(3);
+                
+                mOutcomeData[2] = formatter(mOutcomeData[2]) ;
                 outcomeTableModel.addRow(mOutcomeData);
 
             }
@@ -455,6 +460,16 @@ public class MainFrame extends javax.swing.JFrame {
 
         new javax.swing.Timer(1000, tickTock).start();
 
+    }
+
+    public static String formatter(String input) {
+        DecimalFormatSymbols symbol = new DecimalFormatSymbols();
+        symbol.setGroupingSeparator('.');
+
+        DecimalFormat format = new DecimalFormat("Rp ###,###");
+        format.setDecimalFormatSymbols(symbol);
+
+        return format.format(Double.parseDouble(input)) ;
     }
 
 

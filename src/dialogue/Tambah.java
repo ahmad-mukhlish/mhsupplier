@@ -7,6 +7,9 @@ package dialogue;
 
 import frame.MainFrame;
 import java.sql.*;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 
 /**
@@ -152,6 +155,9 @@ public class Tambah extends java.awt.Dialog {
                     data[0] = res.getString(1);
                 }
 
+             
+                data[2] = MainFrame.formatter(data[2]) ;
+                
                 if (table.equals("pemasukan")) {
                     MainFrame.incomeTableModel.addRow(data);
                 } else {
@@ -167,7 +173,7 @@ public class Tambah extends java.awt.Dialog {
     }//GEN-LAST:event_tambahActionPerformed
 
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
-       this.dispose();
+        this.dispose();
     }//GEN-LAST:event_batalActionPerformed
 
     /**
