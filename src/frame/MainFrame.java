@@ -50,10 +50,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     }
 
-    private javax.swing.table.DefaultTableModel incomeTableModel = mhSupplierTableModel();
-    private javax.swing.table.DefaultTableModel outcomeTableModel = mhSupplierTableModel();
+    public static javax.swing.table.DefaultTableModel incomeTableModel = mhSupplierTableModel();
+    public static javax.swing.table.DefaultTableModel outcomeTableModel = mhSupplierTableModel();
 
-    private javax.swing.table.DefaultTableModel mhSupplierTableModel() {
+    private static javax.swing.table.DefaultTableModel mhSupplierTableModel() {
 
         //membuat judul header
         return new javax.swing.table.DefaultTableModel(
@@ -78,7 +78,7 @@ public class MainFrame extends javax.swing.JFrame {
 
             Class.forName(driver);
             Connection kon = DriverManager.getConnection(database, user, pass);
-
+        
             Statement stt1 = kon.createStatement();
             String SQL1 = "select * from pemasukan";
             ResultSet res1 = stt1.executeQuery(SQL1);
