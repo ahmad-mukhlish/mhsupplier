@@ -5,7 +5,7 @@
  */
 package main;
 
-import frames.MainFrame ;
+import frame.MainFrame ;
 import javax.swing.JFrame;
 
 /**

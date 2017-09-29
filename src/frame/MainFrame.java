@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package frames;
+package frame;
 
+import dialogue.Tambah;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -23,24 +24,29 @@ import javax.swing.JOptionPane;
 
 public class MainFrame extends javax.swing.JFrame {
 
-    Koneksi dbSetting;
-    String driver, database, user, pass;
-    String[] incomeData = new String[3];
-    String[] outcomeData = new String[3];
+    public static Koneksi dbSetting;
+    public static String driver, database, user, pass;
+
+    private String[] mIncomeData = new String[3];
+    private String[] mOutcomeData = new String[3];
 
     public MainFrame() {
         initComponents();
         dateAndTime();
+        connect();
+        TIncome.setModel(incomeTableModel);
+        TOutcome.setModel(outcomeTableModel);
+        setTableLoad();
+
+    }
+
+    public static void connect() {
 
         dbSetting = new Koneksi();
         driver = dbSetting.SettingPanel("DBDriver");
         database = dbSetting.SettingPanel("DBDatabase");
         user = dbSetting.SettingPanel("DBUsername");
         pass = dbSetting.SettingPanel("DBPassword");
-
-        TIncome.setModel(incomeTableModel);
-        TOutcome.setModel(outcomeTableModel);
-        setTableLoad();
 
     }
 
@@ -77,31 +83,30 @@ public class MainFrame extends javax.swing.JFrame {
             String SQL1 = "select * from pemasukan";
             ResultSet res1 = stt1.executeQuery(SQL1);
             while (res1.next()) {
-                incomeData[0] = res1.getString(1);
-                incomeData[1] = res1.getString(2);
-                incomeData[2] = res1.getString(3);
-                incomeTableModel.addRow(incomeData);
+                mIncomeData[0] = res1.getString(1);
+                mIncomeData[1] = res1.getString(2);
+                mIncomeData[2] = res1.getString(3);
+                incomeTableModel.addRow(mIncomeData);
 
             }
-            
+
             res1.close();
             stt1.close();
-            
+
             Statement stt = kon.createStatement();
             String SQL = "select * from pengeluaran";
             ResultSet res = stt.executeQuery(SQL);
 
-            
             while (res.next()) {
-                outcomeData[0] = res.getString(1);
-                outcomeData[1] = res.getString(2);
-                outcomeData[2] = res.getString(3);
-                outcomeTableModel.addRow(outcomeData);
+                mOutcomeData[0] = res.getString(1);
+                mOutcomeData[1] = res.getString(2);
+                mOutcomeData[2] = res.getString(3);
+                outcomeTableModel.addRow(mOutcomeData);
 
             }
             res.close();
             stt.close();
-            
+
             kon.close();
 
         } catch (Exception ex) {
@@ -192,12 +197,22 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane3.setViewportView(TIncome);
 
         AddIncome.setText("Tambah");
+        AddIncome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddIncomeActionPerformed(evt);
+            }
+        });
 
         EditIncome.setText("Edit");
 
         DeleteIncome.setText("Hapus");
 
         AddOutcome.setText("Tambah");
+        AddOutcome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddOutcomeActionPerformed(evt);
+            }
+        });
 
         EditOutcome.setText("Edit");
 
@@ -249,7 +264,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -270,7 +285,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -353,6 +368,20 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void AddIncomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddIncomeActionPerformed
+        TIncome.clearSelection();
+        Tambah tambahIncome = new Tambah(null, "Tambah Data Pemasukan", true);
+        tambahIncome.setLocationRelativeTo(this);
+        tambahIncome.setVisible(true);
+    }//GEN-LAST:event_AddIncomeActionPerformed
+
+    private void AddOutcomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddOutcomeActionPerformed
+        TOutcome.clearSelection();
+        Tambah tambahOutcome = new Tambah(null, "Tambah Data Pengeluaran", true);
+        tambahOutcome.setLocationRelativeTo(this);
+        tambahOutcome.setVisible(true);
+    }//GEN-LAST:event_AddOutcomeActionPerformed
 
     /**
      * @param args the command line arguments
