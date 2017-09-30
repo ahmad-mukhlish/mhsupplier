@@ -5,6 +5,10 @@
  */
 package dialogue;
 
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import com.sun.org.apache.xpath.internal.functions.FuncQname;
+import java.net.FileNameMap;
+
 /**
  *
  * @author GOODWARE1
@@ -15,11 +19,16 @@ public class Edit extends java.awt.Dialog {
      * Creates new form Edit
      */
     private static String mTitle;
+    private static int mRow;
+    private static String[] mDatas;
 
-    public Edit(java.awt.Frame parent, String title, boolean modal) {
+    public Edit(java.awt.Frame parent, String title, boolean modal, String[] datas, int row) {
         super(parent, title, modal);
-        mTitle = title ;
+        mTitle = title;
+        mRow = row;
+        mDatas = datas;
         initComponents();
+        showSelected();
         frame.MainFrame.connect();
     }
 
@@ -32,9 +41,9 @@ public class Edit extends java.awt.Dialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        fName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        fNominal = new javax.swing.JTextField();
         batal = new javax.swing.JButton();
         edit = new javax.swing.JButton();
 
@@ -48,7 +57,7 @@ public class Edit extends java.awt.Dialog {
         jLabel1.setForeground(new java.awt.Color(187, 187, 188));
         jLabel1.setText("Nama");
 
-        jTextField1.setToolTipText("");
+        fName.setToolTipText("");
 
         jLabel2.setForeground(new java.awt.Color(187, 187, 188));
         jLabel2.setText("Nominal");
@@ -68,8 +77,8 @@ public class Edit extends java.awt.Dialog {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fName, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fNominal, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -84,11 +93,11 @@ public class Edit extends java.awt.Dialog {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fNominal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(batal)
@@ -111,26 +120,30 @@ public class Edit extends java.awt.Dialog {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Tambah dialog = new Tambah(new java.awt.Frame(),mTitle,true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            Edit dialog = new Edit(new java.awt.Frame(), mTitle, true, mDatas, mRow);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
+    }
+
+    public static void showSelected() {
+        fName.setText(mDatas[1]);
+        fNominal.setText(mDatas[2]);
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batal;
     private javax.swing.JButton edit;
+    private static javax.swing.JTextField fName;
+    private static javax.swing.JTextField fNominal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

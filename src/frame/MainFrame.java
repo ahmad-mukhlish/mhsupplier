@@ -33,14 +33,15 @@ public class MainFrame extends javax.swing.JFrame {
 
     private String[] mIncomeData = new String[3];
     private String[] mOutcomeData = new String[3];
-    
-    private int IncomeRow, OutcomeRow ;
+
+    private int IncomeRow, OutcomeRow;
     public static long mTotalIncome, mTotalOutcome, mGrandTotal;
 
     public MainFrame() {
         initComponents();
         dateAndTime();
         connect();
+        getDatums();
         TIncome.setModel(incomeTableModel);
         TOutcome.setModel(outcomeTableModel);
         setTableLoad();
@@ -414,13 +415,13 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_AddOutcomeActionPerformed
 
     private void EditIncomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditIncomeActionPerformed
-        Edit editIncome = new Edit(null, "Edit Data Pemasukan", true);
+        Edit editIncome = new Edit(null, "Edit Data Pemasukan", true, mIncomeData, IncomeRow);
         editIncome.setLocationRelativeTo(this);
         editIncome.setVisible(true);
     }//GEN-LAST:event_EditIncomeActionPerformed
 
     private void EditOutcomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditOutcomeActionPerformed
-        Edit editOutcome = new Edit(null, "Edit Data Pengeluaran", true);
+        Edit editOutcome = new Edit(null, "Edit Data Pengeluaran", true, mOutcomeData, OutcomeRow);
         editOutcome.setLocationRelativeTo(this);
         editOutcome.setVisible(true);
     }//GEN-LAST:event_EditOutcomeActionPerformed
@@ -508,31 +509,31 @@ public class MainFrame extends javax.swing.JFrame {
 
         return format.format(Double.parseDouble(input));
     }
-    
+
     public void getDatums() {
-       TIncome.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-           @Override
-           public void valueChanged(ListSelectionEvent e) {
-               IncomeRow = TIncome.getSelectedRow() ;
-               mIncomeData[0] = TIncome.getValueAt(IncomeRow, 0).toString() ;
-               mIncomeData[1] = TIncome.getValueAt(IncomeRow, 1).toString() ;
-               mIncomeData[2] = TIncome.getValueAt(IncomeRow, 2).toString() ;
-           }
-       });
-       
-       TOutcome.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-           @Override
-           public void valueChanged(ListSelectionEvent e) {
-               OutcomeRow = TOutcome.getSelectedRow() ;
-               mOutcomeData[0] = TOutcome.getValueAt(OutcomeRow, 0).toString() ;
-               mOutcomeData[1] = TOutcome.getValueAt(OutcomeRow, 1).toString() ;
-               mOutcomeData[2] = TOutcome.getValueAt(OutcomeRow, 2).toString() ;
-           }
-       });
-       
+        TIncome.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                IncomeRow = TIncome.getSelectedRow();
+                mIncomeData[0] = TIncome.getValueAt(IncomeRow, 0).toString();
+                mIncomeData[1] = TIncome.getValueAt(IncomeRow, 1).toString();
+                mIncomeData[2] = TIncome.getValueAt(IncomeRow, 2).toString();
+            }
+        });
+
+        TOutcome.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                OutcomeRow = TOutcome.getSelectedRow();
+                mOutcomeData[0] = TOutcome.getValueAt(OutcomeRow, 0).toString();
+                mOutcomeData[1] = TOutcome.getValueAt(OutcomeRow, 1).toString();
+                mOutcomeData[2] = TOutcome.getValueAt(OutcomeRow, 2).toString();
+            }
+        });
+
     }
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddIncome;
     private javax.swing.JButton AddOutcome;
