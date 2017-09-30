@@ -22,6 +22,8 @@ import java.sql.*;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -30,6 +32,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private String[] mIncomeData = new String[3];
     private String[] mOutcomeData = new String[3];
+    
+    private int IncomeRow, OutcomeRow ;
     public static long mTotalIncome, mTotalOutcome, mGrandTotal;
 
     public MainFrame() {
@@ -480,6 +484,29 @@ public class MainFrame extends javax.swing.JFrame {
         format.setDecimalFormatSymbols(symbol);
 
         return format.format(Double.parseDouble(input));
+    }
+    
+    public void getDatums() {
+       TIncome.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+           @Override
+           public void valueChanged(ListSelectionEvent e) {
+               IncomeRow = TIncome.getSelectedRow() ;
+               mIncomeData[0] = TIncome.getValueAt(IncomeRow, 0).toString() ;
+               mIncomeData[1] = TIncome.getValueAt(IncomeRow, 1).toString() ;
+               mIncomeData[2] = TIncome.getValueAt(IncomeRow, 2).toString() ;
+           }
+       });
+       
+       TOutcome.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+           @Override
+           public void valueChanged(ListSelectionEvent e) {
+               OutcomeRow = TOutcome.getSelectedRow() ;
+               mOutcomeData[0] = TOutcome.getValueAt(OutcomeRow, 0).toString() ;
+               mOutcomeData[1] = TOutcome.getValueAt(OutcomeRow, 1).toString() ;
+               mOutcomeData[2] = TOutcome.getValueAt(OutcomeRow, 2).toString() ;
+           }
+       });
+       
     }
 
     
