@@ -5,6 +5,7 @@
  */
 package frame;
 
+import dialogue.Edit;
 import dialogue.Tambah;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -223,6 +224,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         EditIncome.setText("Edit");
+        EditIncome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditIncomeActionPerformed(evt);
+            }
+        });
 
         DeleteIncome.setText("Hapus");
 
@@ -234,6 +240,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         EditOutcome.setText("Edit");
+        EditOutcome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditOutcomeActionPerformed(evt);
+            }
+        });
 
         DeleteOutcome.setText("Hapus");
 
@@ -401,6 +412,18 @@ public class MainFrame extends javax.swing.JFrame {
         tambahOutcome.setLocationRelativeTo(this);
         tambahOutcome.setVisible(true);
     }//GEN-LAST:event_AddOutcomeActionPerformed
+
+    private void EditIncomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditIncomeActionPerformed
+        Edit editIncome = new Edit(null, "Edit Data Pemasukan", true);
+        editIncome.setLocationRelativeTo(this);
+        editIncome.setVisible(true);
+    }//GEN-LAST:event_EditIncomeActionPerformed
+
+    private void EditOutcomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditOutcomeActionPerformed
+        Edit editOutcome = new Edit(null, "Edit Data Pengeluaran", true);
+        editOutcome.setLocationRelativeTo(this);
+        editOutcome.setVisible(true);
+    }//GEN-LAST:event_EditOutcomeActionPerformed
 
     /**
      * @param args the command line arguments
