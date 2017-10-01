@@ -5,9 +5,15 @@
  */
 package dialogue;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import com.sun.org.apache.xpath.internal.functions.FuncQname;
-import java.net.FileNameMap;
+import frame.MainFrame;
+import static frame.MainFrame.formatter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -63,8 +69,18 @@ public class Edit extends java.awt.Dialog {
         jLabel2.setText("Nominal");
 
         batal.setText("Batal");
+        batal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                batalActionPerformed(evt);
+            }
+        });
 
         edit.setText("Edit");
+        edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -116,6 +132,80 @@ public class Edit extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
+    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
+        if (fName.getText().isEmpty() || fNominal.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Data tidak boleh kosong, silakan coba lagi", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                Class.forName(MainFrame.driver);
+                Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
+                Statement stt = kon.createStatement();
+                String[] data = new String[3];
+
+                data[1] = fName.getText();
+                data[2] = fNominal.getText();
+
+                String table;
+
+                if (mTitle.contains("Pemasukan")) {
+                    table = "pemasukan";
+                } else {
+                    table = "pengeluaran";
+                }
+
+                String SQLUpdate = "UPDATE " + table + " "
+                        + "SET Nama = '" + data[1] + "', Uang = " + data[2]
+                        + " WHERE Nomor = " + mDatas[0] + ";";
+                String SQLGetNumber = "SELECT Nomor FROM " + table + " WHERE Nama='" + data[1] + "' ";
+
+                stt.execute(SQLUpdate);
+                ResultSet res = stt.executeQuery(SQLGetNumber);
+
+                while (res.next()) {
+                    data[0] = res.getString(1);
+                }
+
+                if (table.equals("pemasukan")) {
+                    MainFrame.mTotalIncome -= Long.parseLong(takeNominal(mDatas[2]));
+                    MainFrame.mTotalIncome += Long.parseLong(data[2]);
+                    MainFrame.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + MainFrame.mTotalIncome));
+                } else {
+                    MainFrame.mTotalOutcome -= Long.parseLong(takeNominal(mDatas[2]));
+                    MainFrame.mTotalOutcome += Long.parseLong(data[2]);
+                    MainFrame.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + MainFrame.mTotalOutcome));
+
+                }
+
+                data[2] = MainFrame.formatter(data[2]);
+
+                if (table.equals("pemasukan")) {
+
+                    MainFrame.incomeTableModel.insertRow(mRow, data);
+                    MainFrame.incomeTableModel.removeRow(mRow + 1);
+
+                } else {
+
+                    MainFrame.outcomeTableModel.insertRow(mRow, data);
+                    MainFrame.outcomeTableModel.removeRow(mRow + 1);
+
+                }
+
+                MainFrame.mGrandTotal = MainFrame.mTotalIncome - MainFrame.mTotalOutcome;
+                MainFrame.total.setText("  GRAND TOTAL : " + formatter("" + MainFrame.mGrandTotal));
+
+                this.dispose();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Terjadi kesalahan", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                System.out.println(ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_editActionPerformed
+
+    private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_batalActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -134,7 +224,18 @@ public class Edit extends java.awt.Dialog {
 
     public static void showSelected() {
         fName.setText(mDatas[1]);
-        fNominal.setText(mDatas[2]);
+        fNominal.setText(takeNominal(mDatas[2]));
+    }
+
+    public static String takeNominal(String nominal) {
+
+        String[] hasilArray = nominal.substring(4).split("\\.");
+        String hasil = "";
+        for (int i = 0; i < hasilArray.length; i++) {
+            hasil += hasilArray[i];
+        }
+
+        return hasil;
     }
 
 

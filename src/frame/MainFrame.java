@@ -66,7 +66,7 @@ public class MainFrame extends javax.swing.JFrame {
         //membuat judul header
         return new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
-                new String[]{"Nomor", "Nama", "Nominal"}
+                new String[]{"Nomor", "Keterangan", "Nominal"}
         ) //disable perubahan pada grid
         {
             boolean[] canEdit = new boolean[]{
@@ -511,13 +511,16 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public void getDatums() {
+
         TIncome.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 IncomeRow = TIncome.getSelectedRow();
-                mIncomeData[0] = TIncome.getValueAt(IncomeRow, 0).toString();
-                mIncomeData[1] = TIncome.getValueAt(IncomeRow, 1).toString();
-                mIncomeData[2] = TIncome.getValueAt(IncomeRow, 2).toString();
+                if (IncomeRow != -1) {
+                    mIncomeData[0] = TIncome.getValueAt(IncomeRow, 0).toString();
+                    mIncomeData[1] = TIncome.getValueAt(IncomeRow, 1).toString();
+                    mIncomeData[2] = TIncome.getValueAt(IncomeRow, 2).toString();
+                }
             }
         });
 
@@ -525,15 +528,15 @@ public class MainFrame extends javax.swing.JFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 OutcomeRow = TOutcome.getSelectedRow();
-                mOutcomeData[0] = TOutcome.getValueAt(OutcomeRow, 0).toString();
-                mOutcomeData[1] = TOutcome.getValueAt(OutcomeRow, 1).toString();
-                mOutcomeData[2] = TOutcome.getValueAt(OutcomeRow, 2).toString();
+                if (OutcomeRow != -1) {
+                    mOutcomeData[0] = TOutcome.getValueAt(OutcomeRow, 0).toString();
+                    mOutcomeData[1] = TOutcome.getValueAt(OutcomeRow, 1).toString();
+                    mOutcomeData[2] = TOutcome.getValueAt(OutcomeRow, 2).toString();
+                }
             }
         });
 
     }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddIncome;
     private javax.swing.JButton AddOutcome;
