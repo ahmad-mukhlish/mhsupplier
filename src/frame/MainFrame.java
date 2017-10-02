@@ -63,11 +63,11 @@ public class MainFrame extends javax.swing.JFrame {
 
     private static javax.swing.table.DefaultTableModel mhSupplierTableModel() {
 
-        //membuat judul header
+        
         return new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{"Nomor", "Keterangan", "Nominal"}
-        ) //disable perubahan pada grid
+        ) 
         {
             boolean[] canEdit = new boolean[]{
                 false, false, false

@@ -47,7 +47,7 @@ public class Edit extends java.awt.Dialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        fName = new javax.swing.JTextField();
+        fInfo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         fNominal = new javax.swing.JTextField();
         batal = new javax.swing.JButton();
@@ -61,9 +61,9 @@ public class Edit extends java.awt.Dialog {
         });
 
         jLabel1.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel1.setText("Nama");
+        jLabel1.setText("Keterangan");
 
-        fName.setToolTipText("");
+        fInfo.setToolTipText("");
 
         jLabel2.setForeground(new java.awt.Color(187, 187, 188));
         jLabel2.setText("Nominal");
@@ -89,11 +89,11 @@ public class Edit extends java.awt.Dialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fName, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fNominal, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -109,7 +109,7 @@ public class Edit extends java.awt.Dialog {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(fName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -133,7 +133,7 @@ public class Edit extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-        if (fName.getText().isEmpty() || fNominal.getText().isEmpty()) {
+        if (fInfo.getText().isEmpty() || fNominal.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Data tidak boleh kosong, silakan coba lagi", "Peringatan", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
@@ -142,7 +142,7 @@ public class Edit extends java.awt.Dialog {
                 Statement stt = kon.createStatement();
                 String[] data = new String[3];
 
-                data[1] = fName.getText();
+                data[1] = fInfo.getText();
                 data[2] = fNominal.getText();
 
                 String table;
@@ -154,9 +154,9 @@ public class Edit extends java.awt.Dialog {
                 }
 
                 String SQLUpdate = "UPDATE " + table + " "
-                        + "SET Nama = '" + data[1] + "', Uang = " + data[2]
+                        + "SET Info = '" + data[1] + "', Uang = " + data[2]
                         + " WHERE Nomor = " + mDatas[0] + ";";
-                String SQLGetNumber = "SELECT Nomor FROM " + table + " WHERE Nama='" + data[1] + "' ";
+                String SQLGetNumber = "SELECT Nomor FROM " + table + " WHERE Info='" + data[1] + "' ";
 
                 stt.execute(SQLUpdate);
                 ResultSet res = stt.executeQuery(SQLGetNumber);
@@ -223,7 +223,7 @@ public class Edit extends java.awt.Dialog {
     }
 
     public static void showSelected() {
-        fName.setText(mDatas[1]);
+        fInfo.setText(mDatas[1]);
         fNominal.setText(takeNominal(mDatas[2]));
     }
 
@@ -242,7 +242,7 @@ public class Edit extends java.awt.Dialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batal;
     private javax.swing.JButton edit;
-    private static javax.swing.JTextField fName;
+    private static javax.swing.JTextField fInfo;
     private static javax.swing.JTextField fNominal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

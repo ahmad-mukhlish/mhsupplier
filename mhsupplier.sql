@@ -22,16 +22,20 @@ DROP TABLE IF EXISTS `pemasukan`;
 
 CREATE TABLE `pemasukan` (
   `Nomor` int(11) NOT NULL AUTO_INCREMENT,
-  `Nama` varchar(50) DEFAULT NULL,
+  `Info` varchar(50) DEFAULT NULL,
   `Uang` double DEFAULT NULL,
   PRIMARY KEY (`Nomor`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `pemasukan` */
 
-insert  into `pemasukan`(`Nomor`,`Nama`,`Uang`) values 
-(1,'Ahmad',3000000),
-(2,'Mukhlis',4000000);
+insert  into `pemasukan`(`Nomor`,`Info`,`Uang`) values 
+(1,'Gisty Amelia',20000),
+(2,'Hasan Syadzilli',20000),
+(3,'Gilang Dirga',50000),
+(4,'Sherlock Holmes',70000),
+(5,'Ahmad Mukhlis ',10000),
+(6,'Ahmad Mukhlis S',100000);
 
 /*Table structure for table `pengeluaran` */
 
@@ -39,16 +43,20 @@ DROP TABLE IF EXISTS `pengeluaran`;
 
 CREATE TABLE `pengeluaran` (
   `Nomor` int(11) NOT NULL AUTO_INCREMENT,
-  `Nama` varchar(50) DEFAULT NULL,
+  `Info` varchar(50) DEFAULT NULL,
   `Uang` double DEFAULT NULL,
   PRIMARY KEY (`Nomor`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Data for the table `pengeluaran` */
 
-insert  into `pengeluaran`(`Nomor`,`Nama`,`Uang`) values 
-(1,'Jana',4000000),
-(2,'Malawat',5000000);
+insert  into `pengeluaran`(`Nomor`,`Info`,`Uang`) values 
+(1,'Jana Fitria Malawat',5000),
+(2,'Ahmad Mukhlis Saputra',5000),
+(3,'Ami Gusmiati',5000),
+(6,'Rosmi Alhandani',6000),
+(7,'Fitriya Rohimah',69000),
+(8,'Watson',50000);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
