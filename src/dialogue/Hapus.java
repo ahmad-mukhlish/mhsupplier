@@ -62,6 +62,7 @@ public class Hapus extends java.awt.Dialog {
         jLabel1.setText("Keterangan");
 
         fInfo.setEditable(false);
+        fInfo.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         fInfo.setForeground(new java.awt.Color(153, 153, 153));
         fInfo.setToolTipText("");
 
@@ -157,8 +158,7 @@ public class Hapus extends java.awt.Dialog {
                     table = "pengeluaran";
                 }
 
-                String SQLUpdate = "UPDATE " + table + " "
-                        + "SET Info = '" + data[1] + "', Uang = " + data[2]
+                String SQLUpdate = "DELETE FROM " + table + " "
                         + " WHERE Nomor = " + mDatas[0] + ";";
                 String SQLGetNumber = "SELECT Nomor FROM " + table + " WHERE Info='" + data[1] + "' ";
 
@@ -171,11 +171,9 @@ public class Hapus extends java.awt.Dialog {
 
                 if (table.equals("pemasukan")) {
                     MainFrame.mTotalIncome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
-                    MainFrame.mTotalIncome += Long.parseLong(data[2]);
                     MainFrame.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + MainFrame.mTotalIncome));
                 } else {
                     MainFrame.mTotalOutcome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
-                    MainFrame.mTotalOutcome += Long.parseLong(data[2]);
                     MainFrame.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + MainFrame.mTotalOutcome));
 
                 }
@@ -184,13 +182,11 @@ public class Hapus extends java.awt.Dialog {
 
                 if (table.equals("pemasukan")) {
 
-                    MainFrame.incomeTableModel.insertRow(mRow, data);
-                    MainFrame.incomeTableModel.removeRow(mRow + 1);
+                    MainFrame.incomeTableModel.removeRow(mRow);
 
                 } else {
 
-                    MainFrame.outcomeTableModel.insertRow(mRow, data);
-                    MainFrame.outcomeTableModel.removeRow(mRow + 1);
+                    MainFrame.outcomeTableModel.removeRow(mRow);
 
                 }
 
