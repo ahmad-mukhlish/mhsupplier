@@ -10,6 +10,7 @@ import dialogue.Hapus;
 import dialogue.Tambah;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,9 +24,21 @@ import miscellaneous.*;
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -162,6 +175,7 @@ public class MainFrame extends javax.swing.JFrame {
         outcome = new javax.swing.JTextField();
         income = new javax.swing.JTextField();
         total = new javax.swing.JTextField();
+        report = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         Date = new javax.swing.JLabel();
         Clock = new javax.swing.JLabel();
@@ -277,6 +291,13 @@ public class MainFrame extends javax.swing.JFrame {
         total.setForeground(new java.awt.Color(187, 187, 188));
         total.setText("  GRAND TOTAL :");
 
+        report.setText("Lihat Contoh Laporan");
+        report.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -314,7 +335,11 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(outcome, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(report, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
                 .addComponent(total)
                 .addContainerGap())
         );
@@ -343,7 +368,9 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(income, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(report)
+                .addContainerGap())
         );
 
         jScrollPane2.setViewportView(jPanel1);
@@ -463,6 +490,25 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_DeleteOutcomeActionPerformed
+
+    private void reportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportActionPerformed
+          // TODO add your handling code here:
+         
+        try {
+            // TODO add your handling code here:
+            Class.forName(driver);
+            Connection kon = DriverManager.getConnection(database, user, pass);
+            
+            //File file = new File("src/laporan/laporan_obat.jrxml");
+            InputStream file = getClass().getResourceAsStream("/report/Prototype.jrxml");
+            JasperDesign jd = JRXmlLoader.load(file);
+            JasperReport rep = JasperCompileManager.compileReport(jd);
+            JasperPrint jp = JasperFillManager.fillReport(rep, new HashMap<String, Object>(), kon);
+            JasperViewer.viewReport(jp, false);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());;
+        } 
+    }//GEN-LAST:event_reportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -596,6 +642,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     public static javax.swing.JTextField outcome;
+    private javax.swing.JButton report;
     public static javax.swing.JTextField total;
     // End of variables declaration//GEN-END:variables
 }
