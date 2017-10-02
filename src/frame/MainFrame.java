@@ -6,6 +6,7 @@
 package frame;
 
 import dialogue.Edit;
+import dialogue.Hapus;
 import dialogue.Tambah;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +35,7 @@ public class MainFrame extends javax.swing.JFrame {
     private String[] mIncomeData = new String[3];
     private String[] mOutcomeData = new String[3];
 
-    private int IncomeRow, OutcomeRow;
+    private int IncomeRow = -1, OutcomeRow = -1;
     public static long mTotalIncome, mTotalOutcome, mGrandTotal;
 
     public MainFrame() {
@@ -63,12 +64,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private static javax.swing.table.DefaultTableModel mhSupplierTableModel() {
 
-        
         return new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{"Nomor", "Keterangan", "Nominal"}
-        ) 
-        {
+        ) {
             boolean[] canEdit = new boolean[]{
                 false, false, false
 
@@ -232,6 +231,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         DeleteIncome.setText("Hapus");
+        DeleteIncome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteIncomeActionPerformed(evt);
+            }
+        });
 
         AddOutcome.setText("Tambah");
         AddOutcome.addActionListener(new java.awt.event.ActionListener() {
@@ -248,6 +252,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         DeleteOutcome.setText("Hapus");
+        DeleteOutcome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteOutcomeActionPerformed(evt);
+            }
+        });
 
         outcome.setEditable(false);
         outcome.setBackground(new java.awt.Color(69, 73, 75));
@@ -415,16 +424,45 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_AddOutcomeActionPerformed
 
     private void EditIncomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditIncomeActionPerformed
-        Edit editIncome = new Edit(null, "Edit Data Pemasukan", true, mIncomeData, IncomeRow);
-        editIncome.setLocationRelativeTo(this);
-        editIncome.setVisible(true);
+        if (IncomeRow != -1) {
+            Edit editIncome = new Edit(null, "Edit Data Pemasukan", true, mIncomeData, IncomeRow);
+            editIncome.setLocationRelativeTo(this);
+            editIncome.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin diedit terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_EditIncomeActionPerformed
 
     private void EditOutcomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditOutcomeActionPerformed
-        Edit editOutcome = new Edit(null, "Edit Data Pengeluaran", true, mOutcomeData, OutcomeRow);
-        editOutcome.setLocationRelativeTo(this);
-        editOutcome.setVisible(true);
+        if (IncomeRow != -1) {
+            Edit editOutcome = new Edit(null, "Edit Data Pengeluaran", true, mOutcomeData, OutcomeRow);
+            editOutcome.setLocationRelativeTo(this);
+            editOutcome.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin diedit terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_EditOutcomeActionPerformed
+
+    private void DeleteIncomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteIncomeActionPerformed
+        if (IncomeRow != -1) {
+            Hapus hapusIncome = new Hapus(null, "Hapus Data Pemasukan", true, mIncomeData, IncomeRow);
+            hapusIncome.setLocationRelativeTo(this);
+            hapusIncome.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin dihapus terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_DeleteIncomeActionPerformed
+
+    private void DeleteOutcomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteOutcomeActionPerformed
+        if (OutcomeRow != -1) {
+            Hapus hapusOutcome = new Hapus(null, "Hapus Data Pengeluaran", true, mOutcomeData, OutcomeRow);
+            hapusOutcome.setLocationRelativeTo(this);
+            hapusOutcome.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin dihapus terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_DeleteOutcomeActionPerformed
 
     /**
      * @param args the command line arguments

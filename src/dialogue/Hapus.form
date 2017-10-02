@@ -43,7 +43,7 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="edit" min="-2" pref="89" max="-2" attributes="0"/>
+              <Component id="hapus" min="-2" pref="89" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="batal" min="-2" pref="89" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
@@ -66,7 +66,7 @@
               <EmptySpace pref="24" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="batal" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="edit" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="hapus" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
           </Group>
@@ -84,6 +84,10 @@
     </Component>
     <Component class="javax.swing.JTextField" name="fInfo">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="99" green="99" red="99" type="rgb"/>
+        </Property>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
@@ -96,6 +100,15 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="fNominal">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="12" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="99" green="99" red="99" type="rgb"/>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="batal">
       <Properties>
@@ -105,12 +118,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="batalActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="edit">
+    <Component class="javax.swing.JButton" name="hapus">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Edit"/>
+        <Property name="text" type="java.lang.String" value="Hapus"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hapusActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

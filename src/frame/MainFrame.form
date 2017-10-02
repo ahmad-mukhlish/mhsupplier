@@ -245,6 +245,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hapus"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteIncomeActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="AddOutcome">
               <Properties>
@@ -266,6 +269,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hapus"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteOutcomeActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="outcome">
               <Properties>

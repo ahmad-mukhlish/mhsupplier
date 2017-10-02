@@ -11,16 +11,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /**
  *
  * @author GOODWARE1
  */
-public class Edit extends java.awt.Dialog {
+public class Hapus extends java.awt.Dialog {
 
     /**
      * Creates new form Edit
@@ -29,13 +26,13 @@ public class Edit extends java.awt.Dialog {
     private static int mRow;
     private static String[] mDatas;
 
-    public Edit(java.awt.Frame parent, String title, boolean modal, String[] datas, int row) {
+    public Hapus(java.awt.Frame parent, String title, boolean modal, String[] datas, int row) {
         super(parent, title, modal);
         mTitle = title;
         mRow = row;
         mDatas = datas;
         initComponents();
-        showSelected(fInfo,fNominal,mDatas);
+        Edit.showSelected(fInfo,fNominal,mDatas);
         frame.MainFrame.connect();
     }
 
@@ -52,7 +49,7 @@ public class Edit extends java.awt.Dialog {
         jLabel2 = new javax.swing.JLabel();
         fNominal = new javax.swing.JTextField();
         batal = new javax.swing.JButton();
-        edit = new javax.swing.JButton();
+        hapus = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(60, 63, 66));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -64,10 +61,16 @@ public class Edit extends java.awt.Dialog {
         jLabel1.setForeground(new java.awt.Color(187, 187, 188));
         jLabel1.setText("Keterangan");
 
+        fInfo.setEditable(false);
+        fInfo.setForeground(new java.awt.Color(153, 153, 153));
         fInfo.setToolTipText("");
 
         jLabel2.setForeground(new java.awt.Color(187, 187, 188));
         jLabel2.setText("Nominal");
+
+        fNominal.setEditable(false);
+        fNominal.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        fNominal.setForeground(new java.awt.Color(153, 153, 153));
 
         batal.setText("Batal");
         batal.addActionListener(new java.awt.event.ActionListener() {
@@ -76,10 +79,10 @@ public class Edit extends java.awt.Dialog {
             }
         });
 
-        edit.setText("Edit");
-        edit.addActionListener(new java.awt.event.ActionListener() {
+        hapus.setText("Hapus");
+        hapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editActionPerformed(evt);
+                hapusActionPerformed(evt);
             }
         });
 
@@ -99,7 +102,7 @@ public class Edit extends java.awt.Dialog {
                 .addGap(41, 41, 41))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(batal, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61))
@@ -118,7 +121,7 @@ public class Edit extends java.awt.Dialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(batal)
-                    .addComponent(edit))
+                    .addComponent(hapus))
                 .addGap(21, 21, 21))
         );
 
@@ -133,7 +136,7 @@ public class Edit extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
+    private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
         if (fInfo.getText().isEmpty() || fNominal.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Data tidak boleh kosong, silakan coba lagi", "Peringatan", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -167,11 +170,11 @@ public class Edit extends java.awt.Dialog {
                 }
 
                 if (table.equals("pemasukan")) {
-                    MainFrame.mTotalIncome -= Long.parseLong(takeNominal(mDatas[2]));
+                    MainFrame.mTotalIncome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
                     MainFrame.mTotalIncome += Long.parseLong(data[2]);
                     MainFrame.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + MainFrame.mTotalIncome));
                 } else {
-                    MainFrame.mTotalOutcome -= Long.parseLong(takeNominal(mDatas[2]));
+                    MainFrame.mTotalOutcome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
                     MainFrame.mTotalOutcome += Long.parseLong(data[2]);
                     MainFrame.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + MainFrame.mTotalOutcome));
 
@@ -201,7 +204,7 @@ public class Edit extends java.awt.Dialog {
                 System.out.println(ex.getMessage());
             }
         }
-    }//GEN-LAST:event_editActionPerformed
+    }//GEN-LAST:event_hapusActionPerformed
 
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         this.dispose();
@@ -222,29 +225,17 @@ public class Edit extends java.awt.Dialog {
             dialog.setVisible(true);
         });
     }
+    
+  
 
-    public static void showSelected(JTextField infoField, JTextField nominalField, String[] datas) {
-        infoField.setText(datas[1]);
-        nominalField.setText(takeNominal(datas[2]));
-    }
-
-    public static String takeNominal(String nominal) {
-
-        String[] hasilArray = nominal.substring(4).split("\\.");
-        String hasil = "";
-        for (int i = 0; i < hasilArray.length; i++) {
-            hasil += hasilArray[i];
-        }
-
-        return hasil;
-    }
+  
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batal;
-    private javax.swing.JButton edit;
     private javax.swing.JTextField fInfo;
     private javax.swing.JTextField fNominal;
+    private javax.swing.JButton hapus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
