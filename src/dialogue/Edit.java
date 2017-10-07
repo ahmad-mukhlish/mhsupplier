@@ -7,12 +7,12 @@ package dialogue;
 
 import frame.MainFrame;
 import static frame.MainFrame.formatter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -37,6 +37,23 @@ public class Edit extends java.awt.Dialog {
         initComponents();
         showSelected(fInfo,fNominal,mDatas);
         frame.MainFrame.connect();
+        fNominal.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+              
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+              fNominal.setText(formatter(Edit.takeNominal(fNominal.getText())));
+//              fInfo.setText(formatter(Edit.takeNominal(fNominal.getText())));
+                       
+            }
+        });
     }
 
     /**
@@ -225,11 +242,10 @@ public class Edit extends java.awt.Dialog {
 
     public static void showSelected(JTextField infoField, JTextField nominalField, String[] datas) {
         infoField.setText(datas[1]);
-        nominalField.setText(takeNominal(datas[2]));
+        nominalField.setText((datas[2]));
     }
 
     public static String takeNominal(String nominal) {
-
         String[] hasilArray = nominal.substring(4).split("\\.");
         String hasil = "";
         for (int i = 0; i < hasilArray.length; i++) {

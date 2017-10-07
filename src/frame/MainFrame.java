@@ -461,7 +461,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_EditIncomeActionPerformed
 
     private void EditOutcomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditOutcomeActionPerformed
-        if (IncomeRow != -1) {
+        if (OutcomeRow != -1) {
             Edit editOutcome = new Edit(null, "Edit Data Pengeluaran", true, mOutcomeData, OutcomeRow);
             editOutcome.setLocationRelativeTo(this);
             editOutcome.setVisible(true);
@@ -492,13 +492,13 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteOutcomeActionPerformed
 
     private void reportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportActionPerformed
-          // TODO add your handling code here:
-         
+        // TODO add your handling code here:
+
         try {
             // TODO add your handling code here:
             Class.forName(driver);
             Connection kon = DriverManager.getConnection(database, user, pass);
-            
+
             //File file = new File("src/laporan/laporan_obat.jrxml");
             InputStream file = getClass().getResourceAsStream("/report/Prototype.jrxml");
             JasperDesign jd = JRXmlLoader.load(file);
@@ -507,7 +507,7 @@ public class MainFrame extends javax.swing.JFrame {
             JasperViewer.viewReport(jp, false);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());;
-        } 
+        }
     }//GEN-LAST:event_reportActionPerformed
 
     /**
@@ -585,13 +585,17 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public static String formatter(String input) {
-        DecimalFormatSymbols symbol = new DecimalFormatSymbols();
-        symbol.setGroupingSeparator('.');
+        if (!input.isEmpty()) {
+            DecimalFormatSymbols symbol = new DecimalFormatSymbols();
+            symbol.setGroupingSeparator('.');
 
-        DecimalFormat format = new DecimalFormat(" Rp ###,###");
-        format.setDecimalFormatSymbols(symbol);
+            DecimalFormat format = new DecimalFormat(" Rp ###,###");
+            format.setDecimalFormatSymbols(symbol);
 
-        return format.format(Double.parseDouble(input));
+            return format.format(Double.parseDouble(input));
+        } else {
+            return "";
+        }
     }
 
     public void getDatums() {

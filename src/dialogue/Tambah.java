@@ -7,6 +7,9 @@ package dialogue;
 
 import frame.MainFrame;
 import static frame.MainFrame.formatter;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -20,12 +23,31 @@ public class Tambah extends java.awt.Dialog {
      * Creates new form Tambah
      */
     private static String mTitle;
+    private String mTemp ;
 
     public Tambah(java.awt.Frame parent, String title, boolean modal) {
         super(parent, title, modal);
         mTitle = title;
         initComponents();
         MainFrame.connect();
+        fNominal.setText(" Rp  ");
+        fNominal.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+              
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+              fNominal.setText(formatter(Edit.takeNominal(fNominal.getText())));
+//              fInfo.setText(formatter(Edit.takeNominal(fNominal.getText())));
+                       
+            }
+        });
     }
 
     /**
@@ -139,7 +161,7 @@ public class Tambah extends java.awt.Dialog {
 
                 data[1] = fInfo.getText();
                 data[2] = fNominal.getText();
-
+                
                 String table;
 
                 if (mTitle.contains("Pemasukan")) {
@@ -192,7 +214,7 @@ public class Tambah extends java.awt.Dialog {
     }//GEN-LAST:event_batalActionPerformed
 
     private void fInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fInfoActionPerformed
-         fNominal.requestFocus();
+        fNominal.requestFocus();
     }//GEN-LAST:event_fInfoActionPerformed
 
     /**
