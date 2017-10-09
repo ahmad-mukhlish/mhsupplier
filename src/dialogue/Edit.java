@@ -35,7 +35,7 @@ public class Edit extends java.awt.Dialog {
         mRow = row;
         mDatas = datas;
         initComponents();
-        showSelected(fInfo,fNominal,mDatas);
+        showSelected(fInfo, fNominal, mDatas);
         frame.MainFrame.connect();
         fNominal.addKeyListener(new KeyListener() {
             @Override
@@ -44,14 +44,14 @@ public class Edit extends java.awt.Dialog {
 
             @Override
             public void keyPressed(KeyEvent e) {
-              
+
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-              fNominal.setText(formatter(Edit.takeNominal(fNominal.getText())));
+                fNominal.setText(formatter(Edit.takeNominal(fNominal.getText())));
 //              fInfo.setText(formatter(Edit.takeNominal(fNominal.getText())));
-                       
+
             }
         });
     }
@@ -161,7 +161,7 @@ public class Edit extends java.awt.Dialog {
                 String[] data = new String[3];
 
                 data[1] = fInfo.getText();
-                data[2] = fNominal.getText();
+                data[2] = Edit.takeNominal(fNominal.getText());
 
                 String table;
 

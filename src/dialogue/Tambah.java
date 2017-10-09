@@ -160,7 +160,7 @@ public class Tambah extends java.awt.Dialog {
                 String[] data = new String[3];
 
                 data[1] = fInfo.getText();
-                data[2] = fNominal.getText();
+                data[2] = Edit.takeNominal(fNominal.getText());
                 
                 String table;
 

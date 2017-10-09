@@ -32,7 +32,7 @@ public class Hapus extends java.awt.Dialog {
         mRow = row;
         mDatas = datas;
         initComponents();
-        Edit.showSelected(fInfo,fNominal,mDatas);
+        Edit.showSelected(fInfo, fNominal, mDatas);
         frame.MainFrame.connect();
     }
 
@@ -148,7 +148,7 @@ public class Hapus extends java.awt.Dialog {
                 String[] data = new String[3];
 
                 data[1] = fInfo.getText();
-                data[2] = fNominal.getText();
+                data[2] = Edit.takeNominal(fNominal.getText());
 
                 String table;
 
@@ -221,10 +221,6 @@ public class Hapus extends java.awt.Dialog {
             dialog.setVisible(true);
         });
     }
-    
-  
-
-  
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
