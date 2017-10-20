@@ -64,7 +64,6 @@ public class MainFrame extends javax.swing.JFrame {
         TOutcome.setModel(outcomeTableModel);
         setTableLoad();
         this.setIconImage((Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resource/ic_launcher.png"))));
-
     }
 
     public static void connect() {
@@ -601,6 +600,10 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
             return "";
         }
+    }
+    
+    public static void Logo() {
+        
     }
 
     public void getDatums() {
