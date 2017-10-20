@@ -5,9 +5,13 @@
  */
 package frame;
 
+
 import dialogue.Edit;
 import dialogue.Hapus;
 import dialogue.Tambah;
+import java.awt.Frame;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
@@ -59,6 +63,7 @@ public class MainFrame extends javax.swing.JFrame {
         TIncome.setModel(incomeTableModel);
         TOutcome.setModel(outcomeTableModel);
         setTableLoad();
+        this.setIconImage((Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resource/ic_launcher.png"))));
 
     }
 
