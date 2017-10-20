@@ -5,6 +5,7 @@
  */
 package main;
 
+import frame.Login;
 import frame.MainFrame ;
 import javax.swing.JFrame;
 
@@ -18,10 +19,9 @@ public class MHSupplier {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-           MainFrame app = new MainFrame() ;
+           Login app = new Login();
            app.setVisible(true);
-           app.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+           app.setLocationRelativeTo(null);
     }
     
 }

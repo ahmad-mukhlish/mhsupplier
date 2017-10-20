@@ -6,6 +6,14 @@
 package frame;
 
 import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Arrays;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -77,6 +85,12 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setText("Password");
 
         user.setBackground(new java.awt.Color(69, 73, 75));
+        user.setForeground(new java.awt.Color(187, 187, 188));
+        user.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userActionPerformed(evt);
+            }
+        });
 
         reset.setBackground(new java.awt.Color(60, 63, 66));
         reset.setForeground(new java.awt.Color(187, 187, 188));
@@ -101,6 +115,11 @@ public class Login extends javax.swing.JFrame {
 
         pass.setBackground(new java.awt.Color(69, 73, 75));
         pass.setForeground(new java.awt.Color(187, 187, 188));
+        pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -168,12 +187,53 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        // TODO add your handling code here:
+        String username = user.getText();
+        String password = "";
+        for (int i = 0; i < pass.getPassword().length; i++) {
+            password += pass.getPassword()[i];
+        }
+
+        String SQL = "SELECT username, password FROM user WHERE username = ? AND password = ? ;";
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Username atau password kosong, silakan coba lagi", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                Class.forName(MainFrame.driver);
+                Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
+                PreparedStatement ps = kon.prepareStatement(SQL);
+                ps.setString(1, username);
+                ps.setString(2, password);
+                ResultSet res = ps.executeQuery();
+                if (res.next()) {
+                    MainFrame app = new MainFrame();
+                    app.setVisible(true);
+                    app.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Username atau password salah", "Peringatan", JOptionPane.WARNING_MESSAGE);
+
+                }
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Terjadi kesalahan", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_loginActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
-        // TODO add your handling code here:
+        user.setText("");
+        pass.setText("");
+        user.requestFocus();
     }//GEN-LAST:event_resetActionPerformed
+
+    private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
+        pass.requestFocus();
+    }//GEN-LAST:event_userActionPerformed
+
+    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
+        loginActionPerformed(evt);
+    }//GEN-LAST:event_passActionPerformed
 
     /**
      * @param args the command line arguments
