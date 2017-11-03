@@ -5,6 +5,7 @@
  */
 package frame;
 
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,6 +27,8 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        user.setCaretColor(Color.WHITE);
+        pass.setCaretColor(Color.WHITE);
         this.setIconImage((Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resource/ic_launcher.png"))));
         MainFrame.connect();
     }

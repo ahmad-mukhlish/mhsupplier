@@ -58,6 +58,21 @@ insert  into `pengeluaran`(`Nomor`,`Info`,`Uang`) values
 (7,'Fitriya Rohimah',69000),
 (8,'Watson',50000);
 
+/*Table structure for table `user` */
+
+DROP TABLE IF EXISTS `user`;
+
+CREATE TABLE `user` (
+  `username` varchar(30) NOT NULL,
+  `password` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `user` */
+
+insert  into `user`(`username`,`password`) values 
+('admin','admin');
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
