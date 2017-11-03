@@ -20,10 +20,9 @@ import javax.swing.JOptionPane;
 public class Tambah extends java.awt.Dialog {
 
     /**
-     * Creates new form Tambah
+     * Creates new form 
      */
     private static String mTitle;
-    private String mTemp ;
 
     public Tambah(java.awt.Frame parent, String title, boolean modal) {
         super(parent, title, modal);
