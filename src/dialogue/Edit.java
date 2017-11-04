@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import layout.PanelSirkulasi;
+import layout.Sirkulasi;
 
 /**
  *
@@ -83,9 +83,20 @@ public class Edit extends java.awt.Dialog {
         jLabel1.setText("Keterangan");
 
         fInfo.setToolTipText("");
+        fInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fInfoActionPerformed(evt);
+            }
+        });
 
         jLabel2.setForeground(new java.awt.Color(187, 187, 188));
         jLabel2.setText("Nominal");
+
+        fNominal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fNominalActionPerformed(evt);
+            }
+        });
 
         batal.setText("Batal");
         batal.addActionListener(new java.awt.event.ActionListener() {
@@ -185,13 +196,13 @@ public class Edit extends java.awt.Dialog {
                 }
 
                 if (table.equals("pemasukan")) {
-                    PanelSirkulasi.mTotalIncome -= Long.parseLong(takeNominal(mDatas[2]));
-                    PanelSirkulasi.mTotalIncome += Long.parseLong(data[2]);
-                    PanelSirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + PanelSirkulasi.mTotalIncome));
+                    Sirkulasi.mTotalIncome -= Long.parseLong(takeNominal(mDatas[2]));
+                    Sirkulasi.mTotalIncome += Long.parseLong(data[2]);
+                    Sirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + Sirkulasi.mTotalIncome));
                 } else {
-                    PanelSirkulasi.mTotalOutcome -= Long.parseLong(takeNominal(mDatas[2]));
-                    PanelSirkulasi.mTotalOutcome += Long.parseLong(data[2]);
-                    PanelSirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + PanelSirkulasi.mTotalOutcome));
+                    Sirkulasi.mTotalOutcome -= Long.parseLong(takeNominal(mDatas[2]));
+                    Sirkulasi.mTotalOutcome += Long.parseLong(data[2]);
+                    Sirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + Sirkulasi.mTotalOutcome));
 
                 }
 
@@ -199,18 +210,18 @@ public class Edit extends java.awt.Dialog {
 
                 if (table.equals("pemasukan")) {
 
-                    PanelSirkulasi.incomeTableModel.insertRow(mRow, data);
-                    PanelSirkulasi.incomeTableModel.removeRow(mRow + 1);
+                    Sirkulasi.incomeTableModel.insertRow(mRow, data);
+                    Sirkulasi.incomeTableModel.removeRow(mRow + 1);
 
                 } else {
 
-                    PanelSirkulasi.outcomeTableModel.insertRow(mRow, data);
-                    PanelSirkulasi.outcomeTableModel.removeRow(mRow + 1);
+                    Sirkulasi.outcomeTableModel.insertRow(mRow, data);
+                    Sirkulasi.outcomeTableModel.removeRow(mRow + 1);
 
                 }
 
-                PanelSirkulasi.mGrandTotal = PanelSirkulasi.mTotalIncome - PanelSirkulasi.mTotalOutcome;
-                PanelSirkulasi.total.setText("  GRAND TOTAL : " + formatter("" + PanelSirkulasi.mGrandTotal));
+                Sirkulasi.mGrandTotal = Sirkulasi.mTotalIncome - Sirkulasi.mTotalOutcome;
+                Sirkulasi.total.setText("  GRAND TOTAL : " + formatter("" + Sirkulasi.mGrandTotal));
 
                 this.dispose();
 
@@ -218,12 +229,22 @@ public class Edit extends java.awt.Dialog {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 System.out.println(ex.getMessage());
             }
+            
+              
         }
     }//GEN-LAST:event_editActionPerformed
 
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         this.dispose();
     }//GEN-LAST:event_batalActionPerformed
+
+    private void fNominalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNominalActionPerformed
+        editActionPerformed(evt);
+    }//GEN-LAST:event_fNominalActionPerformed
+
+    private void fInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fInfoActionPerformed
+        fNominal.requestFocus();
+    }//GEN-LAST:event_fInfoActionPerformed
 
     /**
      * @param args the command line arguments

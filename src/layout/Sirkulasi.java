@@ -32,17 +32,17 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author GOODWARE1
  */
-public class PanelSirkulasi extends javax.swing.JInternalFrame {
+public class Sirkulasi extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Panel
      */
-    public PanelSirkulasi() {
+    public Sirkulasi() {
         initComponents();
         hideTitleBar();
+        MainFrame.connect();
         TIncome.setModel(incomeTableModel);
         TOutcome.setModel(outcomeTableModel);
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         getDatums();
         backToStart();
         setTableLoad();
@@ -51,12 +51,12 @@ public class PanelSirkulasi extends javax.swing.JInternalFrame {
     private void backToStart() {
         incomeTableModel.getDataVector().removeAllElements();
         outcomeTableModel.getDataVector().removeAllElements();
-        mTotalIncome = 0L ;
-        mTotalOutcome = 0L ;
-        mGrandTotal = 0L ;
+        mTotalIncome = 0L;
+        mTotalOutcome = 0L;
+        mGrandTotal = 0L;
     }
 
-   private void hideTitleBar() {
+    private void hideTitleBar() {
         setRootPaneCheckingEnabled(false);
         javax.swing.plaf.InternalFrameUI hide = this.getUI();
         ((javax.swing.plaf.basic.BasicInternalFrameUI) hide).setNorthPane(null);
@@ -363,6 +363,8 @@ public class PanelSirkulasi extends javax.swing.JInternalFrame {
             Edit editIncome = new Edit(null, "Edit Data Pemasukan", true, mIncomeData, IncomeRow);
             editIncome.setLocationRelativeTo(this);
             editIncome.setVisible(true);
+            TIncome.clearSelection();
+
         } else {
             JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin diedit terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
@@ -373,6 +375,8 @@ public class PanelSirkulasi extends javax.swing.JInternalFrame {
             Hapus hapusIncome = new Hapus(null, "Hapus Data Pemasukan", true, mIncomeData, IncomeRow);
             hapusIncome.setLocationRelativeTo(this);
             hapusIncome.setVisible(true);
+            TIncome.clearSelection();
+
         } else {
             JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin dihapus terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
@@ -390,6 +394,8 @@ public class PanelSirkulasi extends javax.swing.JInternalFrame {
             Edit editOutcome = new Edit(null, "Edit Data Pengeluaran", true, mOutcomeData, OutcomeRow);
             editOutcome.setLocationRelativeTo(this);
             editOutcome.setVisible(true);
+            TOutcome.clearSelection();
+
         } else {
             JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin diedit terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
@@ -400,6 +406,8 @@ public class PanelSirkulasi extends javax.swing.JInternalFrame {
             Hapus hapusOutcome = new Hapus(null, "Hapus Data Pengeluaran", true, mOutcomeData, OutcomeRow);
             hapusOutcome.setLocationRelativeTo(this);
             hapusOutcome.setVisible(true);
+            TOutcome.clearSelection();
+
         } else {
             JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin dihapus terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
         }

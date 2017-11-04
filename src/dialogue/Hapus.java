@@ -12,7 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import layout.PanelSirkulasi;
+import layout.Sirkulasi;
 
 /**
  *
@@ -171,11 +171,11 @@ public class Hapus extends java.awt.Dialog {
                 }
 
                 if (table.equals("pemasukan")) {
-                    PanelSirkulasi.mTotalIncome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
-                    PanelSirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + PanelSirkulasi.mTotalIncome));
+                    Sirkulasi.mTotalIncome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
+                    Sirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + Sirkulasi.mTotalIncome));
                 } else {
-                    PanelSirkulasi.mTotalOutcome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
-                    PanelSirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + PanelSirkulasi.mTotalOutcome));
+                    Sirkulasi.mTotalOutcome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
+                    Sirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + Sirkulasi.mTotalOutcome));
 
                 }
 
@@ -183,16 +183,16 @@ public class Hapus extends java.awt.Dialog {
 
                 if (table.equals("pemasukan")) {
 
-                    PanelSirkulasi.incomeTableModel.removeRow(mRow);
+                    Sirkulasi.incomeTableModel.removeRow(mRow);
 
                 } else {
 
-                    PanelSirkulasi.outcomeTableModel.removeRow(mRow);
+                    Sirkulasi.outcomeTableModel.removeRow(mRow);
 
                 }
 
-                PanelSirkulasi.mGrandTotal = PanelSirkulasi.mTotalIncome - PanelSirkulasi.mTotalOutcome;
-                PanelSirkulasi.total.setText("  GRAND TOTAL : " + formatter("" + PanelSirkulasi.mGrandTotal));
+                Sirkulasi.mGrandTotal = Sirkulasi.mTotalIncome - Sirkulasi.mTotalOutcome;
+                Sirkulasi.total.setText("  GRAND TOTAL : " + formatter("" + Sirkulasi.mGrandTotal));
 
                 this.dispose();
 

@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.*;
 import javax.swing.JOptionPane;
-import layout.PanelSirkulasi;
+import layout.Sirkulasi;
 
 /**
  *
@@ -84,6 +84,12 @@ public class Tambah extends java.awt.Dialog {
 
         jLabel2.setForeground(new java.awt.Color(187, 187, 188));
         jLabel2.setText("Nominal");
+
+        fNominal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fNominalActionPerformed(evt);
+            }
+        });
 
         batal.setText("Batal");
         batal.addActionListener(new java.awt.event.ActionListener() {
@@ -181,24 +187,24 @@ public class Tambah extends java.awt.Dialog {
                 }
 
                 if (table.equals("pemasukan")) {
-                    PanelSirkulasi.mTotalIncome += Long.parseLong(data[2]);
-                    PanelSirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + PanelSirkulasi.mTotalIncome));
+                    Sirkulasi.mTotalIncome += Long.parseLong(data[2]);
+                    Sirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + Sirkulasi.mTotalIncome));
                 } else {
-                    PanelSirkulasi.mTotalOutcome += Long.parseLong(data[2]);
-                    PanelSirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + PanelSirkulasi.mTotalOutcome));
+                    Sirkulasi.mTotalOutcome += Long.parseLong(data[2]);
+                    Sirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + Sirkulasi.mTotalOutcome));
 
                 }
 
                 data[2] = MainFrame.formatter(data[2]);
 
                 if (table.equals("pemasukan")) {
-                    PanelSirkulasi.incomeTableModel.addRow(data);
+                    Sirkulasi.incomeTableModel.addRow(data);
                 } else {
-                    PanelSirkulasi.outcomeTableModel.addRow(data);
+                    Sirkulasi.outcomeTableModel.addRow(data);
                 }
 
-                PanelSirkulasi.mGrandTotal = PanelSirkulasi.mTotalIncome - PanelSirkulasi.mTotalOutcome;
-                PanelSirkulasi.total.setText("  GRAND TOTAL : " + formatter("" + PanelSirkulasi.mGrandTotal));
+                Sirkulasi.mGrandTotal = Sirkulasi.mTotalIncome - Sirkulasi.mTotalOutcome;
+                Sirkulasi.total.setText("  GRAND TOTAL : " + formatter("" + Sirkulasi.mGrandTotal));
 
                 this.dispose();
 
@@ -216,6 +222,10 @@ public class Tambah extends java.awt.Dialog {
     private void fInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fInfoActionPerformed
         fNominal.requestFocus();
     }//GEN-LAST:event_fInfoActionPerformed
+
+    private void fNominalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNominalActionPerformed
+         tambahActionPerformed(evt);
+    }//GEN-LAST:event_fNominalActionPerformed
 
     /**
      * @param args the command line arguments

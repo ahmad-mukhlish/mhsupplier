@@ -36,6 +36,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.setIconImage((Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resource/ic_launcher.png"))));
     }
 
+
     public static void connect() {
 
         dbSetting = new Koneksi();
@@ -176,7 +177,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_databaseMenuMousePressed
 
     private void sirkulasiMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sirkulasiMenuMousePressed
-        PanelSirkulasi panelsirkulasi = new PanelSirkulasi();
+        Sirkulasi panelsirkulasi = new Sirkulasi();
         panelUtama.removeAll();
         panelUtama.add(panelsirkulasi);
         panelsirkulasi.setVisible(true);
