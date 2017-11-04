@@ -47,6 +47,9 @@
             <Property name="horizontalAlignment" type="int" value="11"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sirkulasiMenuMousePressed"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>

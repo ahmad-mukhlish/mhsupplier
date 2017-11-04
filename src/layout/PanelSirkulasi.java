@@ -44,15 +44,24 @@ public class PanelSirkulasi extends javax.swing.JInternalFrame {
         TOutcome.setModel(outcomeTableModel);
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         getDatums();
+        backToStart();
         setTableLoad();
     }
 
-     private void hideTitleBar() {
+    private void backToStart() {
+        incomeTableModel.getDataVector().removeAllElements();
+        outcomeTableModel.getDataVector().removeAllElements();
+        mTotalIncome = 0L ;
+        mTotalOutcome = 0L ;
+        mGrandTotal = 0L ;
+    }
+
+    private void hideTitleBar() {
         setRootPaneCheckingEnabled(false);
         javax.swing.plaf.InternalFrameUI hide = this.getUI();
-        ((javax.swing.plaf.basic.BasicInternalFrameUI)hide).setNorthPane(null);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) hide).setNorthPane(null);
     }
-     
+
     private String[] mIncomeData = new String[3];
     private String[] mOutcomeData = new String[3];
 
@@ -452,6 +461,7 @@ public class PanelSirkulasi extends javax.swing.JInternalFrame {
             Statement stt1 = kon.createStatement();
             String SQL1 = "select * from pemasukan";
             ResultSet res1 = stt1.executeQuery(SQL1);
+
             while (res1.next()) {
                 mIncomeData[0] = res1.getString(1);
                 mIncomeData[1] = res1.getString(2);

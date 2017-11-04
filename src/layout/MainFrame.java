@@ -5,6 +5,7 @@
  */
 package layout;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -27,25 +28,25 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 public class MainFrame extends javax.swing.JFrame {
-
+    
     public static Koneksi dbSetting;
     public static String driver, database, user, pass;
-
+    
     public MainFrame() {
         initComponents();
         dateAndTime();
-
+        
         this.setIconImage((Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resource/ic_launcher.png"))));
     }
-
+    
     public static void connect() {
-
+        
         dbSetting = new Koneksi();
         driver = dbSetting.SettingPanel("DBDriver");
         database = dbSetting.SettingPanel("DBDatabase");
         user = dbSetting.SettingPanel("DBUsername");
         pass = dbSetting.SettingPanel("DBPassword");
-
+        
     }
 
     /**
@@ -134,6 +135,11 @@ public class MainFrame extends javax.swing.JFrame {
         sirkulasiMenu.setHideActionText(true);
         sirkulasiMenu.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         sirkulasiMenu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        sirkulasiMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                sirkulasiMenuMousePressed(evt);
+            }
+        });
         jMenuBar1.add(sirkulasiMenu);
 
         setJMenuBar(jMenuBar1);
@@ -157,6 +163,18 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void databaseMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_databaseMenuMousePressed
+        try {
+            Database database = new Database();
+            panelUtama.removeAll();
+            panelUtama.add(database);
+            database.setVisible(true);
+            database.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_databaseMenuMousePressed
+
+    private void sirkulasiMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sirkulasiMenuMousePressed
         PanelSirkulasi panelsirkulasi = new PanelSirkulasi();
         panelUtama.removeAll();
         panelUtama.add(panelsirkulasi);
@@ -166,8 +184,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (PropertyVetoException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-    }//GEN-LAST:event_databaseMenuMousePressed
+    }//GEN-LAST:event_sirkulasiMenuMousePressed
 
     /**
      * @param args the command line arguments
@@ -203,60 +220,58 @@ public class MainFrame extends javax.swing.JFrame {
                 new MainFrame().setVisible(true);
             }
         });
-
+        
     }
-
+    
     private void dateAndTime() {
         DateFormat df
                 = new SimpleDateFormat("EEEE, dd MMMM yyyy", new Locale("in", "ID"));
-
+        
         ActionListener tickTock = (ActionEvent evt) -> {
-
+            
             Calendar today = Calendar.getInstance();
-
+            
             String zeroHour = "";
             String zeroMinute = "";
             String zeroSecond = "";
-
+            
             int hour = today.get(Calendar.HOUR);
             int minute = today.get(Calendar.MINUTE);
             int second = today.get(Calendar.SECOND);
-
+            
             if (hour <= 9) {
                 zeroHour = "0";
             }
-
+            
             if (minute <= 9) {
                 zeroMinute = "0";
             }
-
+            
             if (second <= 9) {
                 zeroSecond = "0";
             }
-
+            
             Clock.setText(zeroHour + hour + ":" + zeroMinute + minute + ":" + zeroSecond + second);
             Date.setText(df.format(today.getTime()));
-
+            
         };
-
+        
         new javax.swing.Timer(1000, tickTock).start();
-
+        
     }
-
+    
     public static String formatter(String input) {
         if (!input.isEmpty()) {
             DecimalFormatSymbols symbol = new DecimalFormatSymbols();
             symbol.setGroupingSeparator('.');
-
+            
             DecimalFormat format = new DecimalFormat(" Rp ###,###");
             format.setDecimalFormatSymbols(symbol);
-
+            
             return format.format(Double.parseDouble(input));
         } else {
             return "";
         }
-        
-        
         
     }
 
