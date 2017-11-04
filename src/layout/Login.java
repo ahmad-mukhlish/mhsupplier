@@ -210,6 +210,7 @@ public class Login extends javax.swing.JFrame {
                 if (res.next()) {
                     MainFrame app = new MainFrame();
                     app.setVisible(true);
+                    app.setExtendedState(JFrame.MAXIMIZED_BOTH);
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Username atau password salah", "Peringatan", JOptionPane.WARNING_MESSAGE);

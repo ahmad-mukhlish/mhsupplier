@@ -33,9 +33,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     public MainFrame() {
         initComponents();
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        this.pack();
-        this.setSize(dimension.width, dimension.height);
         dateAndTime();
 
         this.setIconImage((Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resource/ic_launcher.png"))));
