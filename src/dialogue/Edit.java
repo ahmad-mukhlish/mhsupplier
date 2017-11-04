@@ -5,8 +5,8 @@
  */
 package dialogue;
 
-import frame.MainFrame;
-import static frame.MainFrame.formatter;
+import layout.MainFrame;
+import static layout.MainFrame.formatter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Connection;
@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import layout.PanelSirkulasi;
 
 /**
  *
@@ -36,7 +37,7 @@ public class Edit extends java.awt.Dialog {
         mDatas = datas;
         initComponents();
         showSelected(fInfo, fNominal, mDatas);
-        frame.MainFrame.connect();
+        layout.MainFrame.connect();
         fNominal.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -184,13 +185,13 @@ public class Edit extends java.awt.Dialog {
                 }
 
                 if (table.equals("pemasukan")) {
-                    MainFrame.mTotalIncome -= Long.parseLong(takeNominal(mDatas[2]));
-                    MainFrame.mTotalIncome += Long.parseLong(data[2]);
-                    MainFrame.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + MainFrame.mTotalIncome));
+                    PanelSirkulasi.mTotalIncome -= Long.parseLong(takeNominal(mDatas[2]));
+                    PanelSirkulasi.mTotalIncome += Long.parseLong(data[2]);
+                    PanelSirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + PanelSirkulasi.mTotalIncome));
                 } else {
-                    MainFrame.mTotalOutcome -= Long.parseLong(takeNominal(mDatas[2]));
-                    MainFrame.mTotalOutcome += Long.parseLong(data[2]);
-                    MainFrame.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + MainFrame.mTotalOutcome));
+                    PanelSirkulasi.mTotalOutcome -= Long.parseLong(takeNominal(mDatas[2]));
+                    PanelSirkulasi.mTotalOutcome += Long.parseLong(data[2]);
+                    PanelSirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + PanelSirkulasi.mTotalOutcome));
 
                 }
 
@@ -198,18 +199,18 @@ public class Edit extends java.awt.Dialog {
 
                 if (table.equals("pemasukan")) {
 
-                    MainFrame.incomeTableModel.insertRow(mRow, data);
-                    MainFrame.incomeTableModel.removeRow(mRow + 1);
+                    PanelSirkulasi.incomeTableModel.insertRow(mRow, data);
+                    PanelSirkulasi.incomeTableModel.removeRow(mRow + 1);
 
                 } else {
 
-                    MainFrame.outcomeTableModel.insertRow(mRow, data);
-                    MainFrame.outcomeTableModel.removeRow(mRow + 1);
+                    PanelSirkulasi.outcomeTableModel.insertRow(mRow, data);
+                    PanelSirkulasi.outcomeTableModel.removeRow(mRow + 1);
 
                 }
 
-                MainFrame.mGrandTotal = MainFrame.mTotalIncome - MainFrame.mTotalOutcome;
-                MainFrame.total.setText("  GRAND TOTAL : " + formatter("" + MainFrame.mGrandTotal));
+                PanelSirkulasi.mGrandTotal = PanelSirkulasi.mTotalIncome - PanelSirkulasi.mTotalOutcome;
+                PanelSirkulasi.total.setText("  GRAND TOTAL : " + formatter("" + PanelSirkulasi.mGrandTotal));
 
                 this.dispose();
 

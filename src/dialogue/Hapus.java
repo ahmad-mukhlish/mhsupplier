@@ -5,13 +5,14 @@
  */
 package dialogue;
 
-import frame.MainFrame;
-import static frame.MainFrame.formatter;
+import layout.MainFrame;
+import static layout.MainFrame.formatter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import layout.PanelSirkulasi;
 
 /**
  *
@@ -33,7 +34,7 @@ public class Hapus extends java.awt.Dialog {
         mDatas = datas;
         initComponents();
         Edit.showSelected(fInfo, fNominal, mDatas);
-        frame.MainFrame.connect();
+        layout.MainFrame.connect();
     }
 
     /**
@@ -170,11 +171,11 @@ public class Hapus extends java.awt.Dialog {
                 }
 
                 if (table.equals("pemasukan")) {
-                    MainFrame.mTotalIncome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
-                    MainFrame.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + MainFrame.mTotalIncome));
+                    PanelSirkulasi.mTotalIncome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
+                    PanelSirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + PanelSirkulasi.mTotalIncome));
                 } else {
-                    MainFrame.mTotalOutcome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
-                    MainFrame.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + MainFrame.mTotalOutcome));
+                    PanelSirkulasi.mTotalOutcome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
+                    PanelSirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + PanelSirkulasi.mTotalOutcome));
 
                 }
 
@@ -182,16 +183,16 @@ public class Hapus extends java.awt.Dialog {
 
                 if (table.equals("pemasukan")) {
 
-                    MainFrame.incomeTableModel.removeRow(mRow);
+                    PanelSirkulasi.incomeTableModel.removeRow(mRow);
 
                 } else {
 
-                    MainFrame.outcomeTableModel.removeRow(mRow);
+                    PanelSirkulasi.outcomeTableModel.removeRow(mRow);
 
                 }
 
-                MainFrame.mGrandTotal = MainFrame.mTotalIncome - MainFrame.mTotalOutcome;
-                MainFrame.total.setText("  GRAND TOTAL : " + formatter("" + MainFrame.mGrandTotal));
+                PanelSirkulasi.mGrandTotal = PanelSirkulasi.mTotalIncome - PanelSirkulasi.mTotalOutcome;
+                PanelSirkulasi.total.setText("  GRAND TOTAL : " + formatter("" + PanelSirkulasi.mGrandTotal));
 
                 this.dispose();
 

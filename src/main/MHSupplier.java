@@ -5,8 +5,8 @@
  */
 package main;
 
-import frame.Login;
-import frame.MainFrame ;
+import layout.Login;
+import layout.MainFrame ;
 import javax.swing.JFrame;
 
 /**

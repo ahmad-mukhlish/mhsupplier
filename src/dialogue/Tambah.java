@@ -5,13 +5,14 @@
  */
 package dialogue;
 
-import frame.MainFrame;
-import static frame.MainFrame.formatter;
+import layout.MainFrame;
+import static layout.MainFrame.formatter;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import layout.PanelSirkulasi;
 
 /**
  *
@@ -180,24 +181,24 @@ public class Tambah extends java.awt.Dialog {
                 }
 
                 if (table.equals("pemasukan")) {
-                    MainFrame.mTotalIncome += Long.parseLong(data[2]);
-                    MainFrame.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + MainFrame.mTotalIncome));
+                    PanelSirkulasi.mTotalIncome += Long.parseLong(data[2]);
+                    PanelSirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + PanelSirkulasi.mTotalIncome));
                 } else {
-                    MainFrame.mTotalOutcome += Long.parseLong(data[2]);
-                    MainFrame.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + MainFrame.mTotalOutcome));
+                    PanelSirkulasi.mTotalOutcome += Long.parseLong(data[2]);
+                    PanelSirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + PanelSirkulasi.mTotalOutcome));
 
                 }
 
                 data[2] = MainFrame.formatter(data[2]);
 
                 if (table.equals("pemasukan")) {
-                    MainFrame.incomeTableModel.addRow(data);
+                    PanelSirkulasi.incomeTableModel.addRow(data);
                 } else {
-                    MainFrame.outcomeTableModel.addRow(data);
+                    PanelSirkulasi.outcomeTableModel.addRow(data);
                 }
 
-                MainFrame.mGrandTotal = MainFrame.mTotalIncome - MainFrame.mTotalOutcome;
-                MainFrame.total.setText("  GRAND TOTAL : " + formatter("" + MainFrame.mGrandTotal));
+                PanelSirkulasi.mGrandTotal = PanelSirkulasi.mTotalIncome - PanelSirkulasi.mTotalOutcome;
+                PanelSirkulasi.total.setText("  GRAND TOTAL : " + formatter("" + PanelSirkulasi.mGrandTotal));
 
                 this.dispose();
 
