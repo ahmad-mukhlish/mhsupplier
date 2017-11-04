@@ -128,6 +128,7 @@ public class MainFrame extends javax.swing.JFrame {
         databaseMenu.setForeground(new java.awt.Color(60, 65, 66));
         databaseMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/database.png"))); // NOI18N
         databaseMenu.setText("Database");
+        databaseMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         databaseMenu.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         databaseMenu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         databaseMenu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -141,6 +142,7 @@ public class MainFrame extends javax.swing.JFrame {
         sirkulasiMenu.setForeground(new java.awt.Color(60, 65, 66));
         sirkulasiMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/sirkulasi.png"))); // NOI18N
         sirkulasiMenu.setText("Sirkulasi");
+        sirkulasiMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         sirkulasiMenu.setHideActionText(true);
         sirkulasiMenu.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         sirkulasiMenu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);

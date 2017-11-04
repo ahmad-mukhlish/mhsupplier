@@ -5,6 +5,17 @@
  */
 package layout;
 
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import static layout.MainFrame.database;
+import static layout.MainFrame.driver;
+import static layout.MainFrame.pass;
+import static layout.MainFrame.user;
+
 /**
  *
  * @author GOODWARE1
@@ -17,15 +28,68 @@ public class Database extends javax.swing.JInternalFrame {
     public Database() {
         initComponents();
         hideTitleBar();
+        TPembeli.setModel(pembeliTableModel);
+        TDistributor.setModel(distributorTableModel);
         MainFrame.connect();
+        backToStart();
+        setTableLoad();
+
     }
 
-      private void hideTitleBar() {
+    private String[] mPembeliData = new String[5];
+    private String[] mDistributorData = new String[5];
+
+    private void hideTitleBar() {
         setRootPaneCheckingEnabled(false);
         javax.swing.plaf.InternalFrameUI hide = this.getUI();
         ((javax.swing.plaf.basic.BasicInternalFrameUI) hide).setNorthPane(null);
     }
-    
+
+    private void backToStart() {
+        pembeliTableModel.getDataVector().removeAllElements();
+        distributorTableModel.getDataVector().removeAllElements();
+
+    }
+
+    public static javax.swing.table.DefaultTableModel pembeliTableModel = defaultPembeliTableModel();
+    public static javax.swing.table.DefaultTableModel distributorTableModel = defaultDistributorTableModel();
+
+    private static javax.swing.table.DefaultTableModel defaultPembeliTableModel() {
+
+        return new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{"Kode Pembeli", "Nama Pembeli", "Alamat Pembeli", "Nomor Telepon", "Total Hutang"}
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false
+
+            };
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
+    }
+
+    private static javax.swing.table.DefaultTableModel defaultDistributorTableModel() {
+
+        return new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{"Kode Distributor", "Nama Distributor", "Alamat Distributor", "Nomor Telepon", "Total Hutang"}
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false
+
+            };
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,15 +107,21 @@ public class Database extends javax.swing.JInternalFrame {
         jScrollPane10 = new javax.swing.JScrollPane();
         TMinuman = new javax.swing.JTable();
         tabDistributor = new javax.swing.JPanel();
-        TDistributor = new javax.swing.JScrollPane();
+        jScrollPane12 = new javax.swing.JScrollPane();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        TDistributor = new javax.swing.JTable();
+        EditDistributor = new javax.swing.JLabel();
+        HapusDistributor = new javax.swing.JLabel();
+        TambahDistributor = new javax.swing.JLabel();
         tabPembeli = new javax.swing.JPanel();
-        TPembeli = new javax.swing.JScrollPane();
+        jScrollPane11 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        TPembeli = new javax.swing.JTable();
+        TambahPembeli = new javax.swing.JLabel();
+        EditDistributor1 = new javax.swing.JLabel();
+        HapusDistributor1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(60, 63, 66));
 
@@ -60,6 +130,7 @@ public class Database extends javax.swing.JInternalFrame {
 
         jTabbedPane1.setBackground(new java.awt.Color(60, 63, 66));
         jTabbedPane1.setForeground(new java.awt.Color(187, 187, 188));
+        jTabbedPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         tabMinuman.setBackground(new java.awt.Color(60, 63, 66));
         tabMinuman.setForeground(new java.awt.Color(187, 187, 188));
@@ -122,15 +193,15 @@ public class Database extends javax.swing.JInternalFrame {
         tabDistributor.setBackground(new java.awt.Color(60, 63, 66));
         tabDistributor.setForeground(new java.awt.Color(187, 187, 188));
 
-        TDistributor.setBackground(new java.awt.Color(60, 63, 66));
-        TDistributor.setForeground(new java.awt.Color(187, 187, 188));
+        jScrollPane12.setBackground(new java.awt.Color(60, 63, 66));
+        jScrollPane12.setForeground(new java.awt.Color(187, 187, 188));
 
         jPanel4.setBackground(new java.awt.Color(60, 63, 66));
         jPanel4.setForeground(new java.awt.Color(187, 187, 188));
 
-        jTable4.setBackground(new java.awt.Color(60, 63, 66));
-        jTable4.setForeground(new java.awt.Color(187, 187, 188));
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        TDistributor.setBackground(new java.awt.Color(60, 63, 66));
+        TDistributor.setForeground(new java.awt.Color(187, 187, 188));
+        TDistributor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -141,22 +212,50 @@ public class Database extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane8.setViewportView(jTable4);
+        jScrollPane8.setViewportView(TDistributor);
+
+        EditDistributor.setForeground(new java.awt.Color(187, 187, 188));
+        EditDistributor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/edit.png"))); // NOI18N
+        EditDistributor.setText("Edit Distributor");
+        EditDistributor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        HapusDistributor.setForeground(new java.awt.Color(187, 187, 188));
+        HapusDistributor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/hapus.png"))); // NOI18N
+        HapusDistributor.setText("Hapus Distributor");
+        HapusDistributor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        TambahDistributor.setForeground(new java.awt.Color(187, 187, 188));
+        TambahDistributor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/tambah.png"))); // NOI18N
+        TambahDistributor.setText("Tambah Distributor");
+        TambahDistributor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 908, Short.MAX_VALUE)
+            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 916, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(TambahDistributor)
+                .addGap(18, 18, 18)
+                .addComponent(EditDistributor)
+                .addGap(18, 18, 18)
+                .addComponent(HapusDistributor)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(EditDistributor)
+                    .addComponent(HapusDistributor)
+                    .addComponent(TambahDistributor))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        TDistributor.setViewportView(jPanel4);
+        jScrollPane12.setViewportView(jPanel4);
 
         javax.swing.GroupLayout tabDistributorLayout = new javax.swing.GroupLayout(tabDistributor);
         tabDistributor.setLayout(tabDistributorLayout);
@@ -164,14 +263,14 @@ public class Database extends javax.swing.JInternalFrame {
             tabDistributorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabDistributorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(TDistributor)
+                .addComponent(jScrollPane12)
                 .addContainerGap())
         );
         tabDistributorLayout.setVerticalGroup(
             tabDistributorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabDistributorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(TDistributor)
+                .addComponent(jScrollPane12)
                 .addContainerGap())
         );
 
@@ -180,15 +279,15 @@ public class Database extends javax.swing.JInternalFrame {
         tabPembeli.setBackground(new java.awt.Color(60, 63, 66));
         tabPembeli.setForeground(new java.awt.Color(187, 187, 188));
 
-        TPembeli.setBackground(new java.awt.Color(60, 63, 66));
-        TPembeli.setForeground(new java.awt.Color(187, 187, 188));
+        jScrollPane11.setBackground(new java.awt.Color(60, 63, 66));
+        jScrollPane11.setForeground(new java.awt.Color(187, 187, 188));
 
         jPanel3.setBackground(new java.awt.Color(60, 63, 66));
         jPanel3.setForeground(new java.awt.Color(187, 187, 188));
 
-        jTable3.setBackground(new java.awt.Color(60, 63, 66));
-        jTable3.setForeground(new java.awt.Color(187, 187, 188));
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        TPembeli.setBackground(new java.awt.Color(60, 63, 66));
+        TPembeli.setForeground(new java.awt.Color(187, 187, 188));
+        TPembeli.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -199,22 +298,61 @@ public class Database extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane6.setViewportView(jTable3);
+        jScrollPane6.setViewportView(TPembeli);
+
+        TambahPembeli.setForeground(new java.awt.Color(187, 187, 188));
+        TambahPembeli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/tambah.png"))); // NOI18N
+        TambahPembeli.setText("Tambah Pembeli");
+        TambahPembeli.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TambahPembeli.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                TambahPembeliMouseMoved(evt);
+            }
+        });
+        TambahPembeli.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                TambahPembeliMouseExited(evt);
+            }
+        });
+
+        EditDistributor1.setForeground(new java.awt.Color(187, 187, 188));
+        EditDistributor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/edit.png"))); // NOI18N
+        EditDistributor1.setText("Edit Pembeli");
+        EditDistributor1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        HapusDistributor1.setForeground(new java.awt.Color(187, 187, 188));
+        HapusDistributor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/hapus.png"))); // NOI18N
+        HapusDistributor1.setText("Hapus Pembeli");
+        HapusDistributor1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 908, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(TambahPembeli)
+                .addGap(18, 18, 18)
+                .addComponent(EditDistributor1)
+                .addGap(18, 18, 18)
+                .addComponent(HapusDistributor1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 940, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 30, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TambahPembeli)
+                    .addComponent(EditDistributor1)
+                    .addComponent(HapusDistributor1))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(244, 244, 244))
         );
 
-        TPembeli.setViewportView(jPanel3);
+        jScrollPane11.setViewportView(jPanel3);
 
         javax.swing.GroupLayout tabPembeliLayout = new javax.swing.GroupLayout(tabPembeli);
         tabPembeli.setLayout(tabPembeliLayout);
@@ -222,14 +360,14 @@ public class Database extends javax.swing.JInternalFrame {
             tabPembeliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabPembeliLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(TPembeli)
+                .addComponent(jScrollPane11)
                 .addContainerGap())
         );
         tabPembeliLayout.setVerticalGroup(
             tabPembeliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabPembeliLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(TPembeli)
+                .addComponent(jScrollPane11)
                 .addContainerGap())
         );
 
@@ -273,22 +411,91 @@ public class Database extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void TambahPembeliMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahPembeliMouseMoved
+        TambahPembeli.setOpaque(true);
+        TambahPembeli.setBackground(new Color(187, 187, 187));
+        TambahPembeli.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_TambahPembeliMouseMoved
+
+    private void TambahPembeliMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahPembeliMouseExited
+        TambahPembeli.setOpaque(true);
+        TambahPembeli.setBackground(new Color(60, 63, 66));
+        TambahPembeli.setForeground(new Color(187, 187, 188));
+    }//GEN-LAST:event_TambahPembeliMouseExited
+
+    private void setTableLoad() {
+        try {
+
+            Class.forName(driver);
+            Connection kon = DriverManager.getConnection(database, user, pass);
+
+            Statement stt1 = kon.createStatement();
+            String SQL1 = "select * from pembeli";
+            ResultSet res1 = stt1.executeQuery(SQL1);
+
+            while (res1.next()) {
+                mPembeliData[0] = res1.getString(1);
+                mPembeliData[1] = res1.getString(2);
+                mPembeliData[2] = res1.getString(3);
+                mPembeliData[3] = res1.getString(4);
+                mPembeliData[4] = res1.getString(5);
+
+                pembeliTableModel.addRow(mPembeliData);
+
+            }
+
+            res1.close();
+            stt1.close();
+
+            Statement stt = kon.createStatement();
+            String SQL = "select * from distributor";
+            ResultSet res = stt.executeQuery(SQL);
+
+            while (res.next()) {
+                mDistributorData[0] = res.getString(1);
+                mDistributorData[1] = res.getString(2);
+                mDistributorData[2] = res.getString(3);
+                mDistributorData[3] = res.getString(4);
+                mDistributorData[4] = res.getString(5);
+
+                distributorTableModel.addRow(mDistributorData);
+
+            }
+            res.close();
+            stt.close();
+
+            kon.close();
+
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "error", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
+        }
+
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane TDistributor;
+    private javax.swing.JLabel EditDistributor;
+    private javax.swing.JLabel EditDistributor1;
+    private javax.swing.JLabel HapusDistributor;
+    private javax.swing.JLabel HapusDistributor1;
+    private javax.swing.JTable TDistributor;
     private javax.swing.JTable TMinuman;
-    private javax.swing.JScrollPane TPembeli;
+    private javax.swing.JTable TPembeli;
+    private javax.swing.JLabel TambahDistributor;
+    private javax.swing.JLabel TambahPembeli;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     private javax.swing.JPanel tabDistributor;
     private javax.swing.JPanel tabMinuman;
     private javax.swing.JPanel tabPembeli;
