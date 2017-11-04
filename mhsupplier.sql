@@ -16,6 +16,24 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`mhsupplier` /*!40100 DEFAULT CHARACTER 
 
 USE `mhsupplier`;
 
+/*Table structure for table `distributor` */
+
+DROP TABLE IF EXISTS `distributor`;
+
+CREATE TABLE `distributor` (
+  `kd_dis` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nama_dis` varchar(30) DEFAULT NULL,
+  `alamat` varchar(80) DEFAULT NULL,
+  `no_telp` varchar(13) DEFAULT NULL,
+  `total_hutang` bigint(20) unsigned DEFAULT NULL,
+  PRIMARY KEY (`kd_dis`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/*Data for the table `distributor` */
+
+insert  into `distributor`(`kd_dis`,`nama_dis`,`alamat`,`no_telp`,`total_hutang`) values 
+(1,'Pa Didi','Jl. Soeta no 80','089567821234',2000000);
+
 /*Table structure for table `pemasukan` */
 
 DROP TABLE IF EXISTS `pemasukan`;
@@ -37,6 +55,24 @@ insert  into `pemasukan`(`Nomor`,`Info`,`Uang`) values
 (5,'Ahmad Mukhlis ',10000),
 (6,'Ahmad Mukhlis S',100000);
 
+/*Table structure for table `pembeli` */
+
+DROP TABLE IF EXISTS `pembeli`;
+
+CREATE TABLE `pembeli` (
+  `kd_pbl` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_pbl` varchar(30) DEFAULT NULL,
+  `alamat` varchar(80) DEFAULT NULL,
+  `no_telp` varchar(13) DEFAULT NULL,
+  `total_hutang` bigint(20) unsigned DEFAULT NULL,
+  PRIMARY KEY (`kd_pbl`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/*Data for the table `pembeli` */
+
+insert  into `pembeli`(`kd_pbl`,`nama_pbl`,`alamat`,`no_telp`,`total_hutang`) values 
+(1,'Mang Iin','Jl. Sindangpanon no 20','081321456789',4000000);
+
 /*Table structure for table `pengeluaran` */
 
 DROP TABLE IF EXISTS `pengeluaran`;
@@ -55,8 +91,7 @@ insert  into `pengeluaran`(`Nomor`,`Info`,`Uang`) values
 (2,'Ahmad Mukhlis Saputra',5000),
 (3,'Ami Gusmiati',5000),
 (6,'Rosmi Alhandani',6000),
-(7,'Fitriya Rohimah',69000),
-(8,'Watson',50000);
+(7,'Fitriya Rohimah',69000);
 
 /*Table structure for table `user` */
 

@@ -36,9 +36,21 @@ public class Database extends javax.swing.JInternalFrame {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        tabMinuman = new javax.swing.JPanel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        jTable5 = new javax.swing.JTable();
+        tabDistributor = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
         jPanel4 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
+        tabPembeli = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(60, 63, 66));
 
@@ -48,53 +60,179 @@ public class Database extends javax.swing.JInternalFrame {
         jTabbedPane1.setBackground(new java.awt.Color(60, 63, 66));
         jTabbedPane1.setForeground(new java.awt.Color(187, 187, 188));
 
-        jPanel2.setBackground(new java.awt.Color(60, 63, 66));
-        jPanel2.setForeground(new java.awt.Color(187, 187, 188));
+        tabMinuman.setBackground(new java.awt.Color(60, 63, 66));
+        tabMinuman.setForeground(new java.awt.Color(187, 187, 188));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 923, Short.MAX_VALUE)
+        jScrollPane9.setBackground(new java.awt.Color(60, 63, 66));
+        jScrollPane9.setForeground(new java.awt.Color(187, 187, 188));
+
+        jPanel5.setBackground(new java.awt.Color(60, 63, 66));
+        jPanel5.setForeground(new java.awt.Color(187, 187, 188));
+
+        jTable5.setBackground(new java.awt.Color(60, 63, 66));
+        jTable5.setForeground(new java.awt.Color(187, 187, 188));
+        jTable5.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane10.setViewportView(jTable5);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 908, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTabbedPane1.addTab("Minuman", jPanel2);
+        jScrollPane9.setViewportView(jPanel5);
 
-        jPanel3.setBackground(new java.awt.Color(60, 63, 66));
-        jPanel3.setForeground(new java.awt.Color(187, 187, 188));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 923, Short.MAX_VALUE)
+        javax.swing.GroupLayout tabMinumanLayout = new javax.swing.GroupLayout(tabMinuman);
+        tabMinuman.setLayout(tabMinumanLayout);
+        tabMinumanLayout.setHorizontalGroup(
+            tabMinumanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabMinumanLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane9)
+                .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
+        tabMinumanLayout.setVerticalGroup(
+            tabMinumanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabMinumanLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane9)
+                .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Supplier", jPanel3);
+        jTabbedPane1.addTab("Minuman", tabMinuman);
+
+        tabDistributor.setBackground(new java.awt.Color(60, 63, 66));
+        tabDistributor.setForeground(new java.awt.Color(187, 187, 188));
+
+        jScrollPane7.setBackground(new java.awt.Color(60, 63, 66));
+        jScrollPane7.setForeground(new java.awt.Color(187, 187, 188));
 
         jPanel4.setBackground(new java.awt.Color(60, 63, 66));
         jPanel4.setForeground(new java.awt.Color(187, 187, 188));
+
+        jTable4.setBackground(new java.awt.Color(60, 63, 66));
+        jTable4.setForeground(new java.awt.Color(187, 187, 188));
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane8.setViewportView(jTable4);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 923, Short.MAX_VALUE)
+            .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 908, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTabbedPane1.addTab("Pembeli", jPanel4);
+        jScrollPane7.setViewportView(jPanel4);
+
+        javax.swing.GroupLayout tabDistributorLayout = new javax.swing.GroupLayout(tabDistributor);
+        tabDistributor.setLayout(tabDistributorLayout);
+        tabDistributorLayout.setHorizontalGroup(
+            tabDistributorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabDistributorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7)
+                .addContainerGap())
+        );
+        tabDistributorLayout.setVerticalGroup(
+            tabDistributorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabDistributorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Distributor", tabDistributor);
+
+        tabPembeli.setBackground(new java.awt.Color(60, 63, 66));
+        tabPembeli.setForeground(new java.awt.Color(187, 187, 188));
+
+        jScrollPane5.setBackground(new java.awt.Color(60, 63, 66));
+        jScrollPane5.setForeground(new java.awt.Color(187, 187, 188));
+
+        jPanel3.setBackground(new java.awt.Color(60, 63, 66));
+        jPanel3.setForeground(new java.awt.Color(187, 187, 188));
+
+        jTable3.setBackground(new java.awt.Color(60, 63, 66));
+        jTable3.setForeground(new java.awt.Color(187, 187, 188));
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(jTable3);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 908, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jScrollPane5.setViewportView(jPanel3);
+
+        javax.swing.GroupLayout tabPembeliLayout = new javax.swing.GroupLayout(tabPembeli);
+        tabPembeli.setLayout(tabPembeliLayout);
+        tabPembeliLayout.setHorizontalGroup(
+            tabPembeliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabPembeliLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5)
+                .addContainerGap())
+        );
+        tabPembeliLayout.setVerticalGroup(
+            tabPembeliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabPembeliLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Pembeli", tabPembeli);
 
         jDesktopPane1.setLayer(jTabbedPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -109,9 +247,9 @@ public class Database extends javax.swing.JInternalFrame {
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -127,7 +265,7 @@ public class Database extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(2, 2, 2)
                 .addComponent(jDesktopPane1))
         );
 
@@ -137,9 +275,21 @@ public class Database extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
+    private javax.swing.JTable jTable5;
+    private javax.swing.JPanel tabDistributor;
+    private javax.swing.JPanel tabMinuman;
+    private javax.swing.JPanel tabPembeli;
     // End of variables declaration//GEN-END:variables
 }
