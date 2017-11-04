@@ -56,7 +56,7 @@ public class PanelSirkulasi extends javax.swing.JInternalFrame {
         mGrandTotal = 0L ;
     }
 
-    private void hideTitleBar() {
+   private void hideTitleBar() {
         setRootPaneCheckingEnabled(false);
         javax.swing.plaf.InternalFrameUI hide = this.getUI();
         ((javax.swing.plaf.basic.BasicInternalFrameUI) hide).setNorthPane(null);
