@@ -10,6 +10,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import static layout.MainFrame.database;
 import static layout.MainFrame.driver;
@@ -30,6 +33,7 @@ public class Database extends javax.swing.JInternalFrame {
         hideTitleBar();
         TPembeli.setModel(pembeliTableModel);
         TDistributor.setModel(distributorTableModel);
+        TMinuman.setModel(minumanTableModel);
         MainFrame.connect();
         backToStart();
         setTableLoad();
@@ -38,6 +42,7 @@ public class Database extends javax.swing.JInternalFrame {
 
     private String[] mPembeliData = new String[5];
     private String[] mDistributorData = new String[5];
+    private String[] mMinumanData = new String[8];
 
     private void hideTitleBar() {
         setRootPaneCheckingEnabled(false);
@@ -53,6 +58,7 @@ public class Database extends javax.swing.JInternalFrame {
 
     public static javax.swing.table.DefaultTableModel pembeliTableModel = defaultPembeliTableModel();
     public static javax.swing.table.DefaultTableModel distributorTableModel = defaultDistributorTableModel();
+    public static javax.swing.table.DefaultTableModel minumanTableModel = defaultMinumanTableModel();
 
     private static javax.swing.table.DefaultTableModel defaultPembeliTableModel() {
 
@@ -90,6 +96,24 @@ public class Database extends javax.swing.JInternalFrame {
         };
     }
 
+    private static javax.swing.table.DefaultTableModel defaultMinumanTableModel() {
+
+        return new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{"Kode Minuman", "Nama Minuman", "Ukuran", "Isi", "Stok", "Harga Beli", "Tanggal Masuk", "Dari Distributor"}
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false, false, false
+
+            };
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -106,6 +130,9 @@ public class Database extends javax.swing.JInternalFrame {
         jPanel5 = new javax.swing.JPanel();
         jScrollPane10 = new javax.swing.JScrollPane();
         TMinuman = new javax.swing.JTable();
+        TambahMinuman = new javax.swing.JLabel();
+        EditMinuman = new javax.swing.JLabel();
+        HapusMinuman = new javax.swing.JLabel();
         tabDistributor = new javax.swing.JPanel();
         jScrollPane12 = new javax.swing.JScrollPane();
         jPanel4 = new javax.swing.JPanel();
@@ -120,8 +147,8 @@ public class Database extends javax.swing.JInternalFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         TPembeli = new javax.swing.JTable();
         TambahPembeli = new javax.swing.JLabel();
-        EditDistributor1 = new javax.swing.JLabel();
-        HapusDistributor1 = new javax.swing.JLabel();
+        EditPembeli = new javax.swing.JLabel();
+        HapusPembeli = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(60, 63, 66));
 
@@ -156,16 +183,74 @@ public class Database extends javax.swing.JInternalFrame {
         ));
         jScrollPane10.setViewportView(TMinuman);
 
+        TambahMinuman.setForeground(new java.awt.Color(187, 187, 188));
+        TambahMinuman.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/tambah.png"))); // NOI18N
+        TambahMinuman.setText("Tambah Minuman");
+        TambahMinuman.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TambahMinuman.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                TambahMinumanMouseMoved(evt);
+            }
+        });
+        TambahMinuman.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                TambahMinumanMouseExited(evt);
+            }
+        });
+
+        EditMinuman.setForeground(new java.awt.Color(187, 187, 188));
+        EditMinuman.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/edit.png"))); // NOI18N
+        EditMinuman.setText("Edit Minuman");
+        EditMinuman.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        EditMinuman.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                EditMinumanMouseMoved(evt);
+            }
+        });
+        EditMinuman.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                EditMinumanMouseExited(evt);
+            }
+        });
+
+        HapusMinuman.setForeground(new java.awt.Color(187, 187, 188));
+        HapusMinuman.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/hapus.png"))); // NOI18N
+        HapusMinuman.setText("Hapus Minuman");
+        HapusMinuman.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        HapusMinuman.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                HapusMinumanMouseMoved(evt);
+            }
+        });
+        HapusMinuman.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                HapusMinumanMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 908, Short.MAX_VALUE)
+            .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 940, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(TambahMinuman)
+                .addGap(18, 18, 18)
+                .addComponent(EditMinuman)
+                .addGap(18, 18, 18)
+                .addComponent(HapusMinuman)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TambahMinuman)
+                    .addComponent(EditMinuman)
+                    .addComponent(HapusMinuman))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -218,16 +303,46 @@ public class Database extends javax.swing.JInternalFrame {
         EditDistributor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/edit.png"))); // NOI18N
         EditDistributor.setText("Edit Distributor");
         EditDistributor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        EditDistributor.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                EditDistributorMouseMoved(evt);
+            }
+        });
+        EditDistributor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                EditDistributorMouseExited(evt);
+            }
+        });
 
         HapusDistributor.setForeground(new java.awt.Color(187, 187, 188));
         HapusDistributor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/hapus.png"))); // NOI18N
         HapusDistributor.setText("Hapus Distributor");
         HapusDistributor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        HapusDistributor.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                HapusDistributorMouseMoved(evt);
+            }
+        });
+        HapusDistributor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                HapusDistributorMouseExited(evt);
+            }
+        });
 
         TambahDistributor.setForeground(new java.awt.Color(187, 187, 188));
         TambahDistributor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/tambah.png"))); // NOI18N
         TambahDistributor.setText("Tambah Distributor");
         TambahDistributor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TambahDistributor.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                TambahDistributorMouseMoved(evt);
+            }
+        });
+        TambahDistributor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                TambahDistributorMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -315,15 +430,35 @@ public class Database extends javax.swing.JInternalFrame {
             }
         });
 
-        EditDistributor1.setForeground(new java.awt.Color(187, 187, 188));
-        EditDistributor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/edit.png"))); // NOI18N
-        EditDistributor1.setText("Edit Pembeli");
-        EditDistributor1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        EditPembeli.setForeground(new java.awt.Color(187, 187, 188));
+        EditPembeli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/edit.png"))); // NOI18N
+        EditPembeli.setText("Edit Pembeli");
+        EditPembeli.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        EditPembeli.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                EditPembeliMouseMoved(evt);
+            }
+        });
+        EditPembeli.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                EditPembeliMouseExited(evt);
+            }
+        });
 
-        HapusDistributor1.setForeground(new java.awt.Color(187, 187, 188));
-        HapusDistributor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/hapus.png"))); // NOI18N
-        HapusDistributor1.setText("Hapus Pembeli");
-        HapusDistributor1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        HapusPembeli.setForeground(new java.awt.Color(187, 187, 188));
+        HapusPembeli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/hapus.png"))); // NOI18N
+        HapusPembeli.setText("Hapus Pembeli");
+        HapusPembeli.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        HapusPembeli.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                HapusPembeliMouseMoved(evt);
+            }
+        });
+        HapusPembeli.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                HapusPembeliMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -333,9 +468,9 @@ public class Database extends javax.swing.JInternalFrame {
                 .addGap(88, 88, 88)
                 .addComponent(TambahPembeli)
                 .addGap(18, 18, 18)
-                .addComponent(EditDistributor1)
+                .addComponent(EditPembeli)
                 .addGap(18, 18, 18)
-                .addComponent(HapusDistributor1)
+                .addComponent(HapusPembeli)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 940, Short.MAX_VALUE)
         );
@@ -345,8 +480,8 @@ public class Database extends javax.swing.JInternalFrame {
                 .addGap(0, 30, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TambahPembeli)
-                    .addComponent(EditDistributor1)
-                    .addComponent(HapusDistributor1))
+                    .addComponent(EditPembeli)
+                    .addComponent(HapusPembeli))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(244, 244, 244))
@@ -387,8 +522,8 @@ public class Database extends javax.swing.JInternalFrame {
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -423,46 +558,192 @@ public class Database extends javax.swing.JInternalFrame {
         TambahPembeli.setForeground(new Color(187, 187, 188));
     }//GEN-LAST:event_TambahPembeliMouseExited
 
+    private void EditPembeliMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditPembeliMouseExited
+        EditPembeli.setOpaque(true);
+        EditPembeli.setBackground(new Color(60, 63, 66));
+        EditPembeli.setForeground(new Color(187, 187, 188));
+    }//GEN-LAST:event_EditPembeliMouseExited
+
+    private void EditPembeliMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditPembeliMouseMoved
+        EditPembeli.setOpaque(true);
+        EditPembeli.setBackground(new Color(187, 187, 187));
+        EditPembeli.setForeground(new Color(255, 255, 255));
+
+    }//GEN-LAST:event_EditPembeliMouseMoved
+
+    private void HapusPembeliMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HapusPembeliMouseMoved
+        HapusPembeli.setOpaque(true);
+        HapusPembeli.setBackground(new Color(187, 187, 187));
+        HapusPembeli.setForeground(new Color(255, 255, 255));
+
+    }//GEN-LAST:event_HapusPembeliMouseMoved
+
+    private void HapusPembeliMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HapusPembeliMouseExited
+        HapusPembeli.setOpaque(true);
+        HapusPembeli.setBackground(new Color(60, 63, 66));
+        HapusPembeli.setForeground(new Color(187, 187, 188));
+    }//GEN-LAST:event_HapusPembeliMouseExited
+
+    private void TambahDistributorMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahDistributorMouseMoved
+        TambahDistributor.setOpaque(true);
+        TambahDistributor.setBackground(new Color(187, 187, 187));
+        TambahDistributor.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_TambahDistributorMouseMoved
+
+    private void TambahDistributorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahDistributorMouseExited
+        TambahDistributor.setOpaque(true);
+        TambahDistributor.setBackground(new Color(60, 63, 66));
+        TambahDistributor.setForeground(new Color(187, 187, 188));
+    }//GEN-LAST:event_TambahDistributorMouseExited
+
+    private void EditDistributorMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditDistributorMouseMoved
+        EditDistributor.setOpaque(true);
+        EditDistributor.setBackground(new Color(187, 187, 187));
+        EditDistributor.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_EditDistributorMouseMoved
+
+    private void EditDistributorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditDistributorMouseExited
+        EditDistributor.setOpaque(true);
+        EditDistributor.setBackground(new Color(60, 63, 66));
+        EditDistributor.setForeground(new Color(187, 187, 188));
+    }//GEN-LAST:event_EditDistributorMouseExited
+
+    private void HapusDistributorMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HapusDistributorMouseMoved
+        HapusDistributor.setOpaque(true);
+        HapusDistributor.setBackground(new Color(187, 187, 187));
+        HapusDistributor.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_HapusDistributorMouseMoved
+
+    private void HapusDistributorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HapusDistributorMouseExited
+        HapusDistributor.setOpaque(true);
+        HapusDistributor.setBackground(new Color(60, 63, 66));
+        HapusDistributor.setForeground(new Color(187, 187, 188));
+    }//GEN-LAST:event_HapusDistributorMouseExited
+
+    private void TambahMinumanMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahMinumanMouseMoved
+        TambahMinuman.setOpaque(true);
+        TambahMinuman.setBackground(new Color(187, 187, 187));
+        TambahMinuman.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_TambahMinumanMouseMoved
+
+    private void TambahMinumanMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahMinumanMouseExited
+        TambahMinuman.setOpaque(true);
+        TambahMinuman.setBackground(new Color(60, 63, 66));
+        TambahMinuman.setForeground(new Color(187, 187, 188));
+    }//GEN-LAST:event_TambahMinumanMouseExited
+
+    private void EditMinumanMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditMinumanMouseMoved
+        EditMinuman.setOpaque(true);
+        EditMinuman.setBackground(new Color(187, 187, 187));
+        EditMinuman.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_EditMinumanMouseMoved
+
+    private void EditMinumanMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditMinumanMouseExited
+        EditMinuman.setOpaque(true);
+        EditMinuman.setBackground(new Color(60, 63, 66));
+        EditMinuman.setForeground(new Color(187, 187, 188));
+    }//GEN-LAST:event_EditMinumanMouseExited
+
+    private void HapusMinumanMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HapusMinumanMouseMoved
+        HapusMinuman.setOpaque(true);
+        HapusMinuman.setBackground(new Color(187, 187, 187));
+        HapusMinuman.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_HapusMinumanMouseMoved
+
+    private void HapusMinumanMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HapusMinumanMouseExited
+        HapusMinuman.setOpaque(true);
+        HapusMinuman.setBackground(new Color(60, 63, 66));
+        HapusMinuman.setForeground(new Color(187, 187, 188));
+    }//GEN-LAST:event_HapusMinumanMouseExited
+
     private void setTableLoad() {
         try {
 
             Class.forName(driver);
             Connection kon = DriverManager.getConnection(database, user, pass);
 
-            Statement stt1 = kon.createStatement();
-            String SQL1 = "select * from pembeli";
-            ResultSet res1 = stt1.executeQuery(SQL1);
+            Statement stt_pbl = kon.createStatement();
+            String SQL_pbl = "select * from pembeli";
+            ResultSet res_pbl = stt_pbl.executeQuery(SQL_pbl);
 
-            while (res1.next()) {
-                mPembeliData[0] = res1.getString(1);
-                mPembeliData[1] = res1.getString(2);
-                mPembeliData[2] = res1.getString(3);
-                mPembeliData[3] = res1.getString(4);
-                mPembeliData[4] = res1.getString(5);
+            while (res_pbl.next()) {
+                mPembeliData[0] = res_pbl.getString(1);
+                mPembeliData[1] = res_pbl.getString(2);
+                mPembeliData[2] = res_pbl.getString(3);
+                mPembeliData[3] = res_pbl.getString(4);
+                mPembeliData[4] = res_pbl.getString(5);
 
                 pembeliTableModel.addRow(mPembeliData);
 
             }
 
-            res1.close();
-            stt1.close();
+            res_pbl.close();
+            stt_pbl.close();
 
-            Statement stt = kon.createStatement();
-            String SQL = "select * from distributor";
-            ResultSet res = stt.executeQuery(SQL);
+            Statement stt_dis = kon.createStatement();
+            String sql_dis = "select * from distributor";
+            ResultSet res_dis = stt_dis.executeQuery(sql_dis);
 
-            while (res.next()) {
-                mDistributorData[0] = res.getString(1);
-                mDistributorData[1] = res.getString(2);
-                mDistributorData[2] = res.getString(3);
-                mDistributorData[3] = res.getString(4);
-                mDistributorData[4] = res.getString(5);
+            while (res_dis.next()) {
+                mDistributorData[0] = res_dis.getString(1);
+                mDistributorData[1] = res_dis.getString(2);
+                mDistributorData[2] = res_dis.getString(3);
+                mDistributorData[3] = res_dis.getString(4);
+                mDistributorData[4] = res_dis.getString(5);
 
                 distributorTableModel.addRow(mDistributorData);
 
             }
-            res.close();
-            stt.close();
+            res_dis.close();
+            stt_dis.close();
+
+            Statement stt_min = kon.createStatement();
+            String sql_min = "select * from minuman";
+            ResultSet res_min = stt_min.executeQuery(sql_min);
+
+            while (res_min.next()) {
+                mMinumanData[0] = res_min.getString(1);
+                mMinumanData[1] = res_min.getString(2);
+                mMinumanData[2] = res_min.getString(3);
+                mMinumanData[3] = res_min.getString(4);
+                mMinumanData[4] = res_min.getString(5);
+                mMinumanData[5] = res_min.getString(6);
+                mMinumanData[6] = res_min.getString(7);
+                mMinumanData[7] = res_min.getString(8);
+
+                //reformat data to frontend
+                mMinumanData[0] = mMinumanData[0].substring(0, 3) + "-"
+                        + mMinumanData[0].substring(3, 7) + "-" + mMinumanData[0].substring(7, 13);
+
+                mMinumanData[2] = mMinumanData[2] + " ml";
+
+                mMinumanData[5] = MainFrame.formatter(mMinumanData[5]);
+
+                DateFormat df
+                = new SimpleDateFormat("dd MMMM yyyy", new Locale("in", "ID"));
+                
+                DateFormat sqlDateFormat
+                = new SimpleDateFormat("yyyy-MM-dd");
+                
+                
+                mMinumanData[6] = df.format(sqlDateFormat.parse(mMinumanData[6])) ;
+                
+                Statement stt_dist = kon.createStatement();
+                String sql_dist = "select nama_dis from distributor where kd_dis = " + mMinumanData[7] + ";";
+                ResultSet res_dist = stt_dist.executeQuery(sql_dist);
+
+                while (res_dist.next()) {
+                    mMinumanData[7] = res_dist.getString(1);
+                }
+
+                res_dist.close();
+                stt_dist.close();
+
+                minumanTableModel.addRow(mMinumanData);
+
+            }
+            res_min.close();
+            stt_min.close();
 
             kon.close();
 
@@ -477,13 +758,16 @@ public class Database extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel EditDistributor;
-    private javax.swing.JLabel EditDistributor1;
+    private javax.swing.JLabel EditMinuman;
+    private javax.swing.JLabel EditPembeli;
     private javax.swing.JLabel HapusDistributor;
-    private javax.swing.JLabel HapusDistributor1;
+    private javax.swing.JLabel HapusMinuman;
+    private javax.swing.JLabel HapusPembeli;
     private javax.swing.JTable TDistributor;
     private javax.swing.JTable TMinuman;
     private javax.swing.JTable TPembeli;
     private javax.swing.JLabel TambahDistributor;
+    private javax.swing.JLabel TambahMinuman;
     private javax.swing.JLabel TambahPembeli;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JPanel jPanel3;

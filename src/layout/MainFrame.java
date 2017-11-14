@@ -5,6 +5,7 @@
  */
 package layout;
 
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +36,6 @@ public class MainFrame extends javax.swing.JFrame {
         initMenuDatabase();
         this.setIconImage((Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resource/ic_launcher.png"))));
     }
-
 
     public static void connect() {
 
@@ -125,13 +125,19 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar1.setPreferredSize(new java.awt.Dimension(150, 79));
 
         databaseMenu.setBackground(new java.awt.Color(187, 187, 188));
-        databaseMenu.setForeground(new java.awt.Color(60, 65, 66));
+        databaseMenu.setForeground(new java.awt.Color(255, 255, 255));
         databaseMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/database.png"))); // NOI18N
         databaseMenu.setText("Database");
         databaseMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         databaseMenu.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         databaseMenu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         databaseMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                databaseMenuMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                databaseMenuMouseExited(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 databaseMenuMousePressed(evt);
             }
@@ -139,7 +145,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar1.add(databaseMenu);
 
         sirkulasiMenu.setBackground(new java.awt.Color(187, 187, 188));
-        sirkulasiMenu.setForeground(new java.awt.Color(60, 65, 66));
+        sirkulasiMenu.setForeground(new java.awt.Color(255, 255, 255));
         sirkulasiMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/sirkulasi.png"))); // NOI18N
         sirkulasiMenu.setText("Sirkulasi");
         sirkulasiMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -147,6 +153,12 @@ public class MainFrame extends javax.swing.JFrame {
         sirkulasiMenu.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         sirkulasiMenu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         sirkulasiMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                sirkulasiMenuMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                sirkulasiMenuMouseExited(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 sirkulasiMenuMousePressed(evt);
             }
@@ -190,6 +202,30 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_sirkulasiMenuMousePressed
+
+    private void databaseMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_databaseMenuMouseEntered
+        databaseMenu.setOpaque(true);
+        databaseMenu.setBackground(javax.swing.UIManager.getDefaults().getColor("MenuItem.selectionBackground"));
+        databaseMenu.setForeground(new Color(0, 0, 0));
+    }//GEN-LAST:event_databaseMenuMouseEntered
+
+    private void databaseMenuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_databaseMenuMouseExited
+        databaseMenu.setOpaque(true);
+        databaseMenu.setBackground(new Color(187, 187, 187));
+        databaseMenu.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_databaseMenuMouseExited
+
+    private void sirkulasiMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sirkulasiMenuMouseEntered
+        sirkulasiMenu.setOpaque(true);
+        sirkulasiMenu.setBackground(javax.swing.UIManager.getDefaults().getColor("MenuItem.selectionBackground"));
+        sirkulasiMenu.setForeground(new Color(0, 0, 0));
+    }//GEN-LAST:event_sirkulasiMenuMouseEntered
+
+    private void sirkulasiMenuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sirkulasiMenuMouseExited
+        sirkulasiMenu.setOpaque(true);
+        sirkulasiMenu.setBackground(new Color(187, 187, 187));
+        sirkulasiMenu.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_sirkulasiMenuMouseExited
 
     /**
      * @param args the command line arguments
