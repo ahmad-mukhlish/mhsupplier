@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dialogue;
+package dialogue.sirkulasi;
 
 import layout.MainFrame;
 import static layout.MainFrame.formatter;

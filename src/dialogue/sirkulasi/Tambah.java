@@ -3,41 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dialogue;
+package dialogue.sirkulasi;
 
 import layout.MainFrame;
 import static layout.MainFrame.formatter;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import layout.Sirkulasi;
 
 /**
  *
  * @author GOODWARE1
  */
-public class Edit extends java.awt.Dialog {
+public class Tambah extends java.awt.Dialog {
 
     /**
-     * Creates new form Edit
+     * Creates new form 
      */
     private static String mTitle;
-    private static int mRow;
-    private static String[] mDatas;
 
-    public Edit(java.awt.Frame parent, String title, boolean modal, String[] datas, int row) {
+    public Tambah(java.awt.Frame parent, String title, boolean modal) {
         super(parent, title, modal);
         mTitle = title;
-        mRow = row;
-        mDatas = datas;
         initComponents();
-        showSelected(fInfo, fNominal, mDatas);
-        layout.MainFrame.connect();
+        MainFrame.connect();
+        fNominal.setText(" Rp  ");
         fNominal.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -45,14 +38,14 @@ public class Edit extends java.awt.Dialog {
 
             @Override
             public void keyPressed(KeyEvent e) {
-
+              
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                fNominal.setText(formatter(Edit.takeNominal(fNominal.getText())));
+              fNominal.setText(formatter(Edit.takeNominal(fNominal.getText())));
 //              fInfo.setText(formatter(Edit.takeNominal(fNominal.getText())));
-
+                       
             }
         });
     }
@@ -70,7 +63,7 @@ public class Edit extends java.awt.Dialog {
         jLabel2 = new javax.swing.JLabel();
         fNominal = new javax.swing.JTextField();
         batal = new javax.swing.JButton();
-        edit = new javax.swing.JButton();
+        tambah = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(60, 63, 66));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -105,10 +98,10 @@ public class Edit extends java.awt.Dialog {
             }
         });
 
-        edit.setText("Edit");
-        edit.addActionListener(new java.awt.event.ActionListener() {
+        tambah.setText("Tambah");
+        tambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editActionPerformed(evt);
+                tambahActionPerformed(evt);
             }
         });
 
@@ -128,7 +121,7 @@ public class Edit extends java.awt.Dialog {
                 .addGap(41, 41, 41))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(batal, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61))
@@ -147,7 +140,7 @@ public class Edit extends java.awt.Dialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(batal)
-                    .addComponent(edit))
+                    .addComponent(tambah))
                 .addGap(21, 21, 21))
         );
 
@@ -162,7 +155,7 @@ public class Edit extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
+    private void tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahActionPerformed
         if (fInfo.getText().isEmpty() || fNominal.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Data tidak boleh kosong, silakan coba lagi", "Peringatan", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -174,7 +167,7 @@ public class Edit extends java.awt.Dialog {
 
                 data[1] = fInfo.getText();
                 data[2] = Edit.takeNominal(fNominal.getText());
-
+                
                 String table;
 
                 if (mTitle.contains("Pemasukan")) {
@@ -183,24 +176,20 @@ public class Edit extends java.awt.Dialog {
                     table = "pengeluaran";
                 }
 
-                String SQLUpdate = "UPDATE " + table + " "
-                        + "SET Info = '" + data[1] + "', Uang = " + data[2]
-                        + " WHERE Nomor = " + mDatas[0] + ";";
-                String SQLGetNumber = "SELECT Nomor FROM " + table + " WHERE Info='" + data[1] + "' ";
+                String SQLInsert = "INSERT into " + table + "(Info,Uang) VALUES ('" + data[1] + "', '" + data[2] + "')";
+                String SQLGetNomor = "SELECT Nomor FROM " + table + " WHERE Info='" + data[1] + "' ";
 
-                stt.execute(SQLUpdate);
-                ResultSet res = stt.executeQuery(SQLGetNumber);
+                stt.execute(SQLInsert);
+                ResultSet res = stt.executeQuery(SQLGetNomor);
 
                 while (res.next()) {
                     data[0] = res.getString(1);
                 }
 
                 if (table.equals("pemasukan")) {
-                    Sirkulasi.mTotalIncome -= Long.parseLong(takeNominal(mDatas[2]));
                     Sirkulasi.mTotalIncome += Long.parseLong(data[2]);
                     Sirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + Sirkulasi.mTotalIncome));
                 } else {
-                    Sirkulasi.mTotalOutcome -= Long.parseLong(takeNominal(mDatas[2]));
                     Sirkulasi.mTotalOutcome += Long.parseLong(data[2]);
                     Sirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + Sirkulasi.mTotalOutcome));
 
@@ -209,15 +198,9 @@ public class Edit extends java.awt.Dialog {
                 data[2] = MainFrame.formatter(data[2]);
 
                 if (table.equals("pemasukan")) {
-
-                    Sirkulasi.incomeTableModel.insertRow(mRow, data);
-                    Sirkulasi.incomeTableModel.removeRow(mRow + 1);
-
+                    Sirkulasi.incomeTableModel.addRow(data);
                 } else {
-
-                    Sirkulasi.outcomeTableModel.insertRow(mRow, data);
-                    Sirkulasi.outcomeTableModel.removeRow(mRow + 1);
-
+                    Sirkulasi.outcomeTableModel.addRow(data);
                 }
 
                 Sirkulasi.mGrandTotal = Sirkulasi.mTotalIncome - Sirkulasi.mTotalOutcome;
@@ -225,65 +208,49 @@ public class Edit extends java.awt.Dialog {
 
                 this.dispose();
 
-            } catch (Exception ex) {
+            } catch (ClassNotFoundException | NumberFormatException | SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 System.out.println(ex.getMessage());
             }
-            
-              
         }
-    }//GEN-LAST:event_editActionPerformed
+    }//GEN-LAST:event_tambahActionPerformed
 
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         this.dispose();
     }//GEN-LAST:event_batalActionPerformed
 
-    private void fNominalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNominalActionPerformed
-        editActionPerformed(evt);
-    }//GEN-LAST:event_fNominalActionPerformed
-
     private void fInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fInfoActionPerformed
         fNominal.requestFocus();
     }//GEN-LAST:event_fInfoActionPerformed
+
+    private void fNominalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNominalActionPerformed
+         tambahActionPerformed(evt);
+    }//GEN-LAST:event_fNominalActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(() -> {
-            Edit dialog = new Edit(new java.awt.Frame(), mTitle, true, mDatas, mRow);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
-                }
-            });
-            dialog.setVisible(true);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Tambah dialog = new Tambah(new java.awt.Frame(), mTitle, true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
         });
-    }
-
-    public static void showSelected(JTextField infoField, JTextField nominalField, String[] datas) {
-        infoField.setText(datas[1]);
-        nominalField.setText((datas[2]));
-    }
-
-    public static String takeNominal(String nominal) {
-        String[] hasilArray = nominal.substring(4).split("\\.");
-        String hasil = "";
-        for (int i = 0; i < hasilArray.length; i++) {
-            hasil += hasilArray[i];
-        }
-
-        return hasil;
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batal;
-    private javax.swing.JButton edit;
     private javax.swing.JTextField fInfo;
     private javax.swing.JTextField fNominal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton tambah;
     // End of variables declaration//GEN-END:variables
 }

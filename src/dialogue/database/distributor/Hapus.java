@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dialogue;
+package dialogue.database.distributor;
 
+import dialogue.sirkulasi.*;
 import layout.MainFrame;
 import static layout.MainFrame.formatter;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import layout.Sirkulasi;
 
@@ -18,36 +19,23 @@ import layout.Sirkulasi;
  *
  * @author GOODWARE1
  */
-public class Tambah extends java.awt.Dialog {
+public class Hapus extends java.awt.Dialog {
 
     /**
-     * Creates new form 
+     * Creates new form Edit
      */
     private static String mTitle;
+    private static int mRow;
+    private static String[] mDatas;
 
-    public Tambah(java.awt.Frame parent, String title, boolean modal) {
+    public Hapus(java.awt.Frame parent, String title, boolean modal, String[] datas, int row) {
         super(parent, title, modal);
         mTitle = title;
+        mRow = row;
+        mDatas = datas;
         initComponents();
-        MainFrame.connect();
-        fNominal.setText(" Rp  ");
-        fNominal.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-              
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-              fNominal.setText(formatter(Edit.takeNominal(fNominal.getText())));
-//              fInfo.setText(formatter(Edit.takeNominal(fNominal.getText())));
-                       
-            }
-        });
+        Edit.showSelected(fInfo, fNominal, mDatas);
+        layout.MainFrame.connect();
     }
 
     /**
@@ -63,7 +51,7 @@ public class Tambah extends java.awt.Dialog {
         jLabel2 = new javax.swing.JLabel();
         fNominal = new javax.swing.JTextField();
         batal = new javax.swing.JButton();
-        tambah = new javax.swing.JButton();
+        hapus = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(60, 63, 66));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -75,21 +63,17 @@ public class Tambah extends java.awt.Dialog {
         jLabel1.setForeground(new java.awt.Color(187, 187, 188));
         jLabel1.setText("Keterangan");
 
+        fInfo.setEditable(false);
+        fInfo.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        fInfo.setForeground(new java.awt.Color(153, 153, 153));
         fInfo.setToolTipText("");
-        fInfo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fInfoActionPerformed(evt);
-            }
-        });
 
         jLabel2.setForeground(new java.awt.Color(187, 187, 188));
         jLabel2.setText("Nominal");
 
-        fNominal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fNominalActionPerformed(evt);
-            }
-        });
+        fNominal.setEditable(false);
+        fNominal.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        fNominal.setForeground(new java.awt.Color(153, 153, 153));
 
         batal.setText("Batal");
         batal.addActionListener(new java.awt.event.ActionListener() {
@@ -98,10 +82,10 @@ public class Tambah extends java.awt.Dialog {
             }
         });
 
-        tambah.setText("Tambah");
-        tambah.addActionListener(new java.awt.event.ActionListener() {
+        hapus.setText("Hapus");
+        hapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tambahActionPerformed(evt);
+                hapusActionPerformed(evt);
             }
         });
 
@@ -121,7 +105,7 @@ public class Tambah extends java.awt.Dialog {
                 .addGap(41, 41, 41))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(batal, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61))
@@ -140,7 +124,7 @@ public class Tambah extends java.awt.Dialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(batal)
-                    .addComponent(tambah))
+                    .addComponent(hapus))
                 .addGap(21, 21, 21))
         );
 
@@ -155,7 +139,7 @@ public class Tambah extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahActionPerformed
+    private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
         if (fInfo.getText().isEmpty() || fNominal.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Data tidak boleh kosong, silakan coba lagi", "Peringatan", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -167,7 +151,7 @@ public class Tambah extends java.awt.Dialog {
 
                 data[1] = fInfo.getText();
                 data[2] = Edit.takeNominal(fNominal.getText());
-                
+
                 String table;
 
                 if (mTitle.contains("Pemasukan")) {
@@ -176,21 +160,22 @@ public class Tambah extends java.awt.Dialog {
                     table = "pengeluaran";
                 }
 
-                String SQLInsert = "INSERT into " + table + "(Info,Uang) VALUES ('" + data[1] + "', '" + data[2] + "')";
-                String SQLGetNomor = "SELECT Nomor FROM " + table + " WHERE Info='" + data[1] + "' ";
+                String SQLUpdate = "DELETE FROM " + table + " "
+                        + " WHERE Nomor = " + mDatas[0] + ";";
+                String SQLGetNumber = "SELECT Nomor FROM " + table + " WHERE Info='" + data[1] + "' ";
 
-                stt.execute(SQLInsert);
-                ResultSet res = stt.executeQuery(SQLGetNomor);
+                stt.execute(SQLUpdate);
+                ResultSet res = stt.executeQuery(SQLGetNumber);
 
                 while (res.next()) {
                     data[0] = res.getString(1);
                 }
 
                 if (table.equals("pemasukan")) {
-                    Sirkulasi.mTotalIncome += Long.parseLong(data[2]);
+                    Sirkulasi.mTotalIncome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
                     Sirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + Sirkulasi.mTotalIncome));
                 } else {
-                    Sirkulasi.mTotalOutcome += Long.parseLong(data[2]);
+                    Sirkulasi.mTotalOutcome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
                     Sirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + Sirkulasi.mTotalOutcome));
 
                 }
@@ -198,9 +183,13 @@ public class Tambah extends java.awt.Dialog {
                 data[2] = MainFrame.formatter(data[2]);
 
                 if (table.equals("pemasukan")) {
-                    Sirkulasi.incomeTableModel.addRow(data);
+
+                    Sirkulasi.incomeTableModel.removeRow(mRow);
+
                 } else {
-                    Sirkulasi.outcomeTableModel.addRow(data);
+
+                    Sirkulasi.outcomeTableModel.removeRow(mRow);
+
                 }
 
                 Sirkulasi.mGrandTotal = Sirkulasi.mTotalIncome - Sirkulasi.mTotalOutcome;
@@ -208,39 +197,30 @@ public class Tambah extends java.awt.Dialog {
 
                 this.dispose();
 
-            } catch (ClassNotFoundException | NumberFormatException | SQLException ex) {
+            } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 System.out.println(ex.getMessage());
             }
         }
-    }//GEN-LAST:event_tambahActionPerformed
+    }//GEN-LAST:event_hapusActionPerformed
 
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         this.dispose();
     }//GEN-LAST:event_batalActionPerformed
 
-    private void fInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fInfoActionPerformed
-        fNominal.requestFocus();
-    }//GEN-LAST:event_fInfoActionPerformed
-
-    private void fNominalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNominalActionPerformed
-         tambahActionPerformed(evt);
-    }//GEN-LAST:event_fNominalActionPerformed
-
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Tambah dialog = new Tambah(new java.awt.Frame(), mTitle, true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            Edit dialog = new Edit(new java.awt.Frame(), mTitle, true, mDatas, mRow);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
 
@@ -249,8 +229,8 @@ public class Tambah extends java.awt.Dialog {
     private javax.swing.JButton batal;
     private javax.swing.JTextField fInfo;
     private javax.swing.JTextField fNominal;
+    private javax.swing.JButton hapus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JButton tambah;
     // End of variables declaration//GEN-END:variables
 }

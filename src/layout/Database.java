@@ -5,6 +5,7 @@
  */
 package layout;
 
+import dialogue.database.distributor.Tambah;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -339,6 +340,9 @@ public class Database extends javax.swing.JInternalFrame {
             }
         });
         TambahDistributor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TambahDistributorMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 TambahDistributorMouseExited(evt);
             }
@@ -656,6 +660,13 @@ public class Database extends javax.swing.JInternalFrame {
         HapusMinuman.setForeground(new Color(187, 187, 188));
     }//GEN-LAST:event_HapusMinumanMouseExited
 
+    private void TambahDistributorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahDistributorMouseClicked
+        TDistributor.clearSelection();
+        Tambah tambahIncome = new Tambah(null, "Tambah Data Distributor", true);
+        tambahIncome.setLocationRelativeTo(this);
+        tambahIncome.setVisible(true);
+    }//GEN-LAST:event_TambahDistributorMouseClicked
+
     private void setTableLoad() {
         try {
 
@@ -667,11 +678,11 @@ public class Database extends javax.swing.JInternalFrame {
             ResultSet res_pbl = stt_pbl.executeQuery(SQL_pbl);
 
             while (res_pbl.next()) {
-                mPembeliData[0] = res_pbl.getString(1);
+                mPembeliData[0] = koder("PBL", Integer.parseInt(res_pbl.getString(1)));
                 mPembeliData[1] = res_pbl.getString(2);
                 mPembeliData[2] = res_pbl.getString(3);
                 mPembeliData[3] = res_pbl.getString(4);
-                mPembeliData[4] = res_pbl.getString(5);
+                mPembeliData[4] = MainFrame.formatter(res_pbl.getString(5));
 
                 pembeliTableModel.addRow(mPembeliData);
 
@@ -685,11 +696,11 @@ public class Database extends javax.swing.JInternalFrame {
             ResultSet res_dis = stt_dis.executeQuery(sql_dis);
 
             while (res_dis.next()) {
-                mDistributorData[0] = res_dis.getString(1);
+                mDistributorData[0] = koder("DIS", Integer.parseInt(res_dis.getString(1)));
                 mDistributorData[1] = res_dis.getString(2);
                 mDistributorData[2] = res_dis.getString(3);
                 mDistributorData[3] = res_dis.getString(4);
-                mDistributorData[4] = res_dis.getString(5);
+                mDistributorData[4] = MainFrame.formatter(res_dis.getString(5));
 
                 distributorTableModel.addRow(mDistributorData);
 
@@ -720,14 +731,13 @@ public class Database extends javax.swing.JInternalFrame {
                 mMinumanData[5] = MainFrame.formatter(mMinumanData[5]);
 
                 DateFormat df
-                = new SimpleDateFormat("dd MMMM yyyy", new Locale("in", "ID"));
-                
+                        = new SimpleDateFormat("dd MMMM yyyy", new Locale("in", "ID"));
+
                 DateFormat sqlDateFormat
-                = new SimpleDateFormat("yyyy-MM-dd");
-                
-                
-                mMinumanData[6] = df.format(sqlDateFormat.parse(mMinumanData[6])) ;
-                
+                        = new SimpleDateFormat("yyyy-MM-dd");
+
+                mMinumanData[6] = df.format(sqlDateFormat.parse(mMinumanData[6]));
+
                 Statement stt_dist = kon.createStatement();
                 String sql_dist = "select nama_dis from distributor where kd_dis = " + mMinumanData[7] + ";";
                 ResultSet res_dist = stt_dist.executeQuery(sql_dist);
@@ -753,6 +763,17 @@ public class Database extends javax.swing.JInternalFrame {
             System.exit(0);
         }
 
+    }
+
+    private String koder(String jenis, int kode) {
+
+        if (kode < 10) {
+            return jenis + "-00" + kode;
+        } else if (kode > 9 && kode < 100) {
+            return jenis + "-0" + kode;
+        } else {
+            return jenis + kode;
+        }
     }
 
 

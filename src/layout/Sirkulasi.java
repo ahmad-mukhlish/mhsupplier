@@ -5,11 +5,9 @@
  */
 package layout;
 
-import dialogue.Edit;
-import dialogue.Hapus;
-import dialogue.Tambah;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import dialogue.sirkulasi.Edit;
+import dialogue.sirkulasi.Hapus;
+import dialogue.sirkulasi.Tambah;
 import java.io.InputStream;
 import static layout.MainFrame.database;
 import static layout.MainFrame.driver;
