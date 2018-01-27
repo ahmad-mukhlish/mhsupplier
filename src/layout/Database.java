@@ -52,6 +52,7 @@ public class Database extends javax.swing.JInternalFrame {
     }
 
     private void backToStart() {
+        minumanTableModel.getDataVector().removeAllElements();
         pembeliTableModel.getDataVector().removeAllElements();
         distributorTableModel.getDataVector().removeAllElements();
 
