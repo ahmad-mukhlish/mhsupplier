@@ -288,9 +288,8 @@ public class EditDataMinuman extends java.awt.Dialog {
                 //remove "-" from kd_min
                 String[] kodes = mDatas[0].split("-") ;
                 mDatas[0] = "" ;
-                for (int i = 0; i < kodes.length ; i++) {
-                    
-                    mDatas[0] += kodes[i] ;
+                for (String kode : kodes) {
+                    mDatas[0] += kode;
                 }
 
                 String SQLUpdate = "UPDATE minuman "

@@ -6,6 +6,7 @@
 package layout;
 
 import dialogue.database.minuman.EditDataMinuman;
+import dialogue.database.minuman.HapusDataMinuman;
 import dialogue.database.minuman.TambahDataMinuman;
 import dialogue.database.orang.EditDataOrang;
 import dialogue.database.orang.HapusDataOrang;
@@ -240,6 +241,9 @@ public class Database extends javax.swing.JInternalFrame {
             }
         });
         HapusMinuman.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HapusMinumanMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 HapusMinumanMouseExited(evt);
             }
@@ -771,6 +775,18 @@ public class Database extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin diedit terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_EditMinumanMouseClicked
+
+    private void HapusMinumanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HapusMinumanMouseClicked
+        if (mMinumanRow != -1) {
+            HapusDataMinuman hapusMinuman = new HapusDataMinuman(null, "Hapus Data Minuman", true, mMinumanData, mMinumanRow);
+            hapusMinuman.setLocationRelativeTo(this);
+            hapusMinuman.setVisible(true);
+            TMinuman.clearSelection();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin dihapus terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_HapusMinumanMouseClicked
 
     private void setTableLoad() {
         try {

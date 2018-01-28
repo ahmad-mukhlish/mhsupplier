@@ -14,6 +14,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import layout.Database;
 import layout.Sirkulasi;
@@ -37,7 +40,8 @@ public class HapusDataMinuman extends java.awt.Dialog {
         mRow = row;
         mDatas = datas;
         initComponents();
-//        EditDataMinuman.showSelected(fNama, fAlamat, fNomor, fUtang, mDatas);
+        TambahDataMinuman.getNamaSupplierToComboBox(comboDistributor);
+        EditDataMinuman.showSelected(fMerk, comboUkuran, comboIsi, fStok, fHarga, fTanggal, comboDistributor, mDatas);
         layout.MainFrame.connect();
     }
 
@@ -49,17 +53,22 @@ public class HapusDataMinuman extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        fAlamat = new javax.swing.JTextArea();
-        fUtang = new javax.swing.JTextField();
+        comboDistributor = new javax.swing.JComboBox<>();
+        comboUkuran = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        batal = new javax.swing.JButton();
-        hapus = new javax.swing.JButton();
-        fNomor = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        fNama = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        hapus = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        fHarga = new javax.swing.JTextField();
+        fTanggal = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
+        comboIsi = new javax.swing.JComboBox<>();
+        fMerk = new javax.swing.JTextField();
+        batal = new javax.swing.JButton();
+        fStok = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(60, 63, 66));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -68,25 +77,31 @@ public class HapusDataMinuman extends java.awt.Dialog {
             }
         });
 
-        jLabel4.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel4.setText("Jumlah Utang");
+        comboDistributor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Distributor" }));
+        comboDistributor.setEnabled(false);
 
-        fAlamat.setEditable(false);
-        fAlamat.setColumns(20);
-        fAlamat.setRows(5);
-        jScrollPane1.setViewportView(fAlamat);
-
-        fUtang.setEditable(false);
-
-        jLabel3.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel3.setText("Alamat");
-
-        batal.setText("Batal");
-        batal.addActionListener(new java.awt.event.ActionListener() {
+        comboUkuran.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Ukuran", "1500", "1200", "660", "Cup" }));
+        comboUkuran.setEnabled(false);
+        comboUkuran.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                batalActionPerformed(evt);
+                comboUkuranActionPerformed(evt);
             }
         });
+
+        jLabel7.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel7.setText("Distributor");
+
+        jLabel6.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel6.setText("Tanggal Masuk");
+
+        jLabel5.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel5.setText("Isi");
+
+        jLabel3.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel3.setText("Ukuran");
+
+        jLabel1.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel1.setText("Merk");
 
         hapus.setText("Hapus");
         hapus.addActionListener(new java.awt.event.ActionListener() {
@@ -95,16 +110,51 @@ public class HapusDataMinuman extends java.awt.Dialog {
             }
         });
 
-        fNomor.setEditable(false);
+        jLabel4.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel4.setText("Harga Barang");
+
+        fHarga.setEditable(false);
+        fHarga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fHargaActionPerformed(evt);
+            }
+        });
+
+        fTanggal.setDateFormatString("dd-MM-yyyy");
+        fTanggal.setEnabled(false);
 
         jLabel2.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel2.setText("Nomor Telepon");
+        jLabel2.setText("Stok");
 
-        fNama.setEditable(false);
-        fNama.setToolTipText("");
+        comboIsi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Isi Perdus", "12", "24", "48" }));
+        comboIsi.setEnabled(false);
+        comboIsi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboIsiActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel1.setText("Nama");
+        fMerk.setEditable(false);
+        fMerk.setToolTipText("");
+        fMerk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fMerkActionPerformed(evt);
+            }
+        });
+
+        batal.setText("Batal");
+        batal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                batalActionPerformed(evt);
+            }
+        });
+
+        fStok.setEditable(false);
+        fStok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fStokActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -122,14 +172,20 @@ public class HapusDataMinuman extends java.awt.Dialog {
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(comboDistributor, 0, 229, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(fNama, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fUtang, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1))
-                    .addComponent(fNomor, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(fMerk, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                        .addComponent(fHarga, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                        .addComponent(fStok, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                        .addComponent(fTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboIsi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboUkuran, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
@@ -137,25 +193,37 @@ public class HapusDataMinuman extends java.awt.Dialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fMerk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(fNomor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3)
+                    .addComponent(comboUkuran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(comboIsi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(fStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(fUtang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(fTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(comboDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(batal)
-                    .addComponent(hapus))
-                .addGap(21, 21, 21))
+                    .addComponent(hapus)
+                    .addComponent(batal))
+                .addContainerGap())
         );
 
         pack();
@@ -169,18 +237,60 @@ public class HapusDataMinuman extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
+    private void comboUkuranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboUkuranActionPerformed
+        comboIsi.requestFocus();
+    }//GEN-LAST:event_comboUkuranActionPerformed
+
+    private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
+        try {
+            Class.forName(MainFrame.driver);
+            Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
+            Statement stt = kon.createStatement();
+         
+
+            //remove "-" from kd_min
+            String[] kodes = mDatas[0].split("-");
+            mDatas[0] = "";
+            for (String kode : kodes) {
+                mDatas[0] += kode;
+            }
+
+            String SQLUpdate = "DELETE from minuman "
+                    + " WHERE kd_min " + " = '" + mDatas[0] + "' ;";
+
+            stt.execute(SQLUpdate);
+
+         
+            Database.minumanTableModel.removeRow(mRow);
+
+            this.dispose();
+
+        } catch (ClassNotFoundException | NumberFormatException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Terjadi kesalahan", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            System.out.println(ex.getMessage());
+
+        }
+    }//GEN-LAST:event_hapusActionPerformed
+
+    private void fHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fHargaActionPerformed
+        hapusActionPerformed(evt);
+    }//GEN-LAST:event_fHargaActionPerformed
+
+    private void comboIsiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIsiActionPerformed
+        fStok.requestFocus();
+    }//GEN-LAST:event_comboIsiActionPerformed
+
+    private void fMerkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fMerkActionPerformed
+        comboUkuran.requestFocus();
+    }//GEN-LAST:event_fMerkActionPerformed
+
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         this.dispose();
     }//GEN-LAST:event_batalActionPerformed
 
-    private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
-
-//        try  catch (ClassNotFoundException | NumberFormatException | SQLException ex) {
-//            JOptionPane.showMessageDialog(this, "Terjadi kesalahan", "Peringatan", JOptionPane.WARNING_MESSAGE);
-//            System.out.println(ex.getMessage());
-//        }
-
-    }//GEN-LAST:event_hapusActionPerformed
+    private void fStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fStokActionPerformed
+        fHarga.requestFocus();
+    }//GEN-LAST:event_fStokActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,15 +311,20 @@ public class HapusDataMinuman extends java.awt.Dialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batal;
-    private javax.swing.JTextArea fAlamat;
-    private javax.swing.JTextField fNama;
-    private javax.swing.JTextField fNomor;
-    private javax.swing.JTextField fUtang;
+    private javax.swing.JComboBox<String> comboDistributor;
+    private javax.swing.JComboBox<String> comboIsi;
+    private javax.swing.JComboBox<String> comboUkuran;
+    private javax.swing.JTextField fHarga;
+    private javax.swing.JTextField fMerk;
+    private javax.swing.JTextField fStok;
+    private com.toedter.calendar.JDateChooser fTanggal;
     private javax.swing.JButton hapus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 }
