@@ -5,6 +5,7 @@
  */
 package dialogue.database.minuman;
 
+import com.toedter.calendar.JDateChooser;
 import dialogue.database.orang.*;
 import dialogue.sirkulasi.*;
 import layout.MainFrame;
@@ -16,8 +17,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -43,9 +49,10 @@ public class EditDataMinuman extends java.awt.Dialog {
         mRow = row;
         mDatas = datas;
         initComponents();
-        showSelected(fNama, fAlamat, fNomor, fUtang, mDatas);
+        TambahDataMinuman.getNamaSupplierToComboBox(comboDistributor);
+        this.showSelected(fMerk, comboUkuran, comboIsi, fStok, fHarga, fTanggal, comboDistributor, mDatas);
         layout.MainFrame.connect();
-        fUtang.addKeyListener(new KeyListener() {
+        fHarga.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -57,7 +64,7 @@ public class EditDataMinuman extends java.awt.Dialog {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                fUtang.setText(formatter(EditDataMinuman.takeNominal(fUtang.getText())));
+                fHarga.setText(formatter(EditDataMinuman.takeNominal(fHarga.getText())));
             }
         });
     }
@@ -70,17 +77,22 @@ public class EditDataMinuman extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        fAlamat = new javax.swing.JTextArea();
-        fUtang = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        edit = new javax.swing.JButton();
-        batal = new javax.swing.JButton();
-        fNomor = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        fNama = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        fStok = new javax.swing.JTextField();
+        edit = new javax.swing.JButton();
+        fMerk = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        batal = new javax.swing.JButton();
+        comboIsi = new javax.swing.JComboBox<>();
+        fTanggal = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
+        comboUkuran = new javax.swing.JComboBox<>();
+        comboDistributor = new javax.swing.JComboBox<>();
+        fHarga = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(60, 63, 66));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -89,21 +101,23 @@ public class EditDataMinuman extends java.awt.Dialog {
             }
         });
 
-        fAlamat.setColumns(20);
-        fAlamat.setRows(5);
-        jScrollPane1.setViewportView(fAlamat);
+        jLabel1.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel1.setText("Merk");
 
-        fUtang.addActionListener(new java.awt.event.ActionListener() {
+        jLabel7.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel7.setText("Distributor");
+
+        jLabel6.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel6.setText("Tanggal Masuk");
+
+        jLabel2.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel2.setText("Stok");
+
+        fStok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fUtangActionPerformed(evt);
+                fStokActionPerformed(evt);
             }
         });
-
-        jLabel4.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel4.setText("Jumlah Utang");
-
-        jLabel3.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel3.setText("Alamat");
 
         edit.setText("Edit");
         edit.addActionListener(new java.awt.event.ActionListener() {
@@ -112,6 +126,19 @@ public class EditDataMinuman extends java.awt.Dialog {
             }
         });
 
+        fMerk.setToolTipText("");
+        fMerk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fMerkActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel4.setText("Harga Barang");
+
+        jLabel5.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel5.setText("Isi");
+
         batal.setText("Batal");
         batal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,24 +146,32 @@ public class EditDataMinuman extends java.awt.Dialog {
             }
         });
 
-        fNomor.addActionListener(new java.awt.event.ActionListener() {
+        comboIsi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Isi Perdus", "12", "24", "48" }));
+        comboIsi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fNomorActionPerformed(evt);
+                comboIsiActionPerformed(evt);
             }
         });
 
-        jLabel2.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel2.setText("Nomor Telepon");
+        fTanggal.setDateFormatString("dd-MM-yyyy");
 
-        fNama.setToolTipText("");
-        fNama.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel3.setText("Ukuran");
+
+        comboUkuran.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Ukuran", "1500", "1200", "660", "Cup" }));
+        comboUkuran.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fNamaActionPerformed(evt);
+                comboUkuranActionPerformed(evt);
             }
         });
 
-        jLabel1.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel1.setText("Nama");
+        comboDistributor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Distributor" }));
+
+        fHarga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fHargaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -154,14 +189,20 @@ public class EditDataMinuman extends java.awt.Dialog {
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(comboDistributor, 0, 229, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(fNama, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fUtang, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1))
-                    .addComponent(fNomor, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(fMerk, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                        .addComponent(fHarga, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                        .addComponent(fStok, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                        .addComponent(fTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboIsi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboUkuran, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
@@ -169,25 +210,37 @@ public class EditDataMinuman extends java.awt.Dialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fMerk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(fNomor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3)
+                    .addComponent(comboUkuran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(comboIsi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(fStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(fUtang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(fTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(batal)
-                    .addComponent(edit))
-                .addGap(21, 21, 21))
+                    .addComponent(jLabel7)
+                    .addComponent(comboDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(edit)
+                    .addComponent(batal))
+                .addContainerGap())
         );
 
         pack();
@@ -201,88 +254,110 @@ public class EditDataMinuman extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void fUtangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fUtangActionPerformed
-        editActionPerformed(evt);
-    }//GEN-LAST:event_fUtangActionPerformed
+    private void fStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fStokActionPerformed
+        fHarga.requestFocus();
+    }//GEN-LAST:event_fStokActionPerformed
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-        if (fNama.getText().isEmpty() || fNomor.getText().isEmpty()
-                || fAlamat.getText().isEmpty() || fUtang.getText().isEmpty()) {
+        if (fMerk.getText().isEmpty()
+                || comboUkuran.getSelectedIndex() == 0
+                || comboIsi.getSelectedIndex() == 0
+                || fStok.getText().isEmpty()
+                || fTanggal.getDate() == null
+                || fHarga.getText().isEmpty()
+                || comboDistributor.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Data tidak boleh kosong, silakan coba lagi", "Peringatan", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
                 Class.forName(MainFrame.driver);
                 Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
                 Statement stt = kon.createStatement();
-                String[] data = new String[5];
+                String[] data = new String[8];
 
-                data[1] = fNama.getText();
-                data[2] = fAlamat.getText();
-                data[3] = fNomor.getText();
-                data[4] = EditDataMinuman.takeNominal(fUtang.getText());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-                String table, kode, nama;
-
-                if (mTitle.contains("Distributor")) {
-                    table = "distributor";
-                    kode = "kd_dis";
-                    nama = "nama_dis";
-
-                } else {
-                    table = "pembeli";
-                    kode = "kd_pbl";
-                    nama = "nama_pbl";
+                data[0] = TambahDataMinuman.generateKodeMinuman(fMerk.getText(), comboUkuran.getSelectedIndex(), fTanggal.getDate());
+                data[1] = fMerk.getText();
+                data[2] = comboUkuran.getSelectedItem().toString();
+                data[3] = comboIsi.getSelectedItem().toString();
+                data[4] = fStok.getText();
+                data[5] = EditDataOrang.takeNominal(fHarga.getText());
+                data[6] = sdf.format(fTanggal.getDate());
+                data[7] = comboDistributor.getSelectedIndex() + "";
+                
+                //remove "-" from kd_min
+                String[] kodes = mDatas[0].split("-") ;
+                mDatas[0] = "" ;
+                for (int i = 0; i < kodes.length ; i++) {
+                    
+                    mDatas[0] += kodes[i] ;
                 }
 
-                String SQLUpdate = "UPDATE " + table + " "
-                        + "SET " + nama + " = '" + data[1] + "', "
-                        + "alamat = '" + data[2] + "', "
-                        + "no_telp = '" + data[3] + "', "
-                        + "total_hutang = '" + data[4] + "' "
-                        + " WHERE " + kode + " = " + Integer.parseInt(mDatas[0].substring(4)) + ";";
+                String SQLUpdate = "UPDATE minuman "
+                        + "SET kd_min = '" + data[0] + "', "
+                        + "nama_min = '" + data[1] + "', "
+                        + "ukuran = '" + data[2] + "', "
+                        + "isi = '" + data[3] + "', "
+                        + "stok = '" + data[4] + "', "
+                        + "harga_beli = '" + data[5] + "', "
+                        + "tgl_masuk = '" + data[6] + "', "
+                        + "kd_dis = '" + data[7] + "' "
+                        + " WHERE kd_min " + " = '" + mDatas[0] + "' ;";
 
                 stt.execute(SQLUpdate);
-                String SQLGetNumber = "SELECT " + kode + " FROM " + table + " WHERE " + nama + " = '" + data[1] + "' ;";
-                ResultSet res = stt.executeQuery(SQLGetNumber);
 
-                while (res.next()) {
-                    data[0] = res.getString(1);
-                }
+                //reformat data to frontend
+                data[0] = data[0].substring(0, 3) + "-"
+                        + data[0].substring(3, 7) + "-" + data[0].substring(7, 13);
 
-                data[4] = MainFrame.formatter(data[4]);
+                data[2] = data[2] + " ml";
 
-                if (table.equals("distributor")) {
-                    data[0] = Database.koder("DIS", Integer.parseInt(data[0]));
-                    Database.distributorTableModel.insertRow(mRow, data);
-                    Database.distributorTableModel.removeRow(mRow + 1);
+                data[5] = MainFrame.formatter(data[5]);
 
-                } else {
-                    data[0] = Database.koder("PBL", Integer.parseInt(data[0]));
-                    Database.pembeliTableModel.insertRow(mRow, data);
-                    Database.pembeliTableModel.removeRow(mRow + 1);
+                DateFormat df
+                        = new SimpleDateFormat("dd MMMM yyyy", new Locale("in", "ID"));
 
-                }
+                DateFormat sqlDateFormat
+                        = new SimpleDateFormat("yyyy-MM-dd");
+
+                data[6] = df.format(sqlDateFormat.parse(data[6]));
+
+                data[7] = comboDistributor.getSelectedItem().toString();
+
+                Database.minumanTableModel.insertRow(mRow, data);
+                Database.minumanTableModel.removeRow(mRow + 1);
 
                 this.dispose();
 
             } catch (ClassNotFoundException | NumberFormatException | SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 System.out.println(ex.getMessage());
+
+            } catch (ParseException ex) {
+                Logger.getLogger(TambahDataMinuman.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_editActionPerformed
+
+    private void fMerkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fMerkActionPerformed
+        comboUkuran.requestFocus();
+    }//GEN-LAST:event_fMerkActionPerformed
 
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         this.dispose();
     }//GEN-LAST:event_batalActionPerformed
 
-    private void fNomorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNomorActionPerformed
-        fUtang.requestFocus();
-    }//GEN-LAST:event_fNomorActionPerformed
+    private void comboIsiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIsiActionPerformed
+        fStok.requestFocus();
+    }//GEN-LAST:event_comboIsiActionPerformed
 
-    private void fNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNamaActionPerformed
-        fAlamat.requestFocus();
-    }//GEN-LAST:event_fNamaActionPerformed
+    private void comboUkuranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboUkuranActionPerformed
+        comboIsi.requestFocus();
+    }//GEN-LAST:event_comboUkuranActionPerformed
+
+    private void fHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fHargaActionPerformed
+        editActionPerformed(evt);
+    }//GEN-LAST:event_fHargaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -300,11 +375,26 @@ public class EditDataMinuman extends java.awt.Dialog {
         });
     }
 
-    public static void showSelected(JTextField fNama, JTextArea fAlamat, JTextField fNomor, JTextField fUtang, String[] datas) {
-        fNama.setText(datas[1]);
-        fAlamat.setText((datas[2]));
-        fNomor.setText(datas[3]);
-        fUtang.setText(datas[4]);
+    public static void showSelected(JTextField fMerk, JComboBox comboUkuran, JComboBox comboIsi,
+            JTextField fStok, JTextField fHarga, JDateChooser fTanggal, JComboBox comboDistributor,
+            String[] datas) {
+
+        fMerk.setText(datas[1]);
+        comboUkuran.setSelectedItem(datas[2].substring(0, datas[2].length() - 3));
+        comboIsi.setSelectedItem(datas[3]);
+        fStok.setText(datas[4]);
+        fHarga.setText(datas[5]);
+
+        DateFormat df
+                = new SimpleDateFormat("dd MMMM yyyy", new Locale("in", "ID"));
+
+        try {
+            fTanggal.setDate(df.parse(datas[6]));
+        } catch (ParseException ex) {
+            Logger.getLogger(EditDataMinuman.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        comboDistributor.setSelectedItem(datas[7]);
     }
 
     public static String takeNominal(String nominal) {
@@ -320,15 +410,20 @@ public class EditDataMinuman extends java.awt.Dialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batal;
+    private javax.swing.JComboBox<String> comboDistributor;
+    private javax.swing.JComboBox<String> comboIsi;
+    private javax.swing.JComboBox<String> comboUkuran;
     private javax.swing.JButton edit;
-    private javax.swing.JTextArea fAlamat;
-    private javax.swing.JTextField fNama;
-    private javax.swing.JTextField fNomor;
-    private javax.swing.JTextField fUtang;
+    private javax.swing.JTextField fHarga;
+    private javax.swing.JTextField fMerk;
+    private javax.swing.JTextField fStok;
+    private com.toedter.calendar.JDateChooser fTanggal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 }

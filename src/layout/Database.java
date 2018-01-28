@@ -5,6 +5,7 @@
  */
 package layout;
 
+import dialogue.database.minuman.EditDataMinuman;
 import dialogue.database.minuman.TambahDataMinuman;
 import dialogue.database.orang.EditDataOrang;
 import dialogue.database.orang.HapusDataOrang;
@@ -221,6 +222,9 @@ public class Database extends javax.swing.JInternalFrame {
             }
         });
         EditMinuman.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                EditMinumanMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 EditMinumanMouseExited(evt);
             }
@@ -689,16 +693,16 @@ public class Database extends javax.swing.JInternalFrame {
 
     private void TambahDistributorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahDistributorMouseClicked
         TDistributor.clearSelection();
-        TambahDataOrang tambahIncome = new TambahDataOrang(null, "Tambah Data Distributor", true);
-        tambahIncome.setLocationRelativeTo(this);
-        tambahIncome.setVisible(true);
+        TambahDataOrang tambahDistributor = new TambahDataOrang(null, "Tambah Data Distributor", true);
+        tambahDistributor.setLocationRelativeTo(this);
+        tambahDistributor.setVisible(true);
     }//GEN-LAST:event_TambahDistributorMouseClicked
 
     private void EditDistributorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditDistributorMouseClicked
         if (mDistributorRow != -1) {
-            EditDataOrang editIncome = new EditDataOrang(null, "Edit Data Distributor", true, mDistributorData, mDistributorRow);
-            editIncome.setLocationRelativeTo(this);
-            editIncome.setVisible(true);
+            EditDataOrang editDistributor = new EditDataOrang(null, "Edit Data Distributor", true, mDistributorData, mDistributorRow);
+            editDistributor.setLocationRelativeTo(this);
+            editDistributor.setVisible(true);
             TDistributor.clearSelection();
 
         } else {
@@ -708,9 +712,9 @@ public class Database extends javax.swing.JInternalFrame {
 
     private void HapusDistributorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HapusDistributorMouseClicked
         if (mDistributorRow != -1) {
-            HapusDataOrang editIncome = new HapusDataOrang(null, "Hapus Data Distributor", true, mDistributorData, mDistributorRow);
-            editIncome.setLocationRelativeTo(this);
-            editIncome.setVisible(true);
+            HapusDataOrang hapusDistributor = new HapusDataOrang(null, "Hapus Data Distributor", true, mDistributorData, mDistributorRow);
+            hapusDistributor.setLocationRelativeTo(this);
+            hapusDistributor.setVisible(true);
             TDistributor.clearSelection();
 
         } else {
@@ -720,16 +724,16 @@ public class Database extends javax.swing.JInternalFrame {
 
     private void TambahPembeliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahPembeliMouseClicked
         TPembeli.clearSelection();
-        TambahDataOrang tambahIncome = new TambahDataOrang(null, "Tambah Data Pembeli", true);
-        tambahIncome.setLocationRelativeTo(this);
-        tambahIncome.setVisible(true);
+        TambahDataOrang tambahPembeli = new TambahDataOrang(null, "Tambah Data Pembeli", true);
+        tambahPembeli.setLocationRelativeTo(this);
+        tambahPembeli.setVisible(true);
     }//GEN-LAST:event_TambahPembeliMouseClicked
 
     private void EditPembeliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditPembeliMouseClicked
         if (mPembeliRow != -1) {
-            EditDataOrang editIncome = new EditDataOrang(null, "Edit Data Pembeli", true, mPembeliData, mPembeliRow);
-            editIncome.setLocationRelativeTo(this);
-            editIncome.setVisible(true);
+            EditDataOrang editPembeli = new EditDataOrang(null, "Edit Data Pembeli", true, mPembeliData, mPembeliRow);
+            editPembeli.setLocationRelativeTo(this);
+            editPembeli.setVisible(true);
             TPembeli.clearSelection();
 
         } else {
@@ -739,9 +743,9 @@ public class Database extends javax.swing.JInternalFrame {
 
     private void HapusPembeliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HapusPembeliMouseClicked
         if (mPembeliRow != -1) {
-            HapusDataOrang editIncome = new HapusDataOrang(null, "Hapus Data Pembeli", true, mPembeliData, mPembeliRow);
-            editIncome.setLocationRelativeTo(this);
-            editIncome.setVisible(true);
+            HapusDataOrang hapusPembeli = new HapusDataOrang(null, "Hapus Data Pembeli", true, mPembeliData, mPembeliRow);
+            hapusPembeli.setLocationRelativeTo(this);
+            hapusPembeli.setVisible(true);
             TPembeli.clearSelection();
 
         } else {
@@ -751,10 +755,22 @@ public class Database extends javax.swing.JInternalFrame {
 
     private void TambahMinumanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahMinumanMouseClicked
         TMinuman.clearSelection();
-        TambahDataMinuman tambahIncome = new TambahDataMinuman (null, "Tambah Data Minuman", true);
-        tambahIncome.setLocationRelativeTo(this);
-        tambahIncome.setVisible(true);
+        TambahDataMinuman tambahMinuman = new TambahDataMinuman(null, "Tambah Data Minuman", true);
+        tambahMinuman.setLocationRelativeTo(this);
+        tambahMinuman.setVisible(true);
     }//GEN-LAST:event_TambahMinumanMouseClicked
+
+    private void EditMinumanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditMinumanMouseClicked
+        if (mMinumanRow != -1) {
+            EditDataMinuman editMinuman = new EditDataMinuman(null, "Edit Data Minuman", true, mMinumanData, mMinumanRow);
+            editMinuman.setLocationRelativeTo(this);
+            editMinuman.setVisible(true);
+            TMinuman.clearSelection();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin diedit terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_EditMinumanMouseClicked
 
     private void setTableLoad() {
         try {

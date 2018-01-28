@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import layout.Database;
 import layout.Sirkulasi;
@@ -39,7 +40,7 @@ public class TambahDataMinuman extends java.awt.Dialog {
         mTitle = title;
         initComponents();
         MainFrame.connect();
-        getNamaSupplierToComboBox();
+        getNamaSupplierToComboBox(comboDistributor);
         fHarga.setText(" Rp  ");
         fHarga.addKeyListener(new KeyListener() {
             @Override
@@ -272,11 +273,7 @@ public class TambahDataMinuman extends java.awt.Dialog {
                 data[6] = sdf.format(fTanggal.getDate());
                 data[7] = comboDistributor.getSelectedIndex() + "";
 
-                for (int k = 0; k > data.length; k++) {
-
-                    System.out.println(data[k]);
-
-                }
+            
 
                 String SQLInsert = "INSERT into  minuman (kd_min , nama_min, ukuran, isi, stok, harga_beli, tgl_masuk, kd_dis) VALUES "
                         + "('" + data[0]
@@ -362,7 +359,7 @@ public class TambahDataMinuman extends java.awt.Dialog {
         });
     }
 
-    private String generateKodeMinuman(String merk, int indexUkuran, java.util.Date tanggal) {
+    public static String generateKodeMinuman(String merk, int indexUkuran, java.util.Date tanggal) {
 
         String hasil = merk.substring(0, 3).toUpperCase();
 
@@ -401,7 +398,7 @@ public class TambahDataMinuman extends java.awt.Dialog {
         return hasil;
     }
 
-    private void getNamaSupplierToComboBox() {
+    public static void getNamaSupplierToComboBox(JComboBox comboBox) {
         try {
             Class.forName(MainFrame.driver);
             Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
@@ -411,7 +408,7 @@ public class TambahDataMinuman extends java.awt.Dialog {
             ResultSet res = stt.executeQuery(SQL);
 
             while (res.next()) {
-                comboDistributor.addItem(res.getString(2));
+                comboBox.addItem(res.getString(2));
 
             }
             res.close();

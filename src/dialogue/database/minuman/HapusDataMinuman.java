@@ -37,7 +37,7 @@ public class HapusDataMinuman extends java.awt.Dialog {
         mRow = row;
         mDatas = datas;
         initComponents();
-        EditDataMinuman.showSelected(fNama, fAlamat, fNomor, fUtang, mDatas);
+//        EditDataMinuman.showSelected(fNama, fAlamat, fNomor, fUtang, mDatas);
         layout.MainFrame.connect();
     }
 
