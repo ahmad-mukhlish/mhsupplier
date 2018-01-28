@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dialogue.database.distributor;
+package dialogue.sirkulasi;
 
-import dialogue.sirkulasi.*;
 import layout.MainFrame;
 import static layout.MainFrame.formatter;
 import java.sql.Connection;
@@ -19,7 +18,7 @@ import layout.Sirkulasi;
  *
  * @author GOODWARE1
  */
-public class Hapus extends java.awt.Dialog {
+public class HapusSirkulasi extends java.awt.Dialog {
 
     /**
      * Creates new form Edit
@@ -28,13 +27,13 @@ public class Hapus extends java.awt.Dialog {
     private static int mRow;
     private static String[] mDatas;
 
-    public Hapus(java.awt.Frame parent, String title, boolean modal, String[] datas, int row) {
+    public HapusSirkulasi(java.awt.Frame parent, String title, boolean modal, String[] datas, int row) {
         super(parent, title, modal);
         mTitle = title;
         mRow = row;
         mDatas = datas;
         initComponents();
-        Edit.showSelected(fInfo, fNominal, mDatas);
+        EditSirkulasi.showSelected(fInfo, fNominal, mDatas);
         layout.MainFrame.connect();
     }
 
@@ -150,7 +149,7 @@ public class Hapus extends java.awt.Dialog {
                 String[] data = new String[3];
 
                 data[1] = fInfo.getText();
-                data[2] = Edit.takeNominal(fNominal.getText());
+                data[2] = EditSirkulasi.takeNominal(fNominal.getText());
 
                 String table;
 
@@ -172,10 +171,10 @@ public class Hapus extends java.awt.Dialog {
                 }
 
                 if (table.equals("pemasukan")) {
-                    Sirkulasi.mTotalIncome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
+                    Sirkulasi.mTotalIncome -= Long.parseLong(EditSirkulasi.takeNominal(mDatas[2]));
                     Sirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + Sirkulasi.mTotalIncome));
                 } else {
-                    Sirkulasi.mTotalOutcome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
+                    Sirkulasi.mTotalOutcome -= Long.parseLong(EditSirkulasi.takeNominal(mDatas[2]));
                     Sirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + Sirkulasi.mTotalOutcome));
 
                 }
@@ -213,7 +212,7 @@ public class Hapus extends java.awt.Dialog {
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-            Edit dialog = new Edit(new java.awt.Frame(), mTitle, true, mDatas, mRow);
+            EditSirkulasi dialog = new EditSirkulasi(new java.awt.Frame(), mTitle, true, mDatas, mRow);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {

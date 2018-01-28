@@ -7,18 +7,21 @@ package dialogue.sirkulasi;
 
 import layout.MainFrame;
 import static layout.MainFrame.formatter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import layout.Sirkulasi;
 
 /**
  *
  * @author GOODWARE1
  */
-public class Hapus extends java.awt.Dialog {
+public class EditSirkulasi extends java.awt.Dialog {
 
     /**
      * Creates new form Edit
@@ -27,14 +30,31 @@ public class Hapus extends java.awt.Dialog {
     private static int mRow;
     private static String[] mDatas;
 
-    public Hapus(java.awt.Frame parent, String title, boolean modal, String[] datas, int row) {
+    public EditSirkulasi(java.awt.Frame parent, String title, boolean modal, String[] datas, int row) {
         super(parent, title, modal);
         mTitle = title;
         mRow = row;
         mDatas = datas;
         initComponents();
-        Edit.showSelected(fInfo, fNominal, mDatas);
+        showSelected(fInfo, fNominal, mDatas);
         layout.MainFrame.connect();
+        fNominal.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                fNominal.setText(formatter(EditSirkulasi.takeNominal(fNominal.getText())));
+//              fInfo.setText(formatter(Edit.takeNominal(fNominal.getText())));
+
+            }
+        });
     }
 
     /**
@@ -50,7 +70,7 @@ public class Hapus extends java.awt.Dialog {
         jLabel2 = new javax.swing.JLabel();
         fNominal = new javax.swing.JTextField();
         batal = new javax.swing.JButton();
-        hapus = new javax.swing.JButton();
+        edit = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(60, 63, 66));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -62,17 +82,21 @@ public class Hapus extends java.awt.Dialog {
         jLabel1.setForeground(new java.awt.Color(187, 187, 188));
         jLabel1.setText("Keterangan");
 
-        fInfo.setEditable(false);
-        fInfo.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        fInfo.setForeground(new java.awt.Color(153, 153, 153));
         fInfo.setToolTipText("");
+        fInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fInfoActionPerformed(evt);
+            }
+        });
 
         jLabel2.setForeground(new java.awt.Color(187, 187, 188));
         jLabel2.setText("Nominal");
 
-        fNominal.setEditable(false);
-        fNominal.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        fNominal.setForeground(new java.awt.Color(153, 153, 153));
+        fNominal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fNominalActionPerformed(evt);
+            }
+        });
 
         batal.setText("Batal");
         batal.addActionListener(new java.awt.event.ActionListener() {
@@ -81,10 +105,10 @@ public class Hapus extends java.awt.Dialog {
             }
         });
 
-        hapus.setText("Hapus");
-        hapus.addActionListener(new java.awt.event.ActionListener() {
+        edit.setText("Edit");
+        edit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hapusActionPerformed(evt);
+                editActionPerformed(evt);
             }
         });
 
@@ -104,7 +128,7 @@ public class Hapus extends java.awt.Dialog {
                 .addGap(41, 41, 41))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(batal, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61))
@@ -123,7 +147,7 @@ public class Hapus extends java.awt.Dialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(batal)
-                    .addComponent(hapus))
+                    .addComponent(edit))
                 .addGap(21, 21, 21))
         );
 
@@ -138,7 +162,7 @@ public class Hapus extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
+    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         if (fInfo.getText().isEmpty() || fNominal.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Data tidak boleh kosong, silakan coba lagi", "Peringatan", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -149,7 +173,7 @@ public class Hapus extends java.awt.Dialog {
                 String[] data = new String[3];
 
                 data[1] = fInfo.getText();
-                data[2] = Edit.takeNominal(fNominal.getText());
+                data[2] = EditSirkulasi.takeNominal(fNominal.getText());
 
                 String table;
 
@@ -159,7 +183,8 @@ public class Hapus extends java.awt.Dialog {
                     table = "pengeluaran";
                 }
 
-                String SQLUpdate = "DELETE FROM " + table + " "
+                String SQLUpdate = "UPDATE " + table + " "
+                        + "SET Info = '" + data[1] + "', Uang = " + data[2]
                         + " WHERE Nomor = " + mDatas[0] + ";";
                 String SQLGetNumber = "SELECT Nomor FROM " + table + " WHERE Info='" + data[1] + "' ";
 
@@ -171,10 +196,12 @@ public class Hapus extends java.awt.Dialog {
                 }
 
                 if (table.equals("pemasukan")) {
-                    Sirkulasi.mTotalIncome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
+                    Sirkulasi.mTotalIncome -= Long.parseLong(takeNominal(mDatas[2]));
+                    Sirkulasi.mTotalIncome += Long.parseLong(data[2]);
                     Sirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + Sirkulasi.mTotalIncome));
                 } else {
-                    Sirkulasi.mTotalOutcome -= Long.parseLong(Edit.takeNominal(mDatas[2]));
+                    Sirkulasi.mTotalOutcome -= Long.parseLong(takeNominal(mDatas[2]));
+                    Sirkulasi.mTotalOutcome += Long.parseLong(data[2]);
                     Sirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + Sirkulasi.mTotalOutcome));
 
                 }
@@ -183,11 +210,13 @@ public class Hapus extends java.awt.Dialog {
 
                 if (table.equals("pemasukan")) {
 
-                    Sirkulasi.incomeTableModel.removeRow(mRow);
+                    Sirkulasi.incomeTableModel.insertRow(mRow, data);
+                    Sirkulasi.incomeTableModel.removeRow(mRow + 1);
 
                 } else {
 
-                    Sirkulasi.outcomeTableModel.removeRow(mRow);
+                    Sirkulasi.outcomeTableModel.insertRow(mRow, data);
+                    Sirkulasi.outcomeTableModel.removeRow(mRow + 1);
 
                 }
 
@@ -200,19 +229,29 @@ public class Hapus extends java.awt.Dialog {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 System.out.println(ex.getMessage());
             }
+            
+              
         }
-    }//GEN-LAST:event_hapusActionPerformed
+    }//GEN-LAST:event_editActionPerformed
 
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         this.dispose();
     }//GEN-LAST:event_batalActionPerformed
+
+    private void fNominalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNominalActionPerformed
+        editActionPerformed(evt);
+    }//GEN-LAST:event_fNominalActionPerformed
+
+    private void fInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fInfoActionPerformed
+        fNominal.requestFocus();
+    }//GEN-LAST:event_fInfoActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-            Edit dialog = new Edit(new java.awt.Frame(), mTitle, true, mDatas, mRow);
+            EditSirkulasi dialog = new EditSirkulasi(new java.awt.Frame(), mTitle, true, mDatas, mRow);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -223,12 +262,27 @@ public class Hapus extends java.awt.Dialog {
         });
     }
 
+    public static void showSelected(JTextField infoField, JTextField nominalField, String[] datas) {
+        infoField.setText(datas[1]);
+        nominalField.setText((datas[2]));
+    }
+
+    public static String takeNominal(String nominal) {
+        String[] hasilArray = nominal.substring(4).split("\\.");
+        String hasil = "";
+        for (int i = 0; i < hasilArray.length; i++) {
+            hasil += hasilArray[i];
+        }
+
+        return hasil;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batal;
+    private javax.swing.JButton edit;
     private javax.swing.JTextField fInfo;
     private javax.swing.JTextField fNominal;
-    private javax.swing.JButton hapus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables

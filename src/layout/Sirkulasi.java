@@ -5,9 +5,9 @@
  */
 package layout;
 
-import dialogue.sirkulasi.Edit;
-import dialogue.sirkulasi.Hapus;
-import dialogue.sirkulasi.Tambah;
+import dialogue.sirkulasi.EditSirkulasi;
+import dialogue.sirkulasi.HapusSirkulasi;
+import dialogue.sirkulasi.TambahSirkulasi;
 import java.io.InputStream;
 import static layout.MainFrame.database;
 import static layout.MainFrame.driver;
@@ -351,14 +351,14 @@ public class Sirkulasi extends javax.swing.JInternalFrame {
 
     private void AddIncomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddIncomeActionPerformed
         TIncome.clearSelection();
-        Tambah tambahIncome = new Tambah(null, "Tambah Data Pemasukan", true);
+        TambahSirkulasi tambahIncome = new TambahSirkulasi(null, "Tambah Data Pemasukan", true);
         tambahIncome.setLocationRelativeTo(this);
         tambahIncome.setVisible(true);
     }//GEN-LAST:event_AddIncomeActionPerformed
 
     private void EditIncomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditIncomeActionPerformed
         if (IncomeRow != -1) {
-            Edit editIncome = new Edit(null, "Edit Data Pemasukan", true, mIncomeData, IncomeRow);
+            EditSirkulasi editIncome = new EditSirkulasi(null, "Edit Data Pemasukan", true, mIncomeData, IncomeRow);
             editIncome.setLocationRelativeTo(this);
             editIncome.setVisible(true);
             TIncome.clearSelection();
@@ -370,7 +370,7 @@ public class Sirkulasi extends javax.swing.JInternalFrame {
 
     private void DeleteIncomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteIncomeActionPerformed
         if (IncomeRow != -1) {
-            Hapus hapusIncome = new Hapus(null, "Hapus Data Pemasukan", true, mIncomeData, IncomeRow);
+            HapusSirkulasi hapusIncome = new HapusSirkulasi(null, "Hapus Data Pemasukan", true, mIncomeData, IncomeRow);
             hapusIncome.setLocationRelativeTo(this);
             hapusIncome.setVisible(true);
             TIncome.clearSelection();
@@ -382,14 +382,14 @@ public class Sirkulasi extends javax.swing.JInternalFrame {
 
     private void AddOutcomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddOutcomeActionPerformed
         TOutcome.clearSelection();
-        Tambah tambahOutcome = new Tambah(null, "Tambah Data Pengeluaran", true);
+        TambahSirkulasi tambahOutcome = new TambahSirkulasi(null, "Tambah Data Pengeluaran", true);
         tambahOutcome.setLocationRelativeTo(this);
         tambahOutcome.setVisible(true);
     }//GEN-LAST:event_AddOutcomeActionPerformed
 
     private void EditOutcomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditOutcomeActionPerformed
         if (OutcomeRow != -1) {
-            Edit editOutcome = new Edit(null, "Edit Data Pengeluaran", true, mOutcomeData, OutcomeRow);
+            EditSirkulasi editOutcome = new EditSirkulasi(null, "Edit Data Pengeluaran", true, mOutcomeData, OutcomeRow);
             editOutcome.setLocationRelativeTo(this);
             editOutcome.setVisible(true);
             TOutcome.clearSelection();
@@ -401,7 +401,7 @@ public class Sirkulasi extends javax.swing.JInternalFrame {
 
     private void DeleteOutcomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteOutcomeActionPerformed
         if (OutcomeRow != -1) {
-            Hapus hapusOutcome = new Hapus(null, "Hapus Data Pengeluaran", true, mOutcomeData, OutcomeRow);
+            HapusSirkulasi hapusOutcome = new HapusSirkulasi(null, "Hapus Data Pengeluaran", true, mOutcomeData, OutcomeRow);
             hapusOutcome.setLocationRelativeTo(this);
             hapusOutcome.setVisible(true);
             TOutcome.clearSelection();

@@ -18,14 +18,14 @@ import layout.Sirkulasi;
  *
  * @author GOODWARE1
  */
-public class Tambah extends java.awt.Dialog {
+public class TambahSirkulasi extends java.awt.Dialog {
 
     /**
      * Creates new form 
      */
     private static String mTitle;
 
-    public Tambah(java.awt.Frame parent, String title, boolean modal) {
+    public TambahSirkulasi(java.awt.Frame parent, String title, boolean modal) {
         super(parent, title, modal);
         mTitle = title;
         initComponents();
@@ -43,7 +43,7 @@ public class Tambah extends java.awt.Dialog {
 
             @Override
             public void keyReleased(KeyEvent e) {
-              fNominal.setText(formatter(Edit.takeNominal(fNominal.getText())));
+              fNominal.setText(formatter(EditSirkulasi.takeNominal(fNominal.getText())));
 //              fInfo.setText(formatter(Edit.takeNominal(fNominal.getText())));
                        
             }
@@ -166,7 +166,7 @@ public class Tambah extends java.awt.Dialog {
                 String[] data = new String[3];
 
                 data[1] = fInfo.getText();
-                data[2] = Edit.takeNominal(fNominal.getText());
+                data[2] = EditSirkulasi.takeNominal(fNominal.getText());
                 
                 String table;
 
@@ -233,7 +233,7 @@ public class Tambah extends java.awt.Dialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Tambah dialog = new Tambah(new java.awt.Frame(), mTitle, true);
+                TambahSirkulasi dialog = new TambahSirkulasi(new java.awt.Frame(), mTitle, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);

@@ -5,7 +5,10 @@
  */
 package layout;
 
-import dialogue.database.distributor.Tambah;
+import dialogue.database.distributor.EditDataOrang;
+import dialogue.database.distributor.HapusDataOrang;
+import dialogue.database.distributor.TambahDataOrang;
+import dialogue.sirkulasi.EditSirkulasi;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,6 +18,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import static layout.MainFrame.database;
 import static layout.MainFrame.driver;
 import static layout.MainFrame.pass;
@@ -36,11 +41,13 @@ public class Database extends javax.swing.JInternalFrame {
         TDistributor.setModel(distributorTableModel);
         TMinuman.setModel(minumanTableModel);
         MainFrame.connect();
+        getDatums();
         backToStart();
         setTableLoad();
 
     }
 
+    private int mPembeliRow = -1, mDistributorRow = -1, mMinumanRow = -1;
     private String[] mPembeliData = new String[5];
     private String[] mDistributorData = new String[5];
     private String[] mMinumanData = new String[8];
@@ -311,6 +318,9 @@ public class Database extends javax.swing.JInternalFrame {
             }
         });
         EditDistributor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                EditDistributorMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 EditDistributorMouseExited(evt);
             }
@@ -326,6 +336,9 @@ public class Database extends javax.swing.JInternalFrame {
             }
         });
         HapusDistributor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HapusDistributorMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 HapusDistributorMouseExited(evt);
             }
@@ -430,6 +443,9 @@ public class Database extends javax.swing.JInternalFrame {
             }
         });
         TambahPembeli.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TambahPembeliMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 TambahPembeliMouseExited(evt);
             }
@@ -445,6 +461,9 @@ public class Database extends javax.swing.JInternalFrame {
             }
         });
         EditPembeli.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                EditPembeliMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 EditPembeliMouseExited(evt);
             }
@@ -460,6 +479,9 @@ public class Database extends javax.swing.JInternalFrame {
             }
         });
         HapusPembeli.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HapusPembeliMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 HapusPembeliMouseExited(evt);
             }
@@ -663,10 +685,65 @@ public class Database extends javax.swing.JInternalFrame {
 
     private void TambahDistributorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahDistributorMouseClicked
         TDistributor.clearSelection();
-        Tambah tambahIncome = new Tambah(null, "Tambah Data Distributor", true);
+        TambahDataOrang tambahIncome = new TambahDataOrang(null, "Tambah Data Distributor", true);
         tambahIncome.setLocationRelativeTo(this);
         tambahIncome.setVisible(true);
     }//GEN-LAST:event_TambahDistributorMouseClicked
+
+    private void EditDistributorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditDistributorMouseClicked
+        if (mDistributorRow != -1) {
+            EditDataOrang editIncome = new EditDataOrang(null, "Edit Data Distributor", true, mDistributorData, mDistributorRow);
+            editIncome.setLocationRelativeTo(this);
+            editIncome.setVisible(true);
+            TDistributor.clearSelection();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin diedit terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_EditDistributorMouseClicked
+
+    private void HapusDistributorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HapusDistributorMouseClicked
+        if (mDistributorRow != -1) {
+            HapusDataOrang editIncome = new HapusDataOrang(null, "Hapus Data Distributor", true, mDistributorData, mDistributorRow);
+            editIncome.setLocationRelativeTo(this);
+            editIncome.setVisible(true);
+            TDistributor.clearSelection();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin dihapus terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_HapusDistributorMouseClicked
+
+    private void TambahPembeliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahPembeliMouseClicked
+        TPembeli.clearSelection();
+        TambahDataOrang tambahIncome = new TambahDataOrang(null, "Tambah Data Pembeli", true);
+        tambahIncome.setLocationRelativeTo(this);
+        tambahIncome.setVisible(true);
+    }//GEN-LAST:event_TambahPembeliMouseClicked
+
+    private void EditPembeliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditPembeliMouseClicked
+        if (mPembeliRow != -1) {
+            EditDataOrang editIncome = new EditDataOrang(null, "Edit Data Pembeli", true, mPembeliData, mPembeliRow);
+            editIncome.setLocationRelativeTo(this);
+            editIncome.setVisible(true);
+            TPembeli.clearSelection();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin diedit terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_EditPembeliMouseClicked
+
+    private void HapusPembeliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HapusPembeliMouseClicked
+        if (mPembeliRow != -1) {
+            HapusDataOrang editIncome = new HapusDataOrang(null, "Hapus Data Pembeli", true, mPembeliData, mPembeliRow);
+            editIncome.setLocationRelativeTo(this);
+            editIncome.setVisible(true);
+            TPembeli.clearSelection();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin dihapus terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_HapusPembeliMouseClicked
 
     private void setTableLoad() {
         try {
@@ -706,6 +783,7 @@ public class Database extends javax.swing.JInternalFrame {
                 distributorTableModel.addRow(mDistributorData);
 
             }
+
             res_dis.close();
             stt_dis.close();
 
@@ -766,7 +844,7 @@ public class Database extends javax.swing.JInternalFrame {
 
     }
 
-    private String koder(String jenis, int kode) {
+    public static String koder(String jenis, int kode) {
 
         if (kode < 10) {
             return jenis + "-00" + kode;
@@ -775,6 +853,58 @@ public class Database extends javax.swing.JInternalFrame {
         } else {
             return jenis + kode;
         }
+    }
+
+    public void getDatums() {
+
+        TPembeli.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                mPembeliRow = TPembeli.getSelectedRow();
+                if (mPembeliRow != -1) {
+                    mPembeliData[0] = TPembeli.getValueAt(mPembeliRow, 0).toString();
+                    mPembeliData[1] = TPembeli.getValueAt(mPembeliRow, 1).toString();
+                    mPembeliData[2] = TPembeli.getValueAt(mPembeliRow, 2).toString();
+                    mPembeliData[3] = TPembeli.getValueAt(mPembeliRow, 3).toString();
+                    mPembeliData[4] = TPembeli.getValueAt(mPembeliRow, 4).toString();
+
+                }
+            }
+        });
+
+        TDistributor.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                mDistributorRow = TDistributor.getSelectedRow();
+                if (mDistributorRow != -1) {
+                    mDistributorData[0] = TDistributor.getValueAt(mDistributorRow, 0).toString();
+                    mDistributorData[1] = TDistributor.getValueAt(mDistributorRow, 1).toString();
+                    mDistributorData[2] = TDistributor.getValueAt(mDistributorRow, 2).toString();
+                    mDistributorData[3] = TDistributor.getValueAt(mDistributorRow, 3).toString();
+                    mDistributorData[4] = TDistributor.getValueAt(mDistributorRow, 4).toString();
+
+                }
+            }
+        });
+
+        TMinuman.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                mMinumanRow = TMinuman.getSelectedRow();
+                if (mMinumanRow != -1) {
+                    mMinumanData[0] = TMinuman.getValueAt(mMinumanRow, 0).toString();
+                    mMinumanData[1] = TMinuman.getValueAt(mMinumanRow, 1).toString();
+                    mMinumanData[2] = TMinuman.getValueAt(mMinumanRow, 2).toString();
+                    mMinumanData[3] = TMinuman.getValueAt(mMinumanRow, 3).toString();
+                    mMinumanData[4] = TMinuman.getValueAt(mMinumanRow, 4).toString();
+                    mMinumanData[5] = TMinuman.getValueAt(mMinumanRow, 5).toString();
+                    mMinumanData[6] = TMinuman.getValueAt(mMinumanRow, 6).toString();
+                    mMinumanData[7] = TMinuman.getValueAt(mMinumanRow, 7).toString();
+
+                }
+            }
+        });
+
     }
 
 
