@@ -3,17 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dialogue.database.distributor;
+package dialogue.database.orang;
 
 import dialogue.sirkulasi.*;
 import layout.MainFrame;
 import static layout.MainFrame.formatter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import layout.Database;
 import layout.Sirkulasi;
 
@@ -21,7 +27,7 @@ import layout.Sirkulasi;
  *
  * @author GOODWARE1
  */
-public class HapusDataOrang extends java.awt.Dialog {
+public class EditDataOrang extends java.awt.Dialog {
 
     /**
      * Creates new form Edit
@@ -30,14 +36,29 @@ public class HapusDataOrang extends java.awt.Dialog {
     private static int mRow;
     private static String[] mDatas;
 
-    public HapusDataOrang(java.awt.Frame parent, String title, boolean modal, String[] datas, int row) {
+    public EditDataOrang(java.awt.Frame parent, String title, boolean modal, String[] datas, int row) {
         super(parent, title, modal);
         mTitle = title;
         mRow = row;
         mDatas = datas;
         initComponents();
-        EditDataOrang.showSelected(fNama, fAlamat, fNomor, fUtang, mDatas);
+        showSelected(fNama, fAlamat, fNomor, fUtang, mDatas);
         layout.MainFrame.connect();
+        fUtang.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                fUtang.setText(formatter(EditDataOrang.takeNominal(fUtang.getText())));
+            }
+        });
     }
 
     /**
@@ -48,13 +69,13 @@ public class HapusDataOrang extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         fAlamat = new javax.swing.JTextArea();
         fUtang = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        edit = new javax.swing.JButton();
         batal = new javax.swing.JButton();
-        hapus = new javax.swing.JButton();
         fNomor = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         fNama = new javax.swing.JTextField();
@@ -67,18 +88,28 @@ public class HapusDataOrang extends java.awt.Dialog {
             }
         });
 
-        jLabel4.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel4.setText("Jumlah Utang");
-
-        fAlamat.setEditable(false);
         fAlamat.setColumns(20);
         fAlamat.setRows(5);
         jScrollPane1.setViewportView(fAlamat);
 
-        fUtang.setEditable(false);
+        fUtang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fUtangActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel4.setText("Jumlah Utang");
 
         jLabel3.setForeground(new java.awt.Color(187, 187, 188));
         jLabel3.setText("Alamat");
+
+        edit.setText("Edit");
+        edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editActionPerformed(evt);
+            }
+        });
 
         batal.setText("Batal");
         batal.addActionListener(new java.awt.event.ActionListener() {
@@ -87,20 +118,21 @@ public class HapusDataOrang extends java.awt.Dialog {
             }
         });
 
-        hapus.setText("Hapus");
-        hapus.addActionListener(new java.awt.event.ActionListener() {
+        fNomor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hapusActionPerformed(evt);
+                fNomorActionPerformed(evt);
             }
         });
-
-        fNomor.setEditable(false);
 
         jLabel2.setForeground(new java.awt.Color(187, 187, 188));
         jLabel2.setText("Nomor Telepon");
 
-        fNama.setEditable(false);
         fNama.setToolTipText("");
+        fNama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fNamaActionPerformed(evt);
+            }
+        });
 
         jLabel1.setForeground(new java.awt.Color(187, 187, 188));
         jLabel1.setText("Nama");
@@ -111,7 +143,7 @@ public class HapusDataOrang extends java.awt.Dialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(batal, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61))
@@ -153,7 +185,7 @@ public class HapusDataOrang extends java.awt.Dialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(batal)
-                    .addComponent(hapus))
+                    .addComponent(edit))
                 .addGap(21, 21, 21))
         );
 
@@ -168,47 +200,88 @@ public class HapusDataOrang extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
+    private void fUtangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fUtangActionPerformed
+        editActionPerformed(evt);
+    }//GEN-LAST:event_fUtangActionPerformed
+
+    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
+        if (fNama.getText().isEmpty() || fNomor.getText().isEmpty()
+                || fAlamat.getText().isEmpty() || fUtang.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Data tidak boleh kosong, silakan coba lagi", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                Class.forName(MainFrame.driver);
+                Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
+                Statement stt = kon.createStatement();
+                String[] data = new String[5];
+
+                data[1] = fNama.getText();
+                data[2] = fAlamat.getText();
+                data[3] = fNomor.getText();
+                data[4] = EditDataOrang.takeNominal(fUtang.getText());
+
+                String table, kode, nama;
+
+                if (mTitle.contains("Distributor")) {
+                    table = "distributor";
+                    kode = "kd_dis";
+                    nama = "nama_dis";
+
+                } else {
+                    table = "pembeli";
+                    kode = "kd_pbl";
+                    nama = "nama_pbl";
+                }
+
+                String SQLUpdate = "UPDATE " + table + " "
+                        + "SET " + nama + " = '" + data[1] + "', "
+                        + "alamat = '" + data[2] + "', "
+                        + "no_telp = '" + data[3] + "', "
+                        + "total_hutang = '" + data[4] + "' "
+                        + " WHERE " + kode + " = " + Integer.parseInt(mDatas[0].substring(4)) + ";";
+
+                stt.execute(SQLUpdate);
+                String SQLGetNumber = "SELECT " + kode + " FROM " + table + " WHERE " + nama + " = '" + data[1] + "' ;";
+                ResultSet res = stt.executeQuery(SQLGetNumber);
+
+                while (res.next()) {
+                    data[0] = res.getString(1);
+                }
+
+                data[4] = MainFrame.formatter(data[4]);
+
+                if (table.equals("distributor")) {
+                    data[0] = Database.koder("DIS", Integer.parseInt(data[0]));
+                    Database.distributorTableModel.insertRow(mRow, data);
+                    Database.distributorTableModel.removeRow(mRow + 1);
+
+                } else {
+                    data[0] = Database.koder("PBL", Integer.parseInt(data[0]));
+                    Database.pembeliTableModel.insertRow(mRow, data);
+                    Database.pembeliTableModel.removeRow(mRow + 1);
+
+                }
+
+                this.dispose();
+
+            } catch (ClassNotFoundException | NumberFormatException | SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Terjadi kesalahan", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                System.out.println(ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_editActionPerformed
+
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         this.dispose();
     }//GEN-LAST:event_batalActionPerformed
 
-    private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
+    private void fNomorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNomorActionPerformed
+        fUtang.requestFocus();
+    }//GEN-LAST:event_fNomorActionPerformed
 
-        try {
-            Class.forName(MainFrame.driver);
-            Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
-            Statement stt = kon.createStatement();
-
-            String table, kode;
-
-            if (mTitle.contains("Distributor")) {
-                table = "distributor";
-                kode = "kd_dis";
-
-            } else {
-                table = "pembeli";
-                kode = "kd_pbl";
-            }
-
-            String SQLUpdate = "DELETE FROM " + table + " "
-                    + " WHERE " + kode + " = '" + Integer.parseInt(mDatas[0].substring(4)) + "' ;";
-
-            stt.execute(SQLUpdate);
-
-            if (table.equals("distributor")) {
-                Database.distributorTableModel.removeRow(mRow);
-            } else {
-                Database.pembeliTableModel.removeRow(mRow);
-            }
-
-            this.dispose();
-
-        } catch (ClassNotFoundException | NumberFormatException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Terjadi kesalahan", "Peringatan", JOptionPane.WARNING_MESSAGE);
-            System.out.println(ex.getMessage());
-        }
-
-    }//GEN-LAST:event_hapusActionPerformed
+    private void fNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNamaActionPerformed
+        fAlamat.requestFocus();
+    }//GEN-LAST:event_fNamaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -226,14 +299,31 @@ public class HapusDataOrang extends java.awt.Dialog {
         });
     }
 
+    public static void showSelected(JTextField fNama, JTextArea fAlamat, JTextField fNomor, JTextField fUtang, String[] datas) {
+        fNama.setText(datas[1]);
+        fAlamat.setText((datas[2]));
+        fNomor.setText(datas[3]);
+        fUtang.setText(datas[4]);
+    }
+
+    public static String takeNominal(String nominal) {
+        String[] hasilArray = nominal.substring(4).split("\\.");
+        String hasil = "";
+        for (int i = 0; i < hasilArray.length; i++) {
+            hasil += hasilArray[i];
+        }
+
+        return hasil;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batal;
+    private javax.swing.JButton edit;
     private javax.swing.JTextArea fAlamat;
     private javax.swing.JTextField fNama;
     private javax.swing.JTextField fNomor;
     private javax.swing.JTextField fUtang;
-    private javax.swing.JButton hapus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

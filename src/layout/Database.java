@@ -5,9 +5,10 @@
  */
 package layout;
 
-import dialogue.database.distributor.EditDataOrang;
-import dialogue.database.distributor.HapusDataOrang;
-import dialogue.database.distributor.TambahDataOrang;
+import dialogue.database.minuman.TambahDataMinuman;
+import dialogue.database.orang.EditDataOrang;
+import dialogue.database.orang.HapusDataOrang;
+import dialogue.database.orang.TambahDataOrang;
 import dialogue.sirkulasi.EditSirkulasi;
 import java.awt.Color;
 import java.sql.Connection;
@@ -202,6 +203,9 @@ public class Database extends javax.swing.JInternalFrame {
             }
         });
         TambahMinuman.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TambahMinumanMouseClicked(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 TambahMinumanMouseExited(evt);
             }
@@ -744,6 +748,13 @@ public class Database extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Silakan pilih data yang ingin dihapus terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_HapusPembeliMouseClicked
+
+    private void TambahMinumanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TambahMinumanMouseClicked
+        TMinuman.clearSelection();
+        TambahDataMinuman tambahIncome = new TambahDataMinuman (null, "Tambah Data Minuman", true);
+        tambahIncome.setLocationRelativeTo(this);
+        tambahIncome.setVisible(true);
+    }//GEN-LAST:event_TambahMinumanMouseClicked
 
     private void setTableLoad() {
         try {
