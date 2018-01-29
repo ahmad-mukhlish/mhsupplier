@@ -64,6 +64,9 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         databaseMenu = new javax.swing.JMenu();
         sirkulasiMenu = new javax.swing.JMenu();
+        penjualanMenu = new javax.swing.JMenu();
+        pembelianMenu = new javax.swing.JMenu();
+        laporanMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(60, 63, 66));
@@ -165,6 +168,69 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenuBar1.add(sirkulasiMenu);
 
+        penjualanMenu.setBackground(new java.awt.Color(187, 187, 188));
+        penjualanMenu.setForeground(new java.awt.Color(255, 255, 255));
+        penjualanMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/cart.png"))); // NOI18N
+        penjualanMenu.setText("Penjualan");
+        penjualanMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        penjualanMenu.setHideActionText(true);
+        penjualanMenu.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        penjualanMenu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        penjualanMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                penjualanMenuMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                penjualanMenuMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                penjualanMenuMousePressed(evt);
+            }
+        });
+        jMenuBar1.add(penjualanMenu);
+
+        pembelianMenu.setBackground(new java.awt.Color(187, 187, 188));
+        pembelianMenu.setForeground(new java.awt.Color(255, 255, 255));
+        pembelianMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/box.png"))); // NOI18N
+        pembelianMenu.setText("Pembelian");
+        pembelianMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pembelianMenu.setHideActionText(true);
+        pembelianMenu.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        pembelianMenu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        pembelianMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pembelianMenuMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pembelianMenuMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pembelianMenuMousePressed(evt);
+            }
+        });
+        jMenuBar1.add(pembelianMenu);
+
+        laporanMenu.setBackground(new java.awt.Color(187, 187, 188));
+        laporanMenu.setForeground(new java.awt.Color(255, 255, 255));
+        laporanMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/laporan.png"))); // NOI18N
+        laporanMenu.setText("Laporan");
+        laporanMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        laporanMenu.setHideActionText(true);
+        laporanMenu.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        laporanMenu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        laporanMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                laporanMenuMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                laporanMenuMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                laporanMenuMousePressed(evt);
+            }
+        });
+        jMenuBar1.add(laporanMenu);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -226,6 +292,63 @@ public class MainFrame extends javax.swing.JFrame {
         sirkulasiMenu.setBackground(new Color(187, 187, 187));
         sirkulasiMenu.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_sirkulasiMenuMouseExited
+
+    private void penjualanMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_penjualanMenuMouseEntered
+        penjualanMenu.setOpaque(true);
+        penjualanMenu.setBackground(javax.swing.UIManager.getDefaults().getColor("MenuItem.selectionBackground"));
+        penjualanMenu.setForeground(new Color(0, 0, 0));
+    }//GEN-LAST:event_penjualanMenuMouseEntered
+
+    private void penjualanMenuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_penjualanMenuMouseExited
+        penjualanMenu.setOpaque(true);
+        penjualanMenu.setBackground(new Color(187, 187, 187));
+        penjualanMenu.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_penjualanMenuMouseExited
+
+    private void penjualanMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_penjualanMenuMousePressed
+        Penjualan panelPenjualan = new Penjualan();
+        panelUtama.removeAll();
+        panelUtama.add(panelPenjualan);
+        panelPenjualan.setVisible(true);
+        menu.setText("Menu Penjualan");
+        try {
+            panelPenjualan.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_penjualanMenuMousePressed
+
+    private void pembelianMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pembelianMenuMouseEntered
+        pembelianMenu.setOpaque(true);
+        pembelianMenu.setBackground(javax.swing.UIManager.getDefaults().getColor("MenuItem.selectionBackground"));
+        pembelianMenu.setForeground(new Color(0, 0, 0));
+    }//GEN-LAST:event_pembelianMenuMouseEntered
+
+    private void pembelianMenuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pembelianMenuMouseExited
+        pembelianMenu.setOpaque(true);
+        pembelianMenu.setBackground(new Color(187, 187, 187));
+        pembelianMenu.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_pembelianMenuMouseExited
+
+    private void pembelianMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pembelianMenuMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pembelianMenuMousePressed
+
+    private void laporanMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laporanMenuMouseEntered
+        laporanMenu.setOpaque(true);
+        laporanMenu.setBackground(javax.swing.UIManager.getDefaults().getColor("MenuItem.selectionBackground"));
+        laporanMenu.setForeground(new Color(0, 0, 0));
+    }//GEN-LAST:event_laporanMenuMouseEntered
+
+    private void laporanMenuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laporanMenuMouseExited
+        laporanMenu.setOpaque(true);
+        laporanMenu.setBackground(new Color(187, 187, 187));
+        laporanMenu.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_laporanMenuMouseExited
+
+    private void laporanMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laporanMenuMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_laporanMenuMousePressed
 
     /**
      * @param args the command line arguments
@@ -336,8 +459,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu databaseMenu;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JMenu laporanMenu;
     private javax.swing.JLabel menu;
     private javax.swing.JDesktopPane panelUtama;
+    private javax.swing.JMenu pembelianMenu;
+    private javax.swing.JMenu penjualanMenu;
     private javax.swing.JMenu sirkulasiMenu;
     // End of variables declaration//GEN-END:variables
 }
