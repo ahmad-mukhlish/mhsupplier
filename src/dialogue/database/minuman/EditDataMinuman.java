@@ -50,9 +50,9 @@ public class EditDataMinuman extends java.awt.Dialog {
         mDatas = datas;
         initComponents();
         TambahDataMinuman.getNamaSupplierToComboBox(comboDistributor);
-        this.showSelected(fMerk, comboUkuran, comboIsi, fStok, fHarga, fTanggal, comboDistributor, mDatas);
+        showSelected(fMerk, comboUkuran, comboIsi, fStok, fHargaBeli, fHargaJual, fTanggal, comboDistributor, mDatas);
         layout.MainFrame.connect();
-        fHarga.addKeyListener(new KeyListener() {
+        fHargaBeli.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -64,7 +64,23 @@ public class EditDataMinuman extends java.awt.Dialog {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                fHarga.setText(formatter(EditDataMinuman.takeNominal(fHarga.getText())));
+                fHargaBeli.setText(formatter(EditDataMinuman.takeNominal(fHargaBeli.getText())));
+            }
+        });
+
+        fHargaJual.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                fHargaJual.setText(formatter(EditDataMinuman.takeNominal(fHargaJual.getText())));
             }
         });
     }
@@ -77,22 +93,24 @@ public class EditDataMinuman extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        fStok = new javax.swing.JTextField();
         edit = new javax.swing.JButton();
         fMerk = new javax.swing.JTextField();
+        label = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        fStok = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        batal = new javax.swing.JButton();
         comboIsi = new javax.swing.JComboBox<>();
         fTanggal = new com.toedter.calendar.JDateChooser();
-        jLabel3 = new javax.swing.JLabel();
+        batal = new javax.swing.JButton();
+        fHargaJual = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         comboUkuran = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         comboDistributor = new javax.swing.JComboBox<>();
-        fHarga = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        fHargaBeli = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(60, 63, 66));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -101,23 +119,8 @@ public class EditDataMinuman extends java.awt.Dialog {
             }
         });
 
-        jLabel1.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel1.setText("Merk");
-
-        jLabel7.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel7.setText("Distributor");
-
-        jLabel6.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel6.setText("Tanggal Masuk");
-
         jLabel2.setForeground(new java.awt.Color(187, 187, 188));
         jLabel2.setText("Stok");
-
-        fStok.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fStokActionPerformed(evt);
-            }
-        });
 
         edit.setText("Edit");
         edit.addActionListener(new java.awt.event.ActionListener() {
@@ -133,18 +136,20 @@ public class EditDataMinuman extends java.awt.Dialog {
             }
         });
 
-        jLabel4.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel4.setText("Harga Barang");
+        label.setForeground(new java.awt.Color(187, 187, 188));
+        label.setText("Harga Jual");
 
-        jLabel5.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel5.setText("Isi");
+        jLabel3.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel3.setText("Ukuran");
 
-        batal.setText("Batal");
-        batal.addActionListener(new java.awt.event.ActionListener() {
+        fStok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                batalActionPerformed(evt);
+                fStokActionPerformed(evt);
             }
         });
+
+        jLabel4.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel4.setText("Harga Beli");
 
         comboIsi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Isi Perdus", "12", "24", "48" }));
         comboIsi.addActionListener(new java.awt.event.ActionListener() {
@@ -155,8 +160,21 @@ public class EditDataMinuman extends java.awt.Dialog {
 
         fTanggal.setDateFormatString("dd-MM-yyyy");
 
-        jLabel3.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel3.setText("Ukuran");
+        batal.setText("Batal");
+        batal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                batalActionPerformed(evt);
+            }
+        });
+
+        fHargaJual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fHargaJualActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel5.setText("Isi");
 
         comboUkuran.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Ukuran", "1500", "1200", "660", "Cup" }));
         comboUkuran.addActionListener(new java.awt.event.ActionListener() {
@@ -165,11 +183,20 @@ public class EditDataMinuman extends java.awt.Dialog {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel1.setText("Merk");
+
+        jLabel7.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel7.setText("Distributor");
+
         comboDistributor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Distributor" }));
 
-        fHarga.addActionListener(new java.awt.event.ActionListener() {
+        jLabel6.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel6.setText("Tanggal Masuk");
+
+        fHargaBeli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fHargaActionPerformed(evt);
+                fHargaBeliActionPerformed(evt);
             }
         });
 
@@ -192,17 +219,19 @@ public class EditDataMinuman extends java.awt.Dialog {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(label))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboDistributor, 0, 229, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(fMerk, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fHarga, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fStok, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(comboIsi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(comboUkuran, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(comboDistributor, 0, 229, Short.MAX_VALUE)
+                        .addComponent(fMerk, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                        .addComponent(fHargaBeli, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                        .addComponent(fTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboUkuran, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fStok))
+                    .addComponent(fHargaJual, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
@@ -221,22 +250,26 @@ public class EditDataMinuman extends java.awt.Dialog {
                     .addComponent(jLabel5)
                     .addComponent(comboIsi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(fStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(fHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(fTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(comboDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                    .addComponent(jLabel4)
+                    .addComponent(fHargaBeli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label)
+                    .addComponent(fHargaJual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(fTanggal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(comboDistributor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edit)
                     .addComponent(batal))
@@ -254,17 +287,14 @@ public class EditDataMinuman extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void fStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fStokActionPerformed
-        fHarga.requestFocus();
-    }//GEN-LAST:event_fStokActionPerformed
-
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         if (fMerk.getText().isEmpty()
                 || comboUkuran.getSelectedIndex() == 0
                 || comboIsi.getSelectedIndex() == 0
                 || fStok.getText().isEmpty()
                 || fTanggal.getDate() == null
-                || fHarga.getText().isEmpty()
+                || fHargaBeli.getText().isEmpty()
+                || fHargaJual.getText().isEmpty()
                 || comboDistributor.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Data tidak boleh kosong, silakan coba lagi", "Peringatan", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -272,7 +302,7 @@ public class EditDataMinuman extends java.awt.Dialog {
                 Class.forName(MainFrame.driver);
                 Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
                 Statement stt = kon.createStatement();
-                String[] data = new String[8];
+                String[] data = new String[9];
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -281,13 +311,14 @@ public class EditDataMinuman extends java.awt.Dialog {
                 data[2] = comboUkuran.getSelectedItem().toString();
                 data[3] = comboIsi.getSelectedItem().toString();
                 data[4] = fStok.getText();
-                data[5] = EditDataOrang.takeNominal(fHarga.getText());
-                data[6] = sdf.format(fTanggal.getDate());
-                data[7] = comboDistributor.getSelectedIndex() + "";
-                
+                data[5] = EditDataOrang.takeNominal(fHargaBeli.getText());
+                data[6] = EditDataOrang.takeNominal(fHargaJual.getText());
+                data[7] = sdf.format(fTanggal.getDate());
+                data[8] = comboDistributor.getSelectedIndex() + "";
+
                 //remove "-" from kd_min
-                String[] kodes = mDatas[0].split("-") ;
-                mDatas[0] = "" ;
+                String[] kodes = mDatas[0].split("-");
+                mDatas[0] = "";
                 for (String kode : kodes) {
                     mDatas[0] += kode;
                 }
@@ -299,8 +330,9 @@ public class EditDataMinuman extends java.awt.Dialog {
                         + "isi = '" + data[3] + "', "
                         + "stok = '" + data[4] + "', "
                         + "harga_beli = '" + data[5] + "', "
-                        + "tgl_masuk = '" + data[6] + "', "
-                        + "kd_dis = '" + data[7] + "' "
+                        + "harga_jual = '" + data[6] + "', "
+                        + "tgl_masuk = '" + data[7] + "', "
+                        + "kd_dis = '" + data[8] + "' "
                         + " WHERE kd_min " + " = '" + mDatas[0] + "' ;";
 
                 stt.execute(SQLUpdate);
@@ -312,6 +344,7 @@ public class EditDataMinuman extends java.awt.Dialog {
                 data[2] = data[2] + " ml";
 
                 data[5] = MainFrame.formatter(data[5]);
+                data[6] = MainFrame.formatter(data[6]);
 
                 DateFormat df
                         = new SimpleDateFormat("dd MMMM yyyy", new Locale("in", "ID"));
@@ -319,9 +352,9 @@ public class EditDataMinuman extends java.awt.Dialog {
                 DateFormat sqlDateFormat
                         = new SimpleDateFormat("yyyy-MM-dd");
 
-                data[6] = df.format(sqlDateFormat.parse(data[6]));
+                data[7] = df.format(sqlDateFormat.parse(data[7]));
 
-                data[7] = comboDistributor.getSelectedItem().toString();
+                data[8] = comboDistributor.getSelectedItem().toString();
 
                 Database.minumanTableModel.insertRow(mRow, data);
                 Database.minumanTableModel.removeRow(mRow + 1);
@@ -342,21 +375,29 @@ public class EditDataMinuman extends java.awt.Dialog {
         comboUkuran.requestFocus();
     }//GEN-LAST:event_fMerkActionPerformed
 
-    private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_batalActionPerformed
+    private void fStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fStokActionPerformed
+        fHargaBeli.requestFocus();
+    }//GEN-LAST:event_fStokActionPerformed
 
     private void comboIsiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIsiActionPerformed
         fStok.requestFocus();
     }//GEN-LAST:event_comboIsiActionPerformed
 
+    private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_batalActionPerformed
+
+    private void fHargaJualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fHargaJualActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fHargaJualActionPerformed
+
     private void comboUkuranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboUkuranActionPerformed
         comboIsi.requestFocus();
     }//GEN-LAST:event_comboUkuranActionPerformed
 
-    private void fHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fHargaActionPerformed
+    private void fHargaBeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fHargaBeliActionPerformed
         editActionPerformed(evt);
-    }//GEN-LAST:event_fHargaActionPerformed
+    }//GEN-LAST:event_fHargaBeliActionPerformed
 
     /**
      * @param args the command line arguments
@@ -375,25 +416,26 @@ public class EditDataMinuman extends java.awt.Dialog {
     }
 
     public static void showSelected(JTextField fMerk, JComboBox comboUkuran, JComboBox comboIsi,
-            JTextField fStok, JTextField fHarga, JDateChooser fTanggal, JComboBox comboDistributor,
+            JTextField fStok, JTextField fHargaBeli, JTextField fHargaJual, JDateChooser fTanggal, JComboBox comboDistributor,
             String[] datas) {
 
         fMerk.setText(datas[1]);
         comboUkuran.setSelectedItem(datas[2].substring(0, datas[2].length() - 3));
         comboIsi.setSelectedItem(datas[3]);
         fStok.setText(datas[4]);
-        fHarga.setText(datas[5]);
+        fHargaBeli.setText(datas[5]);
+        fHargaJual.setText(datas[6]);
 
         DateFormat df
                 = new SimpleDateFormat("dd MMMM yyyy", new Locale("in", "ID"));
 
         try {
-            fTanggal.setDate(df.parse(datas[6]));
+            fTanggal.setDate(df.parse(datas[7]));
         } catch (ParseException ex) {
             Logger.getLogger(EditDataMinuman.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        comboDistributor.setSelectedItem(datas[7]);
+        comboDistributor.setSelectedItem(datas[8]);
     }
 
     public static String takeNominal(String nominal) {
@@ -413,7 +455,8 @@ public class EditDataMinuman extends java.awt.Dialog {
     private javax.swing.JComboBox<String> comboIsi;
     private javax.swing.JComboBox<String> comboUkuran;
     private javax.swing.JButton edit;
-    private javax.swing.JTextField fHarga;
+    private javax.swing.JTextField fHargaBeli;
+    private javax.swing.JTextField fHargaJual;
     private javax.swing.JTextField fMerk;
     private javax.swing.JTextField fStok;
     private com.toedter.calendar.JDateChooser fTanggal;
@@ -424,5 +467,6 @@ public class EditDataMinuman extends java.awt.Dialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel label;
     // End of variables declaration//GEN-END:variables
 }

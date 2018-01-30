@@ -53,7 +53,7 @@ public class Database extends javax.swing.JInternalFrame {
     private int mPembeliRow = -1, mDistributorRow = -1, mMinumanRow = -1;
     private String[] mPembeliData = new String[5];
     private String[] mDistributorData = new String[5];
-    private String[] mMinumanData = new String[8];
+    private String[] mMinumanData = new String[9];
 
     private void hideTitleBar() {
         setRootPaneCheckingEnabled(false);
@@ -112,10 +112,10 @@ public class Database extends javax.swing.JInternalFrame {
 
         return new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
-                new String[]{"Kode Minuman", "Nama Minuman", "Ukuran", "Isi", "Stok", "Harga Beli", "Tanggal Masuk", "Dari Distributor"}
+                new String[]{"Kode Minuman", "Nama Minuman", "Ukuran", "Isi", "Stok", "Harga Beli", "Harga Jual", "Tanggal Masuk", "Dari Distributor"}
         ) {
             boolean[] canEdit = new boolean[]{
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
 
             };
 
@@ -843,6 +843,7 @@ public class Database extends javax.swing.JInternalFrame {
                 mMinumanData[5] = res_min.getString(6);
                 mMinumanData[6] = res_min.getString(7);
                 mMinumanData[7] = res_min.getString(8);
+                mMinumanData[8] = res_min.getString(9);
 
                 //reformat data to frontend
                 mMinumanData[0] = mMinumanData[0].substring(0, 3) + "-"
@@ -851,6 +852,7 @@ public class Database extends javax.swing.JInternalFrame {
                 mMinumanData[2] = mMinumanData[2] + " ml";
 
                 mMinumanData[5] = MainFrame.formatter(mMinumanData[5]);
+                mMinumanData[6] = MainFrame.formatter(mMinumanData[6]);
 
                 DateFormat df
                         = new SimpleDateFormat("dd MMMM yyyy", new Locale("in", "ID"));
@@ -858,14 +860,14 @@ public class Database extends javax.swing.JInternalFrame {
                 DateFormat sqlDateFormat
                         = new SimpleDateFormat("yyyy-MM-dd");
 
-                mMinumanData[6] = df.format(sqlDateFormat.parse(mMinumanData[6]));
+                mMinumanData[7] = df.format(sqlDateFormat.parse(mMinumanData[7]));
 
                 Statement stt_dist = kon.createStatement();
-                String sql_dist = "select nama_dis from distributor where kd_dis = " + mMinumanData[7] + ";";
+                String sql_dist = "select nama_dis from distributor where kd_dis = " + mMinumanData[8] + ";";
                 ResultSet res_dist = stt_dist.executeQuery(sql_dist);
 
                 while (res_dist.next()) {
-                    mMinumanData[7] = res_dist.getString(1);
+                    mMinumanData[8] = res_dist.getString(1);
                 }
 
                 res_dist.close();
@@ -943,6 +945,7 @@ public class Database extends javax.swing.JInternalFrame {
                     mMinumanData[5] = TMinuman.getValueAt(mMinumanRow, 5).toString();
                     mMinumanData[6] = TMinuman.getValueAt(mMinumanRow, 6).toString();
                     mMinumanData[7] = TMinuman.getValueAt(mMinumanRow, 7).toString();
+                    mMinumanData[8] = TMinuman.getValueAt(mMinumanRow, 8).toString();
 
                 }
             }

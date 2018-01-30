@@ -27,25 +27,28 @@ CREATE TABLE `distributor` (
   `no_telp` varchar(13) DEFAULT NULL,
   `total_hutang` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`kd_dis`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `distributor` */
 
 insert  into `distributor`(`kd_dis`,`nama_dis`,`alamat`,`no_telp`,`total_hutang`) values 
-(1,'Pa Didi','Jl. Soeta no 80','089567821234',2000000);
+(1,'Pa Didi','Jl. Soeta no 80','089567821233',2000000),
+(2,'Ahmada','Jl. ppd iv no 31','0895105807756',500000),
+(4,'CIkan','123','41412',5000);
 
 /*Table structure for table `minuman` */
 
 DROP TABLE IF EXISTS `minuman`;
 
 CREATE TABLE `minuman` (
-  `kd_min` char(10) NOT NULL,
-  `ukuran` int(11) NOT NULL,
+  `kd_min` char(13) NOT NULL,
   `nama_min` varchar(30) NOT NULL,
+  `ukuran` int(11) NOT NULL,
   `isi` int(11) NOT NULL,
-  `tgl_masuk` date NOT NULL,
   `stok` int(11) NOT NULL,
-  `harga_beli` int(11) NOT NULL,
+  `harga_beli` bigint(11) NOT NULL,
+  `harga_jual` bigint(20) NOT NULL,
+  `tgl_masuk` date NOT NULL,
   `kd_dis` int(11) NOT NULL,
   PRIMARY KEY (`kd_min`),
   KEY `kd_dis` (`kd_dis`),
@@ -53,6 +56,12 @@ CREATE TABLE `minuman` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `minuman` */
+
+insert  into `minuman`(`kd_min`,`nama_min`,`ukuran`,`isi`,`stok`,`harga_beli`,`harga_jual`,`tgl_masuk`,`kd_dis`) values 
+('ALE0660170118','Ale-ale',660,48,23,62000,63000,'2018-01-17',2),
+('COC1500050118','Coca Cola',1500,24,21,123123,0,'2018-01-05',1),
+('FRU1500010118','Frutang',1500,12,32,24000,0,'2018-01-01',1),
+('KOP1200100118','Kopikap',1200,48,41,50000,0,'2018-01-10',1);
 
 /*Table structure for table `pemasukan` */
 
@@ -86,12 +95,13 @@ CREATE TABLE `pembeli` (
   `no_telp` varchar(13) DEFAULT NULL,
   `total_hutang` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`kd_pbl`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `pembeli` */
 
 insert  into `pembeli`(`kd_pbl`,`nama_pbl`,`alamat`,`no_telp`,`total_hutang`) values 
-(1,'Mang Iin','Jl. Sindangpanon no 20','081321456789',4000000);
+(1,'Mang Iin','Jl. Sindangpanon no 20','081321456789',4000000),
+(2,'Joni','Janji Joni\n','089543215678',600000);
 
 /*Table structure for table `pengeluaran` */
 

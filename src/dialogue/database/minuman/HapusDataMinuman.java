@@ -41,7 +41,7 @@ public class HapusDataMinuman extends java.awt.Dialog {
         mDatas = datas;
         initComponents();
         TambahDataMinuman.getNamaSupplierToComboBox(comboDistributor);
-        EditDataMinuman.showSelected(fMerk, comboUkuran, comboIsi, fStok, fHarga, fTanggal, comboDistributor, mDatas);
+        EditDataMinuman.showSelected(fMerk, comboUkuran, comboIsi, fStok, fHargaBeli, fHargaJual, fTanggal, comboDistributor, mDatas);
         layout.MainFrame.connect();
     }
 
@@ -62,13 +62,15 @@ public class HapusDataMinuman extends java.awt.Dialog {
         jLabel1 = new javax.swing.JLabel();
         hapus = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        fHarga = new javax.swing.JTextField();
+        fHargaBeli = new javax.swing.JTextField();
         fTanggal = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         comboIsi = new javax.swing.JComboBox<>();
         fMerk = new javax.swing.JTextField();
         batal = new javax.swing.JButton();
         fStok = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        fHargaJual = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(60, 63, 66));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -113,10 +115,10 @@ public class HapusDataMinuman extends java.awt.Dialog {
         jLabel4.setForeground(new java.awt.Color(187, 187, 188));
         jLabel4.setText("Harga Barang");
 
-        fHarga.setEditable(false);
-        fHarga.addActionListener(new java.awt.event.ActionListener() {
+        fHargaBeli.setEditable(false);
+        fHargaBeli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fHargaActionPerformed(evt);
+                fHargaBeliActionPerformed(evt);
             }
         });
 
@@ -156,6 +158,16 @@ public class HapusDataMinuman extends java.awt.Dialog {
             }
         });
 
+        jLabel8.setForeground(new java.awt.Color(187, 187, 188));
+        jLabel8.setText("Harga Barang");
+
+        fHargaJual.setEditable(false);
+        fHargaJual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fHargaJualActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,38 +181,53 @@ public class HapusDataMinuman extends java.awt.Dialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboDistributor, 0, 229, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(fMerk, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fHarga, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fStok, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(comboIsi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(comboUkuran, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fMerk, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboUkuran, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboIsi, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fStok, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fHargaBeli, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(37, 37, 37)
+                        .addComponent(fHargaJual, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fMerk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(comboUkuran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(comboIsi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -208,18 +235,26 @@ public class HapusDataMinuman extends java.awt.Dialog {
                     .addComponent(jLabel2)
                     .addComponent(fStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(fHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(fTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(fHargaBeli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(comboDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8)
+                    .addComponent(fHargaJual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(fTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addGap(53, 53, 53))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(comboDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(hapus)
                     .addComponent(batal))
@@ -272,9 +307,9 @@ public class HapusDataMinuman extends java.awt.Dialog {
         }
     }//GEN-LAST:event_hapusActionPerformed
 
-    private void fHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fHargaActionPerformed
+    private void fHargaBeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fHargaBeliActionPerformed
         hapusActionPerformed(evt);
-    }//GEN-LAST:event_fHargaActionPerformed
+    }//GEN-LAST:event_fHargaBeliActionPerformed
 
     private void comboIsiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIsiActionPerformed
         fStok.requestFocus();
@@ -289,8 +324,12 @@ public class HapusDataMinuman extends java.awt.Dialog {
     }//GEN-LAST:event_batalActionPerformed
 
     private void fStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fStokActionPerformed
-        fHarga.requestFocus();
+        fHargaBeli.requestFocus();
     }//GEN-LAST:event_fStokActionPerformed
+
+    private void fHargaJualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fHargaJualActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fHargaJualActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,7 +353,8 @@ public class HapusDataMinuman extends java.awt.Dialog {
     private javax.swing.JComboBox<String> comboDistributor;
     private javax.swing.JComboBox<String> comboIsi;
     private javax.swing.JComboBox<String> comboUkuran;
-    private javax.swing.JTextField fHarga;
+    private javax.swing.JTextField fHargaBeli;
+    private javax.swing.JTextField fHargaJual;
     private javax.swing.JTextField fMerk;
     private javax.swing.JTextField fStok;
     private com.toedter.calendar.JDateChooser fTanggal;
@@ -326,5 +366,6 @@ public class HapusDataMinuman extends java.awt.Dialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     // End of variables declaration//GEN-END:variables
 }

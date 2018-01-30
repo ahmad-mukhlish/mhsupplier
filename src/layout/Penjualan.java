@@ -201,7 +201,7 @@ public class Penjualan extends javax.swing.JInternalFrame {
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel3.setText("Nota :");
+        jLabel3.setText("Nota       :");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(187, 187, 188));
@@ -373,7 +373,7 @@ public class Penjualan extends javax.swing.JInternalFrame {
     private javax.swing.JButton DeleteOutcome1;
     private javax.swing.JButton DeleteOutcome2;
     private javax.swing.JTable TOutcome;
-    private javax.swing.JTextField income;
+    public static javax.swing.JTextField income;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -385,8 +385,8 @@ public class Penjualan extends javax.swing.JInternalFrame {
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField outcome;
+    public static javax.swing.JTextField outcome;
     private javax.swing.JPanel panel;
-    private javax.swing.JTextField total;
+    public static javax.swing.JTextField total;
     // End of variables declaration//GEN-END:variables
 }

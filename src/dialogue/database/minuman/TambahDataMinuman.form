@@ -45,18 +45,20 @@
                   <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="label" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="29" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="comboDistributor" pref="229" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="comboIsi" max="32767" attributes="0"/>
+                      <Component id="comboDistributor" pref="229" max="32767" attributes="0"/>
                       <Component id="fMerk" pref="229" max="32767" attributes="0"/>
-                      <Component id="fHarga" pref="229" max="32767" attributes="0"/>
-                      <Component id="fStok" pref="229" max="32767" attributes="0"/>
+                      <Component id="fHargaBeli" pref="229" max="32767" attributes="0"/>
                       <Component id="fTanggal" alignment="0" max="32767" attributes="0"/>
-                      <Component id="comboIsi" alignment="0" max="32767" attributes="0"/>
                       <Component id="comboUkuran" alignment="0" max="32767" attributes="0"/>
+                      <Component id="fStok" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="fHargaJual" min="-2" pref="229" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
           </Group>
@@ -81,26 +83,31 @@
                   <Component id="comboIsi" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  <Component id="fStok" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                  <Component id="fHarga" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="fTanggal" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fStok" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="comboDistributor" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fHargaBeli" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="29" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="label" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fHargaJual" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="fTanggal" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="comboDistributor" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="tambah" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="batal" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -169,12 +176,12 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="bc" green="bb" red="bb" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Harga Barang"/>
+        <Property name="text" type="java.lang.String" value="Harga Beli"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="fHarga">
+    <Component class="javax.swing.JTextField" name="fHargaBeli">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fHargaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fHargaBeliActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="comboUkuran">
@@ -254,6 +261,19 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="label">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="bc" green="bb" red="bb" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Harga Jual"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fHargaJual">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fHargaJualActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

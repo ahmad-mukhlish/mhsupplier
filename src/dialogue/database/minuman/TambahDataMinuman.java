@@ -41,8 +41,8 @@ public class TambahDataMinuman extends java.awt.Dialog {
         initComponents();
         MainFrame.connect();
         getNamaSupplierToComboBox(comboDistributor);
-        fHarga.setText(" Rp  ");
-        fHarga.addKeyListener(new KeyListener() {
+        fHargaBeli.setText(" Rp  ");
+        fHargaBeli.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -54,7 +54,25 @@ public class TambahDataMinuman extends java.awt.Dialog {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                fHarga.setText(formatter(EditDataMinuman.takeNominal(fHarga.getText())));
+                fHargaBeli.setText(formatter(EditDataMinuman.takeNominal(fHargaBeli.getText())));
+
+            }
+        });
+
+        fHargaJual.setText(" Rp  ");
+        fHargaJual.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                fHargaJual.setText(formatter(EditDataMinuman.takeNominal(fHargaJual.getText())));
 
             }
         });
@@ -76,7 +94,7 @@ public class TambahDataMinuman extends java.awt.Dialog {
         tambah = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        fHarga = new javax.swing.JTextField();
+        fHargaBeli = new javax.swing.JTextField();
         comboUkuran = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         comboIsi = new javax.swing.JComboBox<>();
@@ -84,6 +102,8 @@ public class TambahDataMinuman extends java.awt.Dialog {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         comboDistributor = new javax.swing.JComboBox<>();
+        label = new javax.swing.JLabel();
+        fHargaJual = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(60, 63, 66));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -129,11 +149,11 @@ public class TambahDataMinuman extends java.awt.Dialog {
         jLabel3.setText("Ukuran");
 
         jLabel4.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel4.setText("Harga Barang");
+        jLabel4.setText("Harga Beli");
 
-        fHarga.addActionListener(new java.awt.event.ActionListener() {
+        fHargaBeli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fHargaActionPerformed(evt);
+                fHargaBeliActionPerformed(evt);
             }
         });
 
@@ -164,6 +184,15 @@ public class TambahDataMinuman extends java.awt.Dialog {
 
         comboDistributor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Distributor" }));
 
+        label.setForeground(new java.awt.Color(187, 187, 188));
+        label.setText("Harga Jual");
+
+        fHargaJual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fHargaJualActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -183,17 +212,19 @@ public class TambahDataMinuman extends java.awt.Dialog {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(label))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboDistributor, 0, 229, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(fMerk, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fHarga, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fStok, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(comboIsi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(comboUkuran, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(comboDistributor, 0, 229, Short.MAX_VALUE)
+                        .addComponent(fMerk, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                        .addComponent(fHargaBeli, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                        .addComponent(fTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboUkuran, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fStok))
+                    .addComponent(fHargaJual, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
@@ -212,22 +243,26 @@ public class TambahDataMinuman extends java.awt.Dialog {
                     .addComponent(jLabel5)
                     .addComponent(comboIsi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(fStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(fHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(fTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(comboDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4)
+                    .addComponent(fHargaBeli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label)
+                    .addComponent(fHargaJual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(fTanggal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(comboDistributor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tambah)
                     .addComponent(batal))
@@ -252,7 +287,8 @@ public class TambahDataMinuman extends java.awt.Dialog {
                 || comboIsi.getSelectedIndex() == 0
                 || fStok.getText().isEmpty()
                 || fTanggal.getDate() == null
-                || fHarga.getText().isEmpty()
+                || fHargaBeli.getText().isEmpty()
+                || fHargaJual.getText().isEmpty()
                 || comboDistributor.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Data tidak boleh kosong, silakan coba lagi", "Peringatan", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -260,7 +296,7 @@ public class TambahDataMinuman extends java.awt.Dialog {
                 Class.forName(MainFrame.driver);
                 Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
                 Statement stt = kon.createStatement();
-                String[] data = new String[8];
+                String[] data = new String[9];
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -269,13 +305,12 @@ public class TambahDataMinuman extends java.awt.Dialog {
                 data[2] = comboUkuran.getSelectedItem().toString();
                 data[3] = comboIsi.getSelectedItem().toString();
                 data[4] = fStok.getText();
-                data[5] = EditDataOrang.takeNominal(fHarga.getText());
-                data[6] = sdf.format(fTanggal.getDate());
-                data[7] = comboDistributor.getSelectedIndex() + "";
+                data[5] = EditDataOrang.takeNominal(fHargaBeli.getText());
+                data[6] = EditDataOrang.takeNominal(fHargaJual.getText());
+                data[7] = sdf.format(fTanggal.getDate());
+                data[8] = comboDistributor.getSelectedIndex() + "";
 
-            
-
-                String SQLInsert = "INSERT into  minuman (kd_min , nama_min, ukuran, isi, stok, harga_beli, tgl_masuk, kd_dis) VALUES "
+                String SQLInsert = "INSERT into  minuman (kd_min , nama_min, ukuran, isi, stok, harga_beli, harga_jual, tgl_masuk, kd_dis) VALUES "
                         + "('" + data[0]
                         + "', '" + data[1]
                         + "', '" + data[2]
@@ -283,7 +318,8 @@ public class TambahDataMinuman extends java.awt.Dialog {
                         + "', '" + data[4]
                         + "', '" + data[5]
                         + "', '" + data[6]
-                        + "', '" + data[7] + "') ;";
+                        + "', '" + data[7]
+                        + "', '" + data[8] + "') ;";
                 stt.execute(SQLInsert);
 
                 //reformat data to frontend
@@ -293,16 +329,17 @@ public class TambahDataMinuman extends java.awt.Dialog {
                 data[2] = data[2] + " ml";
 
                 data[5] = MainFrame.formatter(data[5]);
-
+                data[6] = MainFrame.formatter(data[6]);
+                
                 DateFormat df
                         = new SimpleDateFormat("dd MMMM yyyy", new Locale("in", "ID"));
 
                 DateFormat sqlDateFormat
                         = new SimpleDateFormat("yyyy-MM-dd");
 
-                data[6] = df.format(sqlDateFormat.parse(data[6]));
-                
-                data[7] = comboDistributor.getSelectedItem().toString() ;
+                data[7] = df.format(sqlDateFormat.parse(data[7]));
+
+                data[8] = comboDistributor.getSelectedItem().toString();
 
                 Database.minumanTableModel.addRow(data);
 
@@ -327,12 +364,12 @@ public class TambahDataMinuman extends java.awt.Dialog {
     }//GEN-LAST:event_fMerkActionPerformed
 
     private void fStokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fStokActionPerformed
-        fHarga.requestFocus();
+        fHargaBeli.requestFocus();
     }//GEN-LAST:event_fStokActionPerformed
 
-    private void fHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fHargaActionPerformed
+    private void fHargaBeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fHargaBeliActionPerformed
         tambahActionPerformed(evt);
-    }//GEN-LAST:event_fHargaActionPerformed
+    }//GEN-LAST:event_fHargaBeliActionPerformed
 
     private void comboIsiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboIsiActionPerformed
         fStok.requestFocus();
@@ -341,6 +378,10 @@ public class TambahDataMinuman extends java.awt.Dialog {
     private void comboUkuranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboUkuranActionPerformed
         comboIsi.requestFocus();
     }//GEN-LAST:event_comboUkuranActionPerformed
+
+    private void fHargaJualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fHargaJualActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fHargaJualActionPerformed
 
     /**
      * @param args the command line arguments
@@ -426,7 +467,8 @@ public class TambahDataMinuman extends java.awt.Dialog {
     private javax.swing.JComboBox<String> comboDistributor;
     private javax.swing.JComboBox<String> comboIsi;
     private javax.swing.JComboBox<String> comboUkuran;
-    private javax.swing.JTextField fHarga;
+    private javax.swing.JTextField fHargaBeli;
+    private javax.swing.JTextField fHargaJual;
     private javax.swing.JTextField fMerk;
     private javax.swing.JTextField fStok;
     private com.toedter.calendar.JDateChooser fTanggal;
@@ -437,6 +479,7 @@ public class TambahDataMinuman extends java.awt.Dialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel label;
     private javax.swing.JButton tambah;
     // End of variables declaration//GEN-END:variables
 }
