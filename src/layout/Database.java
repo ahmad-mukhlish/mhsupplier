@@ -11,7 +11,6 @@ import dialogue.database.minuman.TambahDataMinuman;
 import dialogue.database.orang.EditDataOrang;
 import dialogue.database.orang.HapusDataOrang;
 import dialogue.database.orang.TambahDataOrang;
-import dialogue.sirkulasi.EditSirkulasi;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -778,6 +777,7 @@ public class Database extends javax.swing.JInternalFrame {
 
     private void HapusMinumanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HapusMinumanMouseClicked
         if (mMinumanRow != -1) {
+            System.out.println(mMinumanRow);
             HapusDataMinuman hapusMinuman = new HapusDataMinuman(null, "Hapus Data Minuman", true, mMinumanData, mMinumanRow);
             hapusMinuman.setLocationRelativeTo(this);
             hapusMinuman.setVisible(true);

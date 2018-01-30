@@ -63,10 +63,8 @@ public class MainFrame extends javax.swing.JFrame {
         panelUtama = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         databaseMenu = new javax.swing.JMenu();
-        sirkulasiMenu = new javax.swing.JMenu();
         penjualanMenu = new javax.swing.JMenu();
         pembelianMenu = new javax.swing.JMenu();
-        laporanMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(60, 63, 66));
@@ -147,27 +145,6 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenuBar1.add(databaseMenu);
 
-        sirkulasiMenu.setBackground(new java.awt.Color(187, 187, 188));
-        sirkulasiMenu.setForeground(new java.awt.Color(255, 255, 255));
-        sirkulasiMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/sirkulasi.png"))); // NOI18N
-        sirkulasiMenu.setText("Sirkulasi");
-        sirkulasiMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        sirkulasiMenu.setHideActionText(true);
-        sirkulasiMenu.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        sirkulasiMenu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        sirkulasiMenu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                sirkulasiMenuMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                sirkulasiMenuMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                sirkulasiMenuMousePressed(evt);
-            }
-        });
-        jMenuBar1.add(sirkulasiMenu);
-
         penjualanMenu.setBackground(new java.awt.Color(187, 187, 188));
         penjualanMenu.setForeground(new java.awt.Color(255, 255, 255));
         penjualanMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/cart.png"))); // NOI18N
@@ -210,27 +187,6 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenuBar1.add(pembelianMenu);
 
-        laporanMenu.setBackground(new java.awt.Color(187, 187, 188));
-        laporanMenu.setForeground(new java.awt.Color(255, 255, 255));
-        laporanMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/laporan.png"))); // NOI18N
-        laporanMenu.setText("Laporan");
-        laporanMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        laporanMenu.setHideActionText(true);
-        laporanMenu.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        laporanMenu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        laporanMenu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                laporanMenuMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                laporanMenuMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                laporanMenuMousePressed(evt);
-            }
-        });
-        jMenuBar1.add(laporanMenu);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -256,19 +212,6 @@ public class MainFrame extends javax.swing.JFrame {
         initMenuDatabase();
     }//GEN-LAST:event_databaseMenuMousePressed
 
-    private void sirkulasiMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sirkulasiMenuMousePressed
-        Sirkulasi panelsirkulasi = new Sirkulasi();
-        panelUtama.removeAll();
-        panelUtama.add(panelsirkulasi);
-        panelsirkulasi.setVisible(true);
-        menu.setText("Menu Sirkulasi");
-        try {
-            panelsirkulasi.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_sirkulasiMenuMousePressed
-
     private void databaseMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_databaseMenuMouseEntered
         databaseMenu.setOpaque(true);
         databaseMenu.setBackground(javax.swing.UIManager.getDefaults().getColor("MenuItem.selectionBackground"));
@@ -280,18 +223,6 @@ public class MainFrame extends javax.swing.JFrame {
         databaseMenu.setBackground(new Color(187, 187, 187));
         databaseMenu.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_databaseMenuMouseExited
-
-    private void sirkulasiMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sirkulasiMenuMouseEntered
-        sirkulasiMenu.setOpaque(true);
-        sirkulasiMenu.setBackground(javax.swing.UIManager.getDefaults().getColor("MenuItem.selectionBackground"));
-        sirkulasiMenu.setForeground(new Color(0, 0, 0));
-    }//GEN-LAST:event_sirkulasiMenuMouseEntered
-
-    private void sirkulasiMenuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sirkulasiMenuMouseExited
-        sirkulasiMenu.setOpaque(true);
-        sirkulasiMenu.setBackground(new Color(187, 187, 187));
-        sirkulasiMenu.setForeground(new Color(255, 255, 255));
-    }//GEN-LAST:event_sirkulasiMenuMouseExited
 
     private void penjualanMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_penjualanMenuMouseEntered
         penjualanMenu.setOpaque(true);
@@ -331,24 +262,17 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_pembelianMenuMouseExited
 
     private void pembelianMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pembelianMenuMousePressed
-        // TODO add your handling code here:
+        Pembelian panelPembelian = new Pembelian();
+        panelUtama.removeAll();
+        panelUtama.add(panelPembelian);
+        panelPembelian.setVisible(true);
+        menu.setText("Menu Pembelian");
+        try {
+            panelPembelian.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_pembelianMenuMousePressed
-
-    private void laporanMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laporanMenuMouseEntered
-        laporanMenu.setOpaque(true);
-        laporanMenu.setBackground(javax.swing.UIManager.getDefaults().getColor("MenuItem.selectionBackground"));
-        laporanMenu.setForeground(new Color(0, 0, 0));
-    }//GEN-LAST:event_laporanMenuMouseEntered
-
-    private void laporanMenuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laporanMenuMouseExited
-        laporanMenu.setOpaque(true);
-        laporanMenu.setBackground(new Color(187, 187, 187));
-        laporanMenu.setForeground(new Color(255, 255, 255));
-    }//GEN-LAST:event_laporanMenuMouseExited
-
-    private void laporanMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laporanMenuMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_laporanMenuMousePressed
 
     /**
      * @param args the command line arguments
@@ -459,11 +383,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu databaseMenu;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JMenu laporanMenu;
     private javax.swing.JLabel menu;
     private javax.swing.JDesktopPane panelUtama;
     private javax.swing.JMenu pembelianMenu;
     private javax.swing.JMenu penjualanMenu;
-    private javax.swing.JMenu sirkulasiMenu;
     // End of variables declaration//GEN-END:variables
 }

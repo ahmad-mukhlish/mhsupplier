@@ -176,7 +176,7 @@ public class EditDataMinuman extends java.awt.Dialog {
         jLabel5.setForeground(new java.awt.Color(187, 187, 188));
         jLabel5.setText("Isi");
 
-        comboUkuran.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Ukuran", "1500", "1200", "660", "Cup" }));
+        comboUkuran.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Ukuran", "1500", "1200", "660" }));
         comboUkuran.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboUkuranActionPerformed(evt);

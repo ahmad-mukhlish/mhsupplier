@@ -157,7 +157,7 @@ public class TambahDataMinuman extends java.awt.Dialog {
             }
         });
 
-        comboUkuran.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Ukuran", "1500", "1200", "660", "Cup" }));
+        comboUkuran.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Ukuran", "1500", "1200", "660" }));
         comboUkuran.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboUkuranActionPerformed(evt);

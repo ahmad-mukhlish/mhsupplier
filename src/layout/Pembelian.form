@@ -59,7 +59,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                                  <Component id="simpanPenjualan" min="-2" pref="215" max="-2" attributes="0"/>
+                                  <Component id="DeleteOutcome2" min="-2" pref="215" max="-2" attributes="0"/>
                                   <EmptySpace pref="12" max="32767" attributes="0"/>
                                   <Component id="DeleteOutcome" min="-2" pref="199" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
@@ -211,7 +211,7 @@
                           <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="DeleteOutcome" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                              <Component id="simpanPenjualan" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                              <Component id="DeleteOutcome2" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
@@ -251,12 +251,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteOutcomeActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="simpanPenjualan">
+        <Component class="javax.swing.JButton" name="DeleteOutcome2">
           <Properties>
             <Property name="text" type="java.lang.String" value="Simpan penjualan"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="simpanPenjualanActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteOutcome2ActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="hapusDataMinuman">

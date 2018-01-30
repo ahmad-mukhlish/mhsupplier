@@ -59,30 +59,9 @@ CREATE TABLE `minuman` (
 
 insert  into `minuman`(`kd_min`,`nama_min`,`ukuran`,`isi`,`stok`,`harga_beli`,`harga_jual`,`tgl_masuk`,`kd_dis`) values 
 ('ALE0660170118','Ale-ale',660,48,23,62000,63000,'2018-01-17',2),
-('COC1500050118','Coca Cola',1500,24,21,123123,0,'2018-01-05',1),
-('FRU1500010118','Frutang',1500,12,32,24000,0,'2018-01-01',1),
-('KOP1200100118','Kopikap',1200,48,41,50000,0,'2018-01-10',1);
-
-/*Table structure for table `pemasukan` */
-
-DROP TABLE IF EXISTS `pemasukan`;
-
-CREATE TABLE `pemasukan` (
-  `Nomor` int(11) NOT NULL AUTO_INCREMENT,
-  `Info` varchar(50) DEFAULT NULL,
-  `Uang` double DEFAULT NULL,
-  PRIMARY KEY (`Nomor`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-
-/*Data for the table `pemasukan` */
-
-insert  into `pemasukan`(`Nomor`,`Info`,`Uang`) values 
-(1,'Gisty Amelia',20000),
-(2,'Hasan Syadzilli',20000),
-(3,'Gilang Dirga',50000),
-(4,'Sherlock Holmes',70000),
-(5,'Ahmad Mukhlis ',10000),
-(6,'Ahmad Mukhlis S',100000);
+('COC1500050118','Coca Cola',1500,24,21,123123,123400,'2018-01-05',1),
+('FRU1500010118','Frutang',1500,12,32,24000,25000,'2018-01-01',1),
+('KOP1200100118','Kopikap',1200,48,41,50000,52000,'2018-01-10',1);
 
 /*Table structure for table `pembeli` */
 
@@ -103,25 +82,48 @@ insert  into `pembeli`(`kd_pbl`,`nama_pbl`,`alamat`,`no_telp`,`total_hutang`) va
 (1,'Mang Iin','Jl. Sindangpanon no 20','081321456789',4000000),
 (2,'Joni','Janji Joni\n','089543215678',600000);
 
-/*Table structure for table `pengeluaran` */
+/*Table structure for table `pembelian` */
 
-DROP TABLE IF EXISTS `pengeluaran`;
+DROP TABLE IF EXISTS `pembelian`;
 
-CREATE TABLE `pengeluaran` (
-  `Nomor` int(11) NOT NULL AUTO_INCREMENT,
-  `Info` varchar(50) DEFAULT NULL,
-  `Uang` double DEFAULT NULL,
-  PRIMARY KEY (`Nomor`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+CREATE TABLE `pembelian` (
+  `nomor_nota` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `kd_min` char(13) NOT NULL,
+  `kd_dis` int(11) NOT NULL,
+  `harga_beli` bigint(20) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `sub_total` bigint(20) NOT NULL,
+  PRIMARY KEY (`nomor_nota`),
+  KEY `kd_dis` (`kd_dis`),
+  CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`kd_dis`) REFERENCES `distributor` (`kd_dis`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `pengeluaran` */
+/*Data for the table `pembelian` */
 
-insert  into `pengeluaran`(`Nomor`,`Info`,`Uang`) values 
-(1,'Jana Fitria Malawat',5000),
-(2,'Ahmad Mukhlis Saputra',5000),
-(3,'Ami Gusmiati',5000),
-(6,'Rosmi Alhandani',6000),
-(7,'Fitriya Rohimah',69000);
+/*Table structure for table `penjualan` */
+
+DROP TABLE IF EXISTS `penjualan`;
+
+CREATE TABLE `penjualan` (
+  `nomor_nota` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `kd_min` char(13) NOT NULL,
+  `kd_pbl` int(11) NOT NULL,
+  `harga_jual` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `sub_total` bigint(20) NOT NULL,
+  PRIMARY KEY (`nomor_nota`),
+  KEY `kd_min` (`kd_min`),
+  KEY `kd_pbl` (`kd_pbl`),
+  CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`kd_min`) REFERENCES `minuman` (`kd_min`),
+  CONSTRAINT `penjualan_ibfk_2` FOREIGN KEY (`kd_pbl`) REFERENCES `pembeli` (`kd_pbl`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `penjualan` */
+
+insert  into `penjualan`(`nomor_nota`,`tanggal`,`kd_min`,`kd_pbl`,`harga_jual`,`jumlah`,`sub_total`) values 
+(1,'2018-01-30','COC1500050118',2,40000,2,80000);
 
 /*Table structure for table `user` */
 
