@@ -560,8 +560,8 @@ public class Penjualan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_fKembalianActionPerformed
 
     private void dealButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dealButtonActionPerformed
-
-        if (comboPembeli.getSelectedIndex() != 0 && comboIDMinuman.getSelectedIndex() != 0) {
+        mStok = mStok - Integer.parseInt(spinnerJumlah.getValue() + "") ;
+        if (comboPembeli.getSelectedIndex() != 0 && comboIDMinuman.getSelectedIndex() != 0 && mStok >= 0) {
             mRow++;
 
             mGrandTotal = 0;
@@ -584,12 +584,12 @@ public class Penjualan extends javax.swing.JInternalFrame {
             }
 
             
-            mStok = mStok - Integer.parseInt(spinnerJumlah.getValue() + "") ;
+           
             fStokMin.setText(mStok+"");
             fTotal.setText(MainFrame.formatter(mGrandTotal + ""));
         } else {
-            JOptionPane.showMessageDialog(this, "Silakan pilih pembeli dan minuman terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
-
+            JOptionPane.showMessageDialog(this, "Terjadi kesalahan", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            mStok = mStok + Integer.parseInt(spinnerJumlah.getValue() + "") ;
         }
 
     }//GEN-LAST:event_dealButtonActionPerformed
