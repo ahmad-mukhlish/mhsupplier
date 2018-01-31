@@ -59,9 +59,9 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                                  <Component id="DeleteOutcome2" min="-2" pref="215" max="-2" attributes="0"/>
+                                  <Component id="simpan" min="-2" pref="215" max="-2" attributes="0"/>
                                   <EmptySpace pref="12" max="32767" attributes="0"/>
-                                  <Component id="DeleteOutcome" min="-2" pref="199" max="-2" attributes="0"/>
+                                  <Component id="batal" min="-2" pref="199" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -73,8 +73,8 @@
                       <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="fNamaPembeli" min="-2" pref="164" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="fNamaDistributor" min="-2" pref="158" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -88,7 +88,7 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboPembeli" min="-2" pref="162" max="-2" attributes="0"/>
+                              <Component id="comboDistributor" min="-2" pref="162" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
@@ -132,9 +132,9 @@
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="182" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="197" max="-2" attributes="0"/>
                                   <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="fIsi" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -165,14 +165,14 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="dealButton" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="comboIDMinuman" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="spinnerJumlah" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="dealButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="comboPembeli" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboDistributor" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="fStokMin" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="fHargaMin" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="fHargaMin" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
@@ -180,7 +180,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="fNamaPembeli" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="fNamaDistributor" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="fNamaMin" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -210,8 +210,8 @@
                           <Component id="fKembalian" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="DeleteOutcome" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                              <Component id="DeleteOutcome2" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                              <Component id="batal" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                              <Component id="simpan" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
@@ -243,20 +243,20 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="DeleteOutcome">
+        <Component class="javax.swing.JButton" name="batal">
           <Properties>
             <Property name="text" type="java.lang.String" value="Batal"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteOutcomeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="batalActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="DeleteOutcome2">
+        <Component class="javax.swing.JButton" name="simpan">
           <Properties>
             <Property name="text" type="java.lang.String" value="Simpan penjualan"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteOutcome2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="simpanActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="hapusDataMinuman">
@@ -274,7 +274,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="TPenjualan">
+            <Component class="javax.swing.JTable" name="TPembelian">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="42" green="3f" red="3c" type="rgb"/>
@@ -309,8 +309,9 @@
         <Component class="javax.swing.JSpinner" name="spinnerJumlah">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+              <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -513,7 +514,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="bc" green="bb" red="bb" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Harga"/>
+            <Property name="text" type="java.lang.String" value="Harga Beli"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
@@ -524,7 +525,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="bc" green="bb" red="bb" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Nama Pembeli"/>
+            <Property name="text" type="java.lang.String" value="Nama Distributor"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="fStokMin">
@@ -532,14 +533,17 @@
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="comboPembeli">
+        <Component class="javax.swing.JComboBox" name="comboDistributor">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">
-                <StringItem index="0" value="Pilih Pembeli"/>
+                <StringItem index="0" value="Pilih Distributor"/>
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboDistributorActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -549,7 +553,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="bc" green="bb" red="bb" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Kode Pembeli"/>
+            <Property name="text" type="java.lang.String" value="Kode Distributor"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="fTotal">
@@ -572,7 +576,7 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="fNamaPembeli">
+        <Component class="javax.swing.JTextField" name="fNamaDistributor">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>

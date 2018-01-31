@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import layout.Database;
-import layout.Sirkulasi;
+import layout.Laporan;
 
 /**
  *

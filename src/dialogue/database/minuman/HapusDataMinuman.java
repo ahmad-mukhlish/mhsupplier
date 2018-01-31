@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import layout.Database;
-import layout.Sirkulasi;
+import layout.Laporan;
 
 /**
  *

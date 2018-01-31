@@ -14,7 +14,7 @@ import java.awt.event.KeyListener;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import layout.Database;
-import layout.Sirkulasi;
+import layout.Laporan;
 
 /**
  *

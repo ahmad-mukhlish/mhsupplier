@@ -31,6 +31,7 @@ import static layout.Database.distributorTableModel;
 import static layout.Database.minumanTableModel;
 import static layout.Database.pembeliTableModel;
 import static layout.MainFrame.formatter;
+import static layout.Penjualan.penjualanTableModel;
 
 /**
  *
@@ -51,20 +52,18 @@ public class Pembelian extends javax.swing.JInternalFrame {
         initComponents();
         hideTitleBar();
         MainFrame.connect();
-        getToComboBox(comboIDMinuman, comboPembeli);
-        TPenjualan.setModel(penjualanTableModel);
+        getToComboBox(comboIDMinuman, comboDistributor);
+        TPembelian.setModel(pembelianTableModel);
         backToStart();
-        comboPembeli.addItemListener(new ComboPembeliListener());
+        comboDistributor.addItemListener(new ComboDistributorListener());
         comboIDMinuman.addItemListener(new ComboMinumanListener());
-        spinnerJumlah.setModel(new SpinnerNumberModel(0, 0, 0, 0));
         spinnerJumlah.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 fStokMin.setText(((mStok
-                        - Integer.parseInt(spinnerJumlah.getValue().toString())) + ""));
+                        + Integer.parseInt(spinnerJumlah.getValue().toString())) + ""));
 
                 mSubTotal = mSatuan * Integer.parseInt(spinnerJumlah.getValue() + "");
-
                 fHargaMin.setText(MainFrame.formatter(((mSubTotal + ""))));
 
             }
@@ -97,7 +96,7 @@ public class Pembelian extends javax.swing.JInternalFrame {
     }
 
     private void backToStart() {
-        penjualanTableModel.getDataVector().removeAllElements();
+        pembelianTableModel.getDataVector().removeAllElements();
         mGrandTotal = 0;
     }
 
@@ -107,16 +106,16 @@ public class Pembelian extends javax.swing.JInternalFrame {
         ((javax.swing.plaf.basic.BasicInternalFrameUI) hide).setNorthPane(null);
     }
 
-    public static javax.swing.table.DefaultTableModel penjualanTableModel = mhSupplierTableModel();
+    public static javax.swing.table.DefaultTableModel pembelianTableModel = mhSupplierTableModel();
 
     private static javax.swing.table.DefaultTableModel mhSupplierTableModel() {
 
         return new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
-                new String[]{"No. Item", "Nama Minuman", "Harga Satuan", "Jumlah", "Sub Total"}
+                new String[]{"No. Item", "Kode Minuman", "Nama Minuman", "Harga Satuan", "Jumlah", "Sub Total"}
         ) {
             boolean[] canEdit = new boolean[]{
-                false, false, false, false, false
+                false, false, false, false, false, false
 
             };
 
@@ -138,11 +137,11 @@ public class Pembelian extends javax.swing.JInternalFrame {
 
         panel = new javax.swing.JPanel();
         fKembalian = new javax.swing.JTextField();
-        DeleteOutcome = new javax.swing.JButton();
-        DeleteOutcome2 = new javax.swing.JButton();
+        batal = new javax.swing.JButton();
+        simpan = new javax.swing.JButton();
         hapusDataMinuman = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TPenjualan = new javax.swing.JTable();
+        TPembelian = new javax.swing.JTable();
         comboIDMinuman = new javax.swing.JComboBox<>();
         spinnerJumlah = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
@@ -162,10 +161,10 @@ public class Pembelian extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         fStokMin = new javax.swing.JTextField();
-        comboPembeli = new javax.swing.JComboBox<>();
+        comboDistributor = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         fTotal = new javax.swing.JTextField();
-        fNamaPembeli = new javax.swing.JTextField();
+        fNamaDistributor = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         fUkuran = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -188,17 +187,17 @@ public class Pembelian extends javax.swing.JInternalFrame {
             }
         });
 
-        DeleteOutcome.setText("Batal");
-        DeleteOutcome.addActionListener(new java.awt.event.ActionListener() {
+        batal.setText("Batal");
+        batal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteOutcomeActionPerformed(evt);
+                batalActionPerformed(evt);
             }
         });
 
-        DeleteOutcome2.setText("Simpan penjualan");
-        DeleteOutcome2.addActionListener(new java.awt.event.ActionListener() {
+        simpan.setText("Simpan penjualan");
+        simpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteOutcome2ActionPerformed(evt);
+                simpanActionPerformed(evt);
             }
         });
 
@@ -209,9 +208,9 @@ public class Pembelian extends javax.swing.JInternalFrame {
             }
         });
 
-        TPenjualan.setBackground(new java.awt.Color(60, 63, 66));
-        TPenjualan.setForeground(new java.awt.Color(187, 187, 188));
-        TPenjualan.setModel(new javax.swing.table.DefaultTableModel(
+        TPembelian.setBackground(new java.awt.Color(60, 63, 66));
+        TPembelian.setForeground(new java.awt.Color(187, 187, 188));
+        TPembelian.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -222,11 +221,12 @@ public class Pembelian extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(TPenjualan);
+        jScrollPane1.setViewportView(TPembelian);
 
         comboIDMinuman.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Minuman" }));
 
-        spinnerJumlah.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        spinnerJumlah.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        spinnerJumlah.setEnabled(false);
 
         jLabel1.setForeground(new java.awt.Color(187, 187, 188));
         jLabel1.setText("Jumlah");
@@ -334,18 +334,23 @@ public class Pembelian extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel6.setText("Harga");
+        jLabel6.setText("Harga Beli");
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel7.setText("Nama Pembeli");
+        jLabel7.setText("Nama Distributor");
 
         fStokMin.setEditable(false);
 
-        comboPembeli.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Pembeli" }));
+        comboDistributor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Distributor" }));
+        comboDistributor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboDistributorActionPerformed(evt);
+            }
+        });
 
         jLabel8.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel8.setText("Kode Pembeli");
+        jLabel8.setText("Kode Distributor");
 
         fTotal.setEditable(false);
         fTotal.setBackground(new java.awt.Color(69, 73, 75));
@@ -357,7 +362,7 @@ public class Pembelian extends javax.swing.JInternalFrame {
             }
         });
 
-        fNamaPembeli.setEditable(false);
+        fNamaDistributor.setEditable(false);
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(187, 187, 188));
@@ -391,9 +396,9 @@ public class Pembelian extends javax.swing.JInternalFrame {
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addGap(69, 69, 69)
-                                .addComponent(DeleteOutcome2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                                .addComponent(DeleteOutcome, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(batal, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(31, 31, 31))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -401,8 +406,8 @@ public class Pembelian extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fNamaPembeli, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(fNamaDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
@@ -415,7 +420,7 @@ public class Pembelian extends javax.swing.JInternalFrame {
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
-                            .addComponent(comboPembeli, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(comboDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addGap(28, 28, 28)
@@ -447,9 +452,9 @@ public class Pembelian extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel6)
                                 .addContainerGap())
                             .addGroup(panelLayout.createSequentialGroup()
-                                .addGap(182, 182, 182)
+                                .addGap(197, 197, 197)
                                 .addComponent(jLabel11)
-                                .addGap(27, 27, 27)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(fIsi))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -471,20 +476,20 @@ public class Pembelian extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dealButton, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(comboIDMinuman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(spinnerJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(dealButton)
-                        .addComponent(comboPembeli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(fStokMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(fHargaMin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(comboDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fStokMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fHargaMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7)
-                            .addComponent(fNamaPembeli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fNamaDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(fNamaMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12)))
                     .addGroup(panelLayout.createSequentialGroup()
@@ -508,8 +513,8 @@ public class Pembelian extends javax.swing.JInternalFrame {
                         .addComponent(fKembalian, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(52, 52, 52)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(DeleteOutcome, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(DeleteOutcome2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(batal, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -533,18 +538,25 @@ public class Pembelian extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void DeleteOutcomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteOutcomeActionPerformed
+    private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         comboIDMinuman.setSelectedIndex(0);
-        comboPembeli.setSelectedIndex(0);
-        TPenjualan.clearSelection();
-        penjualanTableModel.setRowCount(0);
+        comboDistributor.setSelectedIndex(0);
+        TPembelian.clearSelection();
+        pembelianTableModel.setRowCount(0);
 
         mRow = 0;
 
         fTotal.setText("");
         fUangMasuk.setText("Rp ");
         fKembalian.setText("");
-    }//GEN-LAST:event_DeleteOutcomeActionPerformed
+
+        comboDistributor.setEnabled(true);
+
+        spinnerJumlah.setEnabled(false);
+        spinnerJumlah.setValue(1);
+
+
+    }//GEN-LAST:event_batalActionPerformed
 
     private void fTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fTotalActionPerformed
         // TODO add your handling code here:
@@ -560,24 +572,24 @@ public class Pembelian extends javax.swing.JInternalFrame {
 
     private void dealButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dealButtonActionPerformed
 
-        if (comboPembeli.getSelectedIndex() != 0 && comboIDMinuman.getSelectedIndex() != 0) {
+        if (comboDistributor.getSelectedIndex() != 0 && comboIDMinuman.getSelectedIndex() != 0) {
             mRow++;
 
             mGrandTotal = 0;
-            String[] data = new String[5];
+            String[] data = new String[6];
 
             data[0] = mRow + "";
-            data[1] = fNamaMin.getText();
-            data[2] = MainFrame.formatter(mSatuan + "");
-            data[3] = spinnerJumlah.getValue() + "";
-            data[4] = MainFrame.formatter(mSubTotal + "");
+            data[1] = comboIDMinuman.getSelectedItem().toString() + "";
+            data[2] = fNamaMin.getText();
+            data[3] = MainFrame.formatter(mSatuan + "");
+            data[4] = spinnerJumlah.getValue() + "";
+            data[5] = MainFrame.formatter(mSubTotal + "");
 
-            penjualanTableModel.addRow(data);
+            pembelianTableModel.addRow(data);
 
             for (int i = 0; i < mRow; i++) {
 
-                mGrandTotal += Integer.parseInt(
-                        EditDataOrang.takeNominal(penjualanTableModel.getValueAt(i, 4) + ""));
+                mGrandTotal += Integer.parseInt(EditDataOrang.takeNominal(pembelianTableModel.getValueAt(i, 5) + ""));
 
             }
 
@@ -589,7 +601,7 @@ public class Pembelian extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_dealButtonActionPerformed
 
-    private void DeleteOutcome2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteOutcome2ActionPerformed
+    private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
 
         try {
 
@@ -601,47 +613,49 @@ public class Pembelian extends javax.swing.JInternalFrame {
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-                String SQL = "INSERT INTO penjualan VALUES ("
+                String SQL = "INSERT INTO pembelian VALUES ("
                         + mNota + ", '"
                         + sdf.format(Calendar.getInstance().getTime()) + "', '"
-                        + comboIDMinuman.getSelectedItem().toString() + "', "
-                        + comboPembeli.getSelectedIndex() + ", "
-                        + mSatuan + ", "
-                        + spinnerJumlah.getValue().toString() + ", "
-                        + mSubTotal + " "
+                        + pembelianTableModel.getValueAt(i, 1) + "', "
+                        + comboDistributor.getSelectedIndex() + ", "
+                        + EditDataOrang.takeNominal(pembelianTableModel.getValueAt(i, 3) + "") + ", "
+                        + pembelianTableModel.getValueAt(i, 4) + " , "
+                        + EditDataOrang.takeNominal(pembelianTableModel.getValueAt(i, 5) + "") + " "
                         + ") ;";
 
-                
                 System.out.println(SQL);
-                
-                
-//                ResultSet res = stt.executeQuery(SQL);
-//                res.close();
-//                stt.close();
-//                kon.close();
+
+                stt.execute(SQL);
+
+                stt.close();
+                kon.close();
+
             }
+
+            mNota++;
+            fNota.setText(mNota + "");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Pembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }//GEN-LAST:event_DeleteOutcome2ActionPerformed
+
+    }//GEN-LAST:event_simpanActionPerformed
 
     private void hapusDataMinumanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusDataMinumanActionPerformed
-        if (TPenjualan.getSelectedRow() != -1 && TPenjualan.getRowCount() != 0) {
-            penjualanTableModel.removeRow(TPenjualan.getSelectedRow());
-            TPenjualan.clearSelection();
+        if (TPembelian.getSelectedRow() != -1 && TPembelian.getRowCount() != 0) {
+            pembelianTableModel.removeRow(TPembelian.getSelectedRow());
+            TPembelian.clearSelection();
             mRow--;
             mGrandTotal = 0;
 
             for (int i = 0; i < mRow; i++) {
 
-                mGrandTotal += Integer.parseInt(
-                        EditDataOrang.takeNominal(penjualanTableModel.getValueAt(i, 4) + ""));
+                mGrandTotal += Integer.parseInt(EditDataOrang.takeNominal(pembelianTableModel.getValueAt(i, 5) + ""));
             }
 
             fTotal.setText(MainFrame.formatter(mGrandTotal + ""));
         } else {
-            JOptionPane.showMessageDialog(this, "Silakan pilih pembeli dan minuman terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Silakan pilih distributor dan minuman terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_hapusDataMinumanActionPerformed
@@ -649,6 +663,10 @@ public class Pembelian extends javax.swing.JInternalFrame {
     private void fNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNotaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fNotaActionPerformed
+
+    private void comboDistributorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDistributorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboDistributorActionPerformed
 
     public static void getToComboBox(JComboBox comboBox, JComboBox comboBox2) {
         try {
@@ -666,11 +684,11 @@ public class Pembelian extends javax.swing.JInternalFrame {
             stt.close();
 
             Statement sttPembeli = kon.createStatement();
-            String SQLPembeli = "select * from pembeli";
+            String SQLPembeli = "select * from distributor";
             ResultSet resPembeli = sttPembeli.executeQuery(SQLPembeli);
 
             while (resPembeli.next()) {
-                comboBox2.addItem(Database.koder("PBL", Integer.parseInt(resPembeli.getString(1))));
+                comboBox2.addItem(Database.koder("DIS", Integer.parseInt(resPembeli.getString(1))));
 
             }
             resPembeli.close();
@@ -696,12 +714,11 @@ public class Pembelian extends javax.swing.JInternalFrame {
                     Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
                     Statement stt = kon.createStatement();
 
-                    String SQL = "SELECT nama_min, harga_jual, stok, ukuran, isi FROM minuman WHERE kd_min = '" + item + "' ;";
+                    String SQL = "SELECT nama_min, harga_beli, stok, ukuran, isi FROM minuman WHERE kd_min = '" + item + "' ;";
                     ResultSet res = stt.executeQuery(SQL);
 
                     while (res.next()) {
                         fNamaMin.setText(res.getString(1));
-
                         mSatuan = Integer.parseInt(res.getString(2));
                         mSubTotal = mSatuan;
                         fHargaMin.setText(MainFrame.formatter(mSubTotal + ""));
@@ -712,11 +729,17 @@ public class Pembelian extends javax.swing.JInternalFrame {
 
                     }
 
-                    spinnerJumlah.setModel(new SpinnerNumberModel(1, 1, mStok, 1));
+                    spinnerJumlah.setValue(0);
 
                     res.close();
                     stt.close();
                     kon.close();
+
+                    if (comboDistributor.getSelectedIndex() != 0 && comboIDMinuman.getSelectedIndex() != 0) {
+
+                        spinnerJumlah.setEnabled(true);
+                        spinnerJumlah.setValue(1);
+                    }
 
                 } catch (ClassNotFoundException | SQLException ex) {
                     Logger.getLogger(Pembelian.class.getName()).log(Level.SEVERE, null, ex);
@@ -734,11 +757,11 @@ public class Pembelian extends javax.swing.JInternalFrame {
         }
     }
 
-    class ComboPembeliListener implements ItemListener {
+    class ComboDistributorListener implements ItemListener {
 
         @Override
         public void itemStateChanged(ItemEvent event) {
-            if (event.getStateChange() == ItemEvent.SELECTED && comboPembeli.getSelectedIndex() != 0) {
+            if (event.getStateChange() == ItemEvent.SELECTED && comboDistributor.getSelectedIndex() != 0) {
                 try {
                     //get the selected item from combo box
                     String item = event.getItem().toString();
@@ -747,11 +770,11 @@ public class Pembelian extends javax.swing.JInternalFrame {
                     Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
                     Statement stt = kon.createStatement();
 
-                    String SQL = "SELECT * from pembeli where kd_pbl = " + comboPembeli.getSelectedIndex() + " ;";
+                    String SQL = "SELECT * from distributor where kd_dis = " + comboDistributor.getSelectedIndex() + " ;";
                     ResultSet res = stt.executeQuery(SQL);
 
                     while (res.next()) {
-                        fNamaPembeli.setText(res.getString(2));
+                        fNamaDistributor.setText(res.getString(2));
                     }
 
                     res.close();
@@ -762,8 +785,16 @@ public class Pembelian extends javax.swing.JInternalFrame {
                     Logger.getLogger(Pembelian.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-            } else if (comboPembeli.getSelectedIndex() == 0) {
-                fNamaPembeli.setText("");
+                comboDistributor.setEnabled(false);
+
+                if (comboDistributor.getSelectedIndex() != 0 && comboIDMinuman.getSelectedIndex() != 0) {
+
+                    spinnerJumlah.setEnabled(true);
+                    spinnerJumlah.setValue(1);
+                }
+
+            } else if (comboDistributor.getSelectedIndex() == 0) {
+                fNamaDistributor.setText("");
             }
 
         }
@@ -781,12 +812,20 @@ public class Pembelian extends javax.swing.JInternalFrame {
             Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
             Statement stt = kon.createStatement();
 
-            String SQL = "SELECT max(nomor_nota) FROM penjualan";
+            String SQL = "SELECT max(nomor_nota) FROM pembelian";
             ResultSet res = stt.executeQuery(SQL);
 
             while (res.next()) {
-                mNota = Integer.parseInt(res.getString(1));
-                fNota.setText(mNota + "");
+                if (res.getString(1) != null) {
+                    System.out.println(res.getString(1));
+                    mNota = Integer.parseInt(res.getString(1)) + 1;
+                    fNota.setText(mNota + "");
+
+                } else {
+                    System.out.println(res.getString(1));
+                    mNota = 1;
+                    fNota.setText(mNota + "");
+                }
             }
 
             res.close();
@@ -801,17 +840,16 @@ public class Pembelian extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton DeleteOutcome;
-    private javax.swing.JButton DeleteOutcome2;
-    private javax.swing.JTable TPenjualan;
+    private javax.swing.JTable TPembelian;
+    private javax.swing.JButton batal;
+    private javax.swing.JComboBox<String> comboDistributor;
     private javax.swing.JComboBox<String> comboIDMinuman;
-    private javax.swing.JComboBox<String> comboPembeli;
     private javax.swing.JButton dealButton;
     private javax.swing.JTextField fHargaMin;
     private javax.swing.JTextField fIsi;
     public static javax.swing.JTextField fKembalian;
+    private javax.swing.JTextField fNamaDistributor;
     private javax.swing.JTextField fNamaMin;
-    private javax.swing.JTextField fNamaPembeli;
     private javax.swing.JTextField fNota;
     private javax.swing.JTextField fStokMin;
     private javax.swing.JTextField fTanggal;
@@ -836,6 +874,7 @@ public class Pembelian extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panel;
+    private javax.swing.JButton simpan;
     private javax.swing.JSpinner spinnerJumlah;
     // End of variables declaration//GEN-END:variables
 }

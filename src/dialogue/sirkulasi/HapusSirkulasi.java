@@ -12,7 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import layout.Sirkulasi;
+import layout.Laporan;
 
 /**
  *
@@ -171,11 +171,11 @@ public class HapusSirkulasi extends java.awt.Dialog {
                 }
 
                 if (table.equals("pemasukan")) {
-                    Sirkulasi.mTotalIncome -= Long.parseLong(EditSirkulasi.takeNominal(mDatas[2]));
-                    Sirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + Sirkulasi.mTotalIncome));
+                    Laporan.mTotalIncome -= Long.parseLong(EditSirkulasi.takeNominal(mDatas[2]));
+                    Laporan.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + Laporan.mTotalIncome));
                 } else {
-                    Sirkulasi.mTotalOutcome -= Long.parseLong(EditSirkulasi.takeNominal(mDatas[2]));
-                    Sirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + Sirkulasi.mTotalOutcome));
+                    Laporan.mTotalOutcome -= Long.parseLong(EditSirkulasi.takeNominal(mDatas[2]));
+                    Laporan.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + Laporan.mTotalOutcome));
 
                 }
 
@@ -183,16 +183,16 @@ public class HapusSirkulasi extends java.awt.Dialog {
 
                 if (table.equals("pemasukan")) {
 
-                    Sirkulasi.incomeTableModel.removeRow(mRow);
+                    Laporan.incomeTableModel.removeRow(mRow);
 
                 } else {
 
-                    Sirkulasi.outcomeTableModel.removeRow(mRow);
+                    Laporan.outcomeTableModel.removeRow(mRow);
 
                 }
 
-                Sirkulasi.mGrandTotal = Sirkulasi.mTotalIncome - Sirkulasi.mTotalOutcome;
-                Sirkulasi.total.setText("  GRAND TOTAL : " + formatter("" + Sirkulasi.mGrandTotal));
+                Laporan.mGrandTotal = Laporan.mTotalIncome - Laporan.mTotalOutcome;
+                Laporan.total.setText("  GRAND TOTAL : " + formatter("" + Laporan.mGrandTotal));
 
                 this.dispose();
 

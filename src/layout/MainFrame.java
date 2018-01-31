@@ -65,6 +65,7 @@ public class MainFrame extends javax.swing.JFrame {
         databaseMenu = new javax.swing.JMenu();
         penjualanMenu = new javax.swing.JMenu();
         pembelianMenu = new javax.swing.JMenu();
+        laporanMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(60, 63, 66));
@@ -187,6 +188,27 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenuBar1.add(pembelianMenu);
 
+        laporanMenu.setBackground(new java.awt.Color(187, 187, 188));
+        laporanMenu.setForeground(new java.awt.Color(255, 255, 255));
+        laporanMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/laporan.png"))); // NOI18N
+        laporanMenu.setText("Laporan");
+        laporanMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        laporanMenu.setHideActionText(true);
+        laporanMenu.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        laporanMenu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        laporanMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                laporanMenuMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                laporanMenuMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                laporanMenuMousePressed(evt);
+            }
+        });
+        jMenuBar1.add(laporanMenu);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -273,6 +295,35 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_pembelianMenuMousePressed
+
+    private void laporanMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laporanMenuMouseEntered
+
+        laporanMenu.setOpaque(true);
+        laporanMenu.setBackground(javax.swing.UIManager.getDefaults().getColor("MenuItem.selectionBackground"));
+        laporanMenu.setForeground(new Color(0, 0, 0));
+
+    }//GEN-LAST:event_laporanMenuMouseEntered
+
+    private void laporanMenuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laporanMenuMouseExited
+
+        laporanMenu.setOpaque(true);
+        laporanMenu.setBackground(new Color(187, 187, 187));
+        laporanMenu.setForeground(new Color(255, 255, 255));
+
+    }//GEN-LAST:event_laporanMenuMouseExited
+
+    private void laporanMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laporanMenuMousePressed
+        Laporan panelSirkulasi = new Laporan();
+        panelUtama.removeAll();
+        panelUtama.add(panelSirkulasi);
+        panelSirkulasi.setVisible(true);
+        menu.setText("Menu Pembelian");
+        try {
+            panelSirkulasi.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_laporanMenuMousePressed
 
     /**
      * @param args the command line arguments
@@ -383,6 +434,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu databaseMenu;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JMenu laporanMenu;
     private javax.swing.JLabel menu;
     private javax.swing.JDesktopPane panelUtama;
     private javax.swing.JMenu pembelianMenu;

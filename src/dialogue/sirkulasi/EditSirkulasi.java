@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import layout.Sirkulasi;
+import layout.Laporan;
 
 /**
  *
@@ -196,13 +196,13 @@ public class EditSirkulasi extends java.awt.Dialog {
                 }
 
                 if (table.equals("pemasukan")) {
-                    Sirkulasi.mTotalIncome -= Long.parseLong(takeNominal(mDatas[2]));
-                    Sirkulasi.mTotalIncome += Long.parseLong(data[2]);
-                    Sirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + Sirkulasi.mTotalIncome));
+                    Laporan.mTotalIncome -= Long.parseLong(takeNominal(mDatas[2]));
+                    Laporan.mTotalIncome += Long.parseLong(data[2]);
+                    Laporan.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + Laporan.mTotalIncome));
                 } else {
-                    Sirkulasi.mTotalOutcome -= Long.parseLong(takeNominal(mDatas[2]));
-                    Sirkulasi.mTotalOutcome += Long.parseLong(data[2]);
-                    Sirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + Sirkulasi.mTotalOutcome));
+                    Laporan.mTotalOutcome -= Long.parseLong(takeNominal(mDatas[2]));
+                    Laporan.mTotalOutcome += Long.parseLong(data[2]);
+                    Laporan.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + Laporan.mTotalOutcome));
 
                 }
 
@@ -210,18 +210,18 @@ public class EditSirkulasi extends java.awt.Dialog {
 
                 if (table.equals("pemasukan")) {
 
-                    Sirkulasi.incomeTableModel.insertRow(mRow, data);
-                    Sirkulasi.incomeTableModel.removeRow(mRow + 1);
+                    Laporan.incomeTableModel.insertRow(mRow, data);
+                    Laporan.incomeTableModel.removeRow(mRow + 1);
 
                 } else {
 
-                    Sirkulasi.outcomeTableModel.insertRow(mRow, data);
-                    Sirkulasi.outcomeTableModel.removeRow(mRow + 1);
+                    Laporan.outcomeTableModel.insertRow(mRow, data);
+                    Laporan.outcomeTableModel.removeRow(mRow + 1);
 
                 }
 
-                Sirkulasi.mGrandTotal = Sirkulasi.mTotalIncome - Sirkulasi.mTotalOutcome;
-                Sirkulasi.total.setText("  GRAND TOTAL : " + formatter("" + Sirkulasi.mGrandTotal));
+                Laporan.mGrandTotal = Laporan.mTotalIncome - Laporan.mTotalOutcome;
+                Laporan.total.setText("  GRAND TOTAL : " + formatter("" + Laporan.mGrandTotal));
 
                 this.dispose();
 

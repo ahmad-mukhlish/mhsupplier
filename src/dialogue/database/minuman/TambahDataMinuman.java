@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import layout.Database;
-import layout.Sirkulasi;
+import layout.Laporan;
 
 /**
  *

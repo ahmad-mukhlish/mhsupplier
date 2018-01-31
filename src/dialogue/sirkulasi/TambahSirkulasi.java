@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.*;
 import javax.swing.JOptionPane;
-import layout.Sirkulasi;
+import layout.Laporan;
 
 /**
  *
@@ -187,24 +187,24 @@ public class TambahSirkulasi extends java.awt.Dialog {
                 }
 
                 if (table.equals("pemasukan")) {
-                    Sirkulasi.mTotalIncome += Long.parseLong(data[2]);
-                    Sirkulasi.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + Sirkulasi.mTotalIncome));
+                    Laporan.mTotalIncome += Long.parseLong(data[2]);
+                    Laporan.income.setText("  Total Pemasukan : " + MainFrame.formatter("" + Laporan.mTotalIncome));
                 } else {
-                    Sirkulasi.mTotalOutcome += Long.parseLong(data[2]);
-                    Sirkulasi.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + Sirkulasi.mTotalOutcome));
+                    Laporan.mTotalOutcome += Long.parseLong(data[2]);
+                    Laporan.outcome.setText("  Total Pengeluaran : " + MainFrame.formatter("" + Laporan.mTotalOutcome));
 
                 }
 
                 data[2] = MainFrame.formatter(data[2]);
 
                 if (table.equals("pemasukan")) {
-                    Sirkulasi.incomeTableModel.addRow(data);
+                    Laporan.incomeTableModel.addRow(data);
                 } else {
-                    Sirkulasi.outcomeTableModel.addRow(data);
+                    Laporan.outcomeTableModel.addRow(data);
                 }
 
-                Sirkulasi.mGrandTotal = Sirkulasi.mTotalIncome - Sirkulasi.mTotalOutcome;
-                Sirkulasi.total.setText("  GRAND TOTAL : " + formatter("" + Sirkulasi.mGrandTotal));
+                Laporan.mGrandTotal = Laporan.mTotalIncome - Laporan.mTotalOutcome;
+                Laporan.total.setText("  GRAND TOTAL : " + formatter("" + Laporan.mGrandTotal));
 
                 this.dispose();
 

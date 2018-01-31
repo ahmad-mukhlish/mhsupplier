@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import layout.Database;
-import layout.Sirkulasi;
+import layout.Laporan;
 
 /**
  *

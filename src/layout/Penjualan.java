@@ -56,7 +56,6 @@ public class Penjualan extends javax.swing.JInternalFrame {
         backToStart();
         comboPembeli.addItemListener(new ComboPembeliListener());
         comboIDMinuman.addItemListener(new ComboMinumanListener());
-        spinnerJumlah.setModel(new SpinnerNumberModel(0, 0, 0, 0));
         spinnerJumlah.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -113,7 +112,7 @@ public class Penjualan extends javax.swing.JInternalFrame {
 
         return new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
-                new String[]{"No Item", "Kode Minuman", "Nama Minuman", "Harga Satuan", "Jumlah", "Sub Total"}
+                new String[]{"No. Item", "Kode Minuman", "Nama Minuman", "Harga Satuan", "Jumlah", "Sub Total"}
         ) {
             boolean[] canEdit = new boolean[]{
                 false, false, false, false, false, false
@@ -227,6 +226,7 @@ public class Penjualan extends javax.swing.JInternalFrame {
         comboIDMinuman.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Minuman" }));
 
         spinnerJumlah.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        spinnerJumlah.setValue(1);
 
         jLabel1.setForeground(new java.awt.Color(187, 187, 188));
         jLabel1.setText("Jumlah");
@@ -334,7 +334,7 @@ public class Penjualan extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel6.setText("Harga");
+        jLabel6.setText("Harga Jual");
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(187, 187, 188));
@@ -470,14 +470,13 @@ public class Penjualan extends javax.swing.JInternalFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(comboIDMinuman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(spinnerJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(dealButton)
-                        .addComponent(comboPembeli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(fStokMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(fHargaMin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboIDMinuman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinnerJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dealButton)
+                    .addComponent(comboPembeli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fStokMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fHargaMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
@@ -613,14 +612,16 @@ public class Penjualan extends javax.swing.JInternalFrame {
                         + EditDataOrang.takeNominal(penjualanTableModel.getValueAt(i, 5) + "") + " "
                         + ") ;";
 
-                System.out.println(SQL);
 
                 stt.execute(SQL);
 
                 stt.close();
                 kon.close();
+
             }
 
+            mNota++;
+            fNota.setText(mNota + "");
             comboPembeli.setEnabled(true);
 
         } catch (ClassNotFoundException | SQLException ex) {
@@ -681,107 +682,102 @@ public class Penjualan extends javax.swing.JInternalFrame {
 
             kon.close();
 
-        
-
-} catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(TambahDataMinuman.class
+                    .getName()).log(Level.SEVERE, null, ex);
 
-.getName()).log(Level.SEVERE, null, ex);
-
-        
-
-}
+        }
     }
 
     class ComboMinumanListener implements ItemListener {
 
-    @Override
-    public void itemStateChanged(ItemEvent event) {
-        if (event.getStateChange() == ItemEvent.SELECTED && comboIDMinuman.getSelectedIndex() != 0) {
-            try {
-                //get the selected item from combo box
-                String item = event.getItem().toString();
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED && comboIDMinuman.getSelectedIndex() != 0) {
+                try {
+                    //get the selected item from combo box
+                    String item = event.getItem().toString();
 
-                Class.forName(MainFrame.driver);
-                Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
-                Statement stt = kon.createStatement();
+                    Class.forName(MainFrame.driver);
+                    Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
+                    Statement stt = kon.createStatement();
 
-                String SQL = "SELECT nama_min, harga_jual, stok, ukuran, isi FROM minuman WHERE kd_min = '" + item + "' ;";
-                ResultSet res = stt.executeQuery(SQL);
+                    String SQL = "SELECT nama_min, harga_jual, stok, ukuran, isi FROM minuman WHERE kd_min = '" + item + "' ;";
+                    ResultSet res = stt.executeQuery(SQL);
 
-                while (res.next()) {
-                    fNamaMin.setText(res.getString(1));
+                    while (res.next()) {
+                        fNamaMin.setText(res.getString(1));
 
-                    mSatuan = Integer.parseInt(res.getString(2));
-                    mSubTotal = mSatuan;
-                    fHargaMin.setText(MainFrame.formatter(mSubTotal + ""));
-                    mStok = Integer.parseInt(res.getString(3));
-                    fStokMin.setText(mStok + "");
-                    fUkuran.setText(res.getString(4) + " ml");
-                    fIsi.setText(res.getString(5));
+                        mSatuan = Integer.parseInt(res.getString(2));
+                        mSubTotal = mSatuan;
+                        fHargaMin.setText(MainFrame.formatter(mSubTotal + ""));
+                        mStok = Integer.parseInt(res.getString(3));
+                        fStokMin.setText(mStok + "");
+                        fUkuran.setText(res.getString(4) + " ml");
+                        fIsi.setText(res.getString(5));
 
+                    }
+
+                    spinnerJumlah.setModel(new SpinnerNumberModel(1, 1, mStok, 1));
+
+                    res.close();
+                    stt.close();
+                    kon.close();
+
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Logger.getLogger(Penjualan.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                spinnerJumlah.setModel(new SpinnerNumberModel(1, 1, mStok, 1));
+            } else if (comboIDMinuman.getSelectedIndex() == 0) {
+                fNamaMin.setText("");
+                fHargaMin.setText("");
+                fStokMin.setText("");
+                fUkuran.setText("");
+                fIsi.setText("");
+                spinnerJumlah.setValue(0);
 
-                res.close();
-                stt.close();
-                kon.close();
-
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(Penjualan.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
 
-        } else if (comboIDMinuman.getSelectedIndex() == 0) {
-            fNamaMin.setText("");
-            fHargaMin.setText("");
-            fStokMin.setText("");
-            fUkuran.setText("");
-            fIsi.setText("");
-            spinnerJumlah.setValue(0);
+    class ComboPembeliListener implements ItemListener {
+
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED && comboPembeli.getSelectedIndex() != 0) {
+                try {
+                    //get the selected item from combo box
+                    String item = event.getItem().toString();
+
+                    Class.forName(MainFrame.driver);
+                    Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
+                    Statement stt = kon.createStatement();
+
+                    String SQL = "SELECT * from pembeli where kd_pbl = " + comboPembeli.getSelectedIndex() + " ;";
+                    ResultSet res = stt.executeQuery(SQL);
+
+                    while (res.next()) {
+                        fNamaPembeli.setText(res.getString(2));
+                    }
+
+                    res.close();
+                    stt.close();
+                    kon.close();
+
+                    comboPembeli.setEnabled(false);
+
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Logger.getLogger(Penjualan.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else if (comboPembeli.getSelectedIndex() == 0) {
+                fNamaPembeli.setText("");
+            }
 
         }
     }
-}
 
-class ComboPembeliListener implements ItemListener {
-
-    @Override
-    public void itemStateChanged(ItemEvent event) {
-        if (event.getStateChange() == ItemEvent.SELECTED && comboPembeli.getSelectedIndex() != 0) {
-            try {
-                //get the selected item from combo box
-                String item = event.getItem().toString();
-
-                Class.forName(MainFrame.driver);
-                Connection kon = DriverManager.getConnection(MainFrame.database, MainFrame.user, MainFrame.pass);
-                Statement stt = kon.createStatement();
-
-                String SQL = "SELECT * from pembeli where kd_pbl = " + comboPembeli.getSelectedIndex() + " ;";
-                ResultSet res = stt.executeQuery(SQL);
-
-                while (res.next()) {
-                    fNamaPembeli.setText(res.getString(2));
-                }
-
-                res.close();
-                stt.close();
-                kon.close();
-
-                comboPembeli.setEnabled(false);
-
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(Penjualan.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        } else if (comboPembeli.getSelectedIndex() == 0) {
-            fNamaPembeli.setText("");
-        }
-
-    }
-}
-
-private void setTanggaldanNota() {
+    private void setTanggaldanNota() {
 
         try {
             DateFormat df
@@ -797,20 +793,23 @@ private void setTanggaldanNota() {
             ResultSet res = stt.executeQuery(SQL);
 
             while (res.next()) {
-                mNota = Integer.parseInt(res.getString(1));
-                fNota.setText(mNota + "");
+                if (res.getString(1) != null) {
+                    mNota = Integer.parseInt(res.getString(1)) + 1;
+                    fNota.setText(mNota + "");
+
+                } else {
+                    mNota = 1;
+                    fNota.setText(mNota + "");
+                }
             }
 
             res.close();
             stt.close();
             kon.close();
 
-        
-
-} catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Penjualan.class
-
-.getName()).log(Level.SEVERE, null, ex);
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
