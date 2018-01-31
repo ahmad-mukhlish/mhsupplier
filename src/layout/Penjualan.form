@@ -61,7 +61,7 @@
                                   <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
                                   <Component id="simpanPenjualan" min="-2" pref="215" max="-2" attributes="0"/>
                                   <EmptySpace pref="12" max="32767" attributes="0"/>
-                                  <Component id="DeleteOutcome" min="-2" pref="199" max="-2" attributes="0"/>
+                                  <Component id="batal" min="-2" pref="199" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -208,7 +208,7 @@
                           <Component id="fKembalian" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="DeleteOutcome" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                              <Component id="batal" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                               <Component id="simpanPenjualan" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -241,12 +241,12 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="DeleteOutcome">
+        <Component class="javax.swing.JButton" name="batal">
           <Properties>
             <Property name="text" type="java.lang.String" value="Batal"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteOutcomeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="batalActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="simpanPenjualan">

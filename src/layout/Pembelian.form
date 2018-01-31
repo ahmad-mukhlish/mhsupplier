@@ -124,8 +124,9 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="fHargaMin" min="-2" pref="237" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="dealButton" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
@@ -164,16 +165,15 @@
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="dealButton" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="comboIDMinuman" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="spinnerJumlah" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="comboDistributor" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="fStokMin" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="fHargaMin" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="comboIDMinuman" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="spinnerJumlah" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="comboDistributor" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fStokMin" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fHargaMin" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="dealButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
@@ -309,7 +309,7 @@
         <Component class="javax.swing.JSpinner" name="spinnerJumlah">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+              <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>

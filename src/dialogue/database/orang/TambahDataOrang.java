@@ -32,23 +32,7 @@ public class TambahDataOrang extends java.awt.Dialog {
         mTitle = title;
         initComponents();
         MainFrame.connect();
-        fUtang.setText(" Rp  ");
-        fUtang.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                fUtang.setText(formatter(EditDataOrang.takeNominal(fUtang.getText())));
-
-            }
-        });
+        
     }
 
     /**
@@ -66,8 +50,6 @@ public class TambahDataOrang extends java.awt.Dialog {
         batal = new javax.swing.JButton();
         tambah = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        fUtang = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         fAlamat = new javax.swing.JTextArea();
 
@@ -114,15 +96,6 @@ public class TambahDataOrang extends java.awt.Dialog {
         jLabel3.setForeground(new java.awt.Color(187, 187, 188));
         jLabel3.setText("Alamat");
 
-        jLabel4.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel4.setText("Jumlah Utang");
-
-        fUtang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fUtangActionPerformed(evt);
-            }
-        });
-
         fAlamat.setColumns(20);
         fAlamat.setRows(5);
         jScrollPane1.setViewportView(fAlamat);
@@ -142,13 +115,11 @@ public class TambahDataOrang extends java.awt.Dialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(fNama, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fUtang, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
                         .addComponent(jScrollPane1))
                     .addComponent(fNomor, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41))
@@ -168,11 +139,7 @@ public class TambahDataOrang extends java.awt.Dialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(fNomor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(fUtang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(batal)
                     .addComponent(tambah))
@@ -192,7 +159,7 @@ public class TambahDataOrang extends java.awt.Dialog {
 
     private void tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahActionPerformed
         if (fNama.getText().isEmpty() || fNomor.getText().isEmpty()
-                || fAlamat.getText().isEmpty() || fUtang.getText().isEmpty()) {
+                || fAlamat.getText().isEmpty() ) {
             JOptionPane.showMessageDialog(this, "Data tidak boleh kosong, silakan coba lagi", "Peringatan", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
@@ -204,7 +171,6 @@ public class TambahDataOrang extends java.awt.Dialog {
                 data[1] = fNama.getText();
                 data[2] = fAlamat.getText();
                 data[3] = fNomor.getText();
-                data[4] = EditDataOrang.takeNominal(fUtang.getText());
 
                 String table, kode, nama;
 
@@ -219,11 +185,11 @@ public class TambahDataOrang extends java.awt.Dialog {
                     nama = "nama_pbl";
                 }
 
-                String SQLInsert = "INSERT into " + table + " ( " + nama + ", alamat, no_telp, total_hutang) VALUES "
+                String SQLInsert = "INSERT into " + table + " ( " + nama + ", alamat, no_telp) VALUES "
                         + "('" + data[1]
                         + "', '" + data[2]
-                        + "', '" + data[3]
-                        + "', '" + data[4] + "') ;";
+                        + "', '" + data[3] + "') ;";
+                
                 String SQLGetNomor = "SELECT " + kode + " FROM " + table + " WHERE " + nama + " = '" + data[1] + "' ";
 
                 stt.execute(SQLInsert);
@@ -233,7 +199,6 @@ public class TambahDataOrang extends java.awt.Dialog {
                     data[0] = res.getString(1);
                 }
 
-                data[4] = MainFrame.formatter(data[4]);
 
                 if (table.equals("distributor")) {
                     data[0] = Database.koder("DIS", Integer.parseInt(data[0]));
@@ -261,12 +226,8 @@ public class TambahDataOrang extends java.awt.Dialog {
     }//GEN-LAST:event_fNamaActionPerformed
 
     private void fNomorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNomorActionPerformed
-        fUtang.requestFocus();
-    }//GEN-LAST:event_fNomorActionPerformed
-
-    private void fUtangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fUtangActionPerformed
         tambahActionPerformed(evt);
-    }//GEN-LAST:event_fUtangActionPerformed
+    }//GEN-LAST:event_fNomorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,11 +252,9 @@ public class TambahDataOrang extends java.awt.Dialog {
     private javax.swing.JTextArea fAlamat;
     private javax.swing.JTextField fNama;
     private javax.swing.JTextField fNomor;
-    private javax.swing.JTextField fUtang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton tambah;
     // End of variables declaration//GEN-END:variables

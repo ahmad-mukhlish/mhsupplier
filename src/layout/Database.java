@@ -50,8 +50,8 @@ public class Database extends javax.swing.JInternalFrame {
     }
 
     private int mPembeliRow = -1, mDistributorRow = -1, mMinumanRow = -1;
-    private String[] mPembeliData = new String[5];
-    private String[] mDistributorData = new String[5];
+    private String[] mPembeliData = new String[4];
+    private String[] mDistributorData = new String[4];
     private String[] mMinumanData = new String[9];
 
     private void hideTitleBar() {
@@ -75,10 +75,10 @@ public class Database extends javax.swing.JInternalFrame {
 
         return new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
-                new String[]{"Kode Pembeli", "Nama Pembeli", "Alamat Pembeli", "Nomor Telepon", "Total Hutang"}
+                new String[]{"Kode Pembeli", "Nama Pembeli", "Alamat Pembeli", "Nomor Telepon"}
         ) {
             boolean[] canEdit = new boolean[]{
-                false, false, false, false, false
+                false, false, false, false
 
             };
 
@@ -93,10 +93,10 @@ public class Database extends javax.swing.JInternalFrame {
 
         return new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
-                new String[]{"Kode Distributor", "Nama Distributor", "Alamat Distributor", "Nomor Telepon", "Total Hutang"}
+                new String[]{"Kode Distributor", "Nama Distributor", "Alamat Distributor", "Nomor Telepon"}
         ) {
             boolean[] canEdit = new boolean[]{
-                false, false, false, false, false
+                false, false, false, false
 
             };
 
@@ -803,7 +803,6 @@ public class Database extends javax.swing.JInternalFrame {
                 mPembeliData[1] = res_pbl.getString(2);
                 mPembeliData[2] = res_pbl.getString(3);
                 mPembeliData[3] = res_pbl.getString(4);
-                mPembeliData[4] = MainFrame.formatter(res_pbl.getString(5));
 
                 pembeliTableModel.addRow(mPembeliData);
 
@@ -821,7 +820,6 @@ public class Database extends javax.swing.JInternalFrame {
                 mDistributorData[1] = res_dis.getString(2);
                 mDistributorData[2] = res_dis.getString(3);
                 mDistributorData[3] = res_dis.getString(4);
-                mDistributorData[4] = MainFrame.formatter(res_dis.getString(5));
 
                 distributorTableModel.addRow(mDistributorData);
 
@@ -911,7 +909,6 @@ public class Database extends javax.swing.JInternalFrame {
                     mPembeliData[1] = TPembeli.getValueAt(mPembeliRow, 1).toString();
                     mPembeliData[2] = TPembeli.getValueAt(mPembeliRow, 2).toString();
                     mPembeliData[3] = TPembeli.getValueAt(mPembeliRow, 3).toString();
-                    mPembeliData[4] = TPembeli.getValueAt(mPembeliRow, 4).toString();
 
                 }
             }
@@ -926,7 +923,6 @@ public class Database extends javax.swing.JInternalFrame {
                     mDistributorData[1] = TDistributor.getValueAt(mDistributorRow, 1).toString();
                     mDistributorData[2] = TDistributor.getValueAt(mDistributorRow, 2).toString();
                     mDistributorData[3] = TDistributor.getValueAt(mDistributorRow, 3).toString();
-                    mDistributorData[4] = TDistributor.getValueAt(mDistributorRow, 4).toString();
 
                 }
             }

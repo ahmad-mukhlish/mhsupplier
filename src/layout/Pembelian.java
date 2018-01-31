@@ -225,7 +225,7 @@ public class Pembelian extends javax.swing.JInternalFrame {
 
         comboIDMinuman.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Minuman" }));
 
-        spinnerJumlah.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        spinnerJumlah.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         spinnerJumlah.setEnabled(false);
 
         jLabel1.setForeground(new java.awt.Color(187, 187, 188));
@@ -446,8 +446,9 @@ public class Pembelian extends javax.swing.JInternalFrame {
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addComponent(fHargaMin, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
-                                .addComponent(dealButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dealButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(25, 25, 25))
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addContainerGap())
@@ -475,14 +476,14 @@ public class Pembelian extends javax.swing.JInternalFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dealButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(comboIDMinuman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(spinnerJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(comboDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(fStokMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(fHargaMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboIDMinuman, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinnerJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboDistributor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fStokMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fHargaMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dealButton))
+                .addGap(3, 3, 3)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
@@ -593,6 +594,8 @@ public class Pembelian extends javax.swing.JInternalFrame {
 
             }
 
+            mStok = mStok + Integer.parseInt(spinnerJumlah.getValue() + "");
+            fStokMin.setText(mStok + "");
             fTotal.setText(MainFrame.formatter(mGrandTotal + ""));
         } else {
             JOptionPane.showMessageDialog(this, "Silakan pilih pembeli dan minuman terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
@@ -627,10 +630,19 @@ public class Pembelian extends javax.swing.JInternalFrame {
 
                 stt.execute(SQL);
 
+                Statement stt1 = kon.createStatement();
+                String SQL1 = "UPDATE minuman set stok = stok + " + pembelianTableModel.getValueAt(i, 4)
+                        + " where kd_min = '" + pembelianTableModel.getValueAt(i, 1) + "' ;";
+
+                stt1.execute(SQL1);
+                stt1.close();
+
                 stt.close();
                 kon.close();
 
             }
+
+            batalActionPerformed(evt);
 
             mNota++;
             fNota.setText(mNota + "");

@@ -307,18 +307,18 @@ public class Laporan extends javax.swing.JInternalFrame {
                 mIncomeData[1] = df.format(sqlDateFormat.parse(res1.getString(2)));
                 mIncomeData[2] = res1.getString(3);
 
-                Statement sttTotal = kon.createStatement();
-                String SQLTotal = "SELECT SUM(harga_jual) FROM penjualan WHERE nomor_nota = " + mIncomeData[0] + " ;";
-                ResultSet resTotal = sttTotal.executeQuery(SQLTotal);
+                Statement sttTotalNya = kon.createStatement();
+                String sqlTotalNya = "SELECT SUM(sub_total) FROM penjualan WHERE nomor_nota = " + mIncomeData[0] + " ;";
+                ResultSet resTotalNYa = sttTotalNya.executeQuery(sqlTotalNya);
 
-                while (resTotal.next()) {
+                while (resTotalNYa.next()) {
 
-                    mIncomeData[3] = MainFrame.formatter(resTotal.getString(1));
+                    mIncomeData[3] = MainFrame.formatter(resTotalNYa.getString(1));
 
                 }
 
-                resTotal.close();
-                sttTotal.close();
+                resTotalNYa.close();
+                sttTotalNya.close();
                 incomeTableModel.addRow(mIncomeData);
 
             }
@@ -339,7 +339,7 @@ public class Laporan extends javax.swing.JInternalFrame {
                 mOutcomeData[2] = res.getString(3);
 
                 Statement sttTotal = kon.createStatement();
-                String SQLTotal = "SELECT SUM(harga_beli) FROM pembelian WHERE nomor_nota = " + mOutcomeData[0] + " ;";
+                String SQLTotal = "SELECT SUM(sub_total) FROM pembelian WHERE nomor_nota = " + mOutcomeData[0] + " ;";
                 ResultSet resTotal = sttTotal.executeQuery(SQLTotal);
 
                 while (resTotal.next()) {

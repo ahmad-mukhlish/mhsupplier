@@ -42,23 +42,9 @@ public class EditDataOrang extends java.awt.Dialog {
         mRow = row;
         mDatas = datas;
         initComponents();
-        showSelected(fNama, fAlamat, fNomor, fUtang, mDatas);
+        showSelected(fNama, fAlamat, fNomor, mDatas);
         layout.MainFrame.connect();
-        fUtang.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                fUtang.setText(formatter(EditDataOrang.takeNominal(fUtang.getText())));
-            }
-        });
+      
     }
 
     /**
@@ -71,8 +57,6 @@ public class EditDataOrang extends java.awt.Dialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         fAlamat = new javax.swing.JTextArea();
-        fUtang = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         edit = new javax.swing.JButton();
         batal = new javax.swing.JButton();
@@ -91,15 +75,6 @@ public class EditDataOrang extends java.awt.Dialog {
         fAlamat.setColumns(20);
         fAlamat.setRows(5);
         jScrollPane1.setViewportView(fAlamat);
-
-        fUtang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fUtangActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel4.setText("Jumlah Utang");
 
         jLabel3.setForeground(new java.awt.Color(187, 187, 188));
         jLabel3.setText("Alamat");
@@ -152,13 +127,11 @@ public class EditDataOrang extends java.awt.Dialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(fNama, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fUtang, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
                         .addComponent(jScrollPane1))
                     .addComponent(fNomor, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41))
@@ -178,11 +151,7 @@ public class EditDataOrang extends java.awt.Dialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(fNomor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(fUtang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(batal)
                     .addComponent(edit))
@@ -200,13 +169,9 @@ public class EditDataOrang extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void fUtangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fUtangActionPerformed
-        editActionPerformed(evt);
-    }//GEN-LAST:event_fUtangActionPerformed
-
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         if (fNama.getText().isEmpty() || fNomor.getText().isEmpty()
-                || fAlamat.getText().isEmpty() || fUtang.getText().isEmpty()) {
+                || fAlamat.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Data tidak boleh kosong, silakan coba lagi", "Peringatan", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
@@ -218,7 +183,6 @@ public class EditDataOrang extends java.awt.Dialog {
                 data[1] = fNama.getText();
                 data[2] = fAlamat.getText();
                 data[3] = fNomor.getText();
-                data[4] = EditDataOrang.takeNominal(fUtang.getText());
 
                 String table, kode, nama;
 
@@ -236,8 +200,7 @@ public class EditDataOrang extends java.awt.Dialog {
                 String SQLUpdate = "UPDATE " + table + " "
                         + "SET " + nama + " = '" + data[1] + "', "
                         + "alamat = '" + data[2] + "', "
-                        + "no_telp = '" + data[3] + "', "
-                        + "total_hutang = '" + data[4] + "' "
+                        + "no_telp = '" + data[3] + "' "
                         + " WHERE " + kode + " = " + Integer.parseInt(mDatas[0].substring(4)) + ";";
 
                 stt.execute(SQLUpdate);
@@ -248,7 +211,6 @@ public class EditDataOrang extends java.awt.Dialog {
                     data[0] = res.getString(1);
                 }
 
-                data[4] = MainFrame.formatter(data[4]);
 
                 if (table.equals("distributor")) {
                     data[0] = Database.koder("DIS", Integer.parseInt(data[0]));
@@ -276,7 +238,7 @@ public class EditDataOrang extends java.awt.Dialog {
     }//GEN-LAST:event_batalActionPerformed
 
     private void fNomorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNomorActionPerformed
-        fUtang.requestFocus();
+        editActionPerformed(evt);
     }//GEN-LAST:event_fNomorActionPerformed
 
     private void fNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNamaActionPerformed
@@ -299,11 +261,10 @@ public class EditDataOrang extends java.awt.Dialog {
         });
     }
 
-    public static void showSelected(JTextField fNama, JTextArea fAlamat, JTextField fNomor, JTextField fUtang, String[] datas) {
+    public static void showSelected(JTextField fNama, JTextArea fAlamat, JTextField fNomor,  String[] datas) {
         fNama.setText(datas[1]);
         fAlamat.setText((datas[2]));
         fNomor.setText(datas[3]);
-        fUtang.setText(datas[4]);
     }
 
     public static String takeNominal(String nominal) {
@@ -323,11 +284,9 @@ public class EditDataOrang extends java.awt.Dialog {
     private javax.swing.JTextArea fAlamat;
     private javax.swing.JTextField fNama;
     private javax.swing.JTextField fNomor;
-    private javax.swing.JTextField fUtang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

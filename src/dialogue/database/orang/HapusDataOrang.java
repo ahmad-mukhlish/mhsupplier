@@ -36,7 +36,7 @@ public class HapusDataOrang extends java.awt.Dialog {
         mRow = row;
         mDatas = datas;
         initComponents();
-        EditDataOrang.showSelected(fNama, fAlamat, fNomor, fUtang, mDatas);
+        EditDataOrang.showSelected(fNama, fAlamat, fNomor,  mDatas);
         layout.MainFrame.connect();
     }
 
@@ -48,10 +48,8 @@ public class HapusDataOrang extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         fAlamat = new javax.swing.JTextArea();
-        fUtang = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         batal = new javax.swing.JButton();
         hapus = new javax.swing.JButton();
@@ -67,15 +65,10 @@ public class HapusDataOrang extends java.awt.Dialog {
             }
         });
 
-        jLabel4.setForeground(new java.awt.Color(187, 187, 188));
-        jLabel4.setText("Jumlah Utang");
-
         fAlamat.setEditable(false);
         fAlamat.setColumns(20);
         fAlamat.setRows(5);
         jScrollPane1.setViewportView(fAlamat);
-
-        fUtang.setEditable(false);
 
         jLabel3.setForeground(new java.awt.Color(187, 187, 188));
         jLabel3.setText("Alamat");
@@ -120,13 +113,11 @@ public class HapusDataOrang extends java.awt.Dialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(fNama, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                        .addComponent(fUtang, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
                         .addComponent(jScrollPane1))
                     .addComponent(fNomor, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41))
@@ -146,11 +137,7 @@ public class HapusDataOrang extends java.awt.Dialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(fNomor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(fUtang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(batal)
                     .addComponent(hapus))
@@ -232,12 +219,10 @@ public class HapusDataOrang extends java.awt.Dialog {
     private javax.swing.JTextArea fAlamat;
     private javax.swing.JTextField fNama;
     private javax.swing.JTextField fNomor;
-    private javax.swing.JTextField fUtang;
     private javax.swing.JButton hapus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -137,7 +137,7 @@ public class Penjualan extends javax.swing.JInternalFrame {
 
         panel = new javax.swing.JPanel();
         fKembalian = new javax.swing.JTextField();
-        DeleteOutcome = new javax.swing.JButton();
+        batal = new javax.swing.JButton();
         simpanPenjualan = new javax.swing.JButton();
         hapusDataMinuman = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -187,10 +187,10 @@ public class Penjualan extends javax.swing.JInternalFrame {
             }
         });
 
-        DeleteOutcome.setText("Batal");
-        DeleteOutcome.addActionListener(new java.awt.event.ActionListener() {
+        batal.setText("Batal");
+        batal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteOutcomeActionPerformed(evt);
+                batalActionPerformed(evt);
             }
         });
 
@@ -393,7 +393,7 @@ public class Penjualan extends javax.swing.JInternalFrame {
                                 .addGap(69, 69, 69)
                                 .addComponent(simpanPenjualan, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                                .addComponent(DeleteOutcome, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(batal, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(31, 31, 31))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -507,7 +507,7 @@ public class Penjualan extends javax.swing.JInternalFrame {
                         .addComponent(fKembalian, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(52, 52, 52)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(DeleteOutcome, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(batal, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(simpanPenjualan, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -532,7 +532,7 @@ public class Penjualan extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void DeleteOutcomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteOutcomeActionPerformed
+    private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         comboIDMinuman.setSelectedIndex(0);
         comboPembeli.setSelectedIndex(0);
         TPenjualan.clearSelection();
@@ -545,7 +545,7 @@ public class Penjualan extends javax.swing.JInternalFrame {
         fKembalian.setText("");
 
         comboPembeli.setEnabled(true);
-    }//GEN-LAST:event_DeleteOutcomeActionPerformed
+    }//GEN-LAST:event_batalActionPerformed
 
     private void fTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fTotalActionPerformed
         // TODO add your handling code here:
@@ -583,6 +583,9 @@ public class Penjualan extends javax.swing.JInternalFrame {
 
             }
 
+            
+            mStok = mStok - Integer.parseInt(spinnerJumlah.getValue() + "") ;
+            fStokMin.setText(mStok+"");
             fTotal.setText(MainFrame.formatter(mGrandTotal + ""));
         } else {
             JOptionPane.showMessageDialog(this, "Silakan pilih pembeli dan minuman terlebih dahulu", "Peringatan", JOptionPane.WARNING_MESSAGE);
@@ -612,13 +615,22 @@ public class Penjualan extends javax.swing.JInternalFrame {
                         + EditDataOrang.takeNominal(penjualanTableModel.getValueAt(i, 5) + "") + " "
                         + ") ;";
 
-
                 stt.execute(SQL);
-
                 stt.close();
+
+                Statement stt1 = kon.createStatement();
+                String SQL1 = "UPDATE minuman set stok = stok - " + penjualanTableModel.getValueAt(i, 4) 
+                        + " where kd_min = '" + penjualanTableModel.getValueAt(i, 1) + "' ;" ;
+                        
+
+                stt1.execute(SQL1);
+                stt1.close();
+
                 kon.close();
 
             }
+
+            batalActionPerformed(evt);
 
             mNota++;
             fNota.setText(mNota + "");
@@ -718,7 +730,7 @@ public class Penjualan extends javax.swing.JInternalFrame {
 
                     }
 
-                    spinnerJumlah.setModel(new SpinnerNumberModel(1, 1, mStok, 1));
+                    spinnerJumlah.setModel(new SpinnerNumberModel(0, 0, mStok, 1));
 
                     res.close();
                     stt.close();
@@ -816,8 +828,8 @@ public class Penjualan extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton DeleteOutcome;
     private javax.swing.JTable TPenjualan;
+    private javax.swing.JButton batal;
     private javax.swing.JComboBox<String> comboIDMinuman;
     private javax.swing.JComboBox<String> comboPembeli;
     private javax.swing.JButton dealButton;
